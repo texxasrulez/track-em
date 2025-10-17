@@ -11,7 +11,7 @@ Track 'Em is a no‑nonsense, PHP‑native tracker and tiny dashboard you can dr
 
 It records page views and lightweight metadata, respects user privacy, and gives you simple, fast admin views — **no external SaaS, no cookies unless you enable consent**, and no build toolchain. 
 
-If you are looking for something in depth like Matomo, this is not for you. This is a lightweight tracker built for the enthusiest that does not want their system resources getting hogged up. 
+If you are looking for something in depth like Matomo, this is not for you. This is a lightweight tracker built for the enthusiast that does not want their system resources getting hogged up. 
 
 ---
 
