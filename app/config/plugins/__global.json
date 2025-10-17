@@ -1,0 +1,8 @@
+{
+    "enabled": {
+        "consent_banner": true,
+        "maps": true,
+        "realtime": true,
+        "visitors": true
+    }
+}

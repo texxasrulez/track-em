@@ -1,0 +1,7 @@
+{
+  "key": "visitors",
+  "name": "Visitors",
+  "version": "0.1.0",
+  "description": "Visitors widget for the dashboard (unique IPs, last 24h, top countries).",
+  "author": "Track-Em"
+}

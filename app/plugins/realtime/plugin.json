@@ -1,0 +1,11 @@
+{
+  "id": "realtime",
+  "name": "Realtime",
+  "version": "0.1.0",
+  "description": "Realtime polling widget for recent visits.",
+  "configSchema": {
+    "fields": [
+      { "name": "poll_ms", "label": "Poll interval (ms)", "type": "number", "default": 3000, "help": "Client refresh cadence for dashboard widgets." }
+    ]
+  }
+}

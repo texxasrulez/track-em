@@ -1,0 +1,12 @@
+{
+  "id": "consent_banner",
+  "name": "Consent Banner",
+  "version": "0.1.1",
+  "description": "GDPR-style opt-in/out banner that sets te_consent cookie.",
+  "configSchema": {
+    "fields": [
+      { "name": "message", "label": "Banner message", "type": "text", "default": "This site uses privacy-friendly analytics." },
+      { "name": "position", "label": "Position", "type": "select", "default": "bottom", "options": { "bottom": "Bottom", "top": "Top" } }
+    ]
+  }
+}

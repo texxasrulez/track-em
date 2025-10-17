@@ -1,0 +1,64 @@
+/* Track Em Theme: Pastel */
+:root {
+    --bg: #f7f7ff;
+    --panel: #ffffff;
+    --muted: #f1f0ff;
+    --text: #16161a;
+    --sub: #555770;
+    --accent: #cf224d;
+    --accent2: #94b3fd;
+    --border: #e7e7ff;
+    --theme-pin-color: #cf224d;
+	--pin-color: var(--theme-pin-color);
+	--icon-color: #0f172a;
+}
+html,
+body {
+    background: var(--bg);
+    color: var(--text);
+}
+a {
+    color: var(--accent);
+}
+.topbar {
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+}
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(86, 86, 120, 0.06);
+}
+input,
+select,
+button {
+    background: #fff;
+    color: #16161a;
+    border: 1px solid var(--border);
+}
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+th,
+td {
+    border-bottom: 1px solid var(--border);
+}
+thead th {
+    background: var(--muted);
+    color: var(--text);
+}
+.badge {
+    background: var(--muted);
+    color: var(--sub);
+    border: 1px solid var(--border);
+}
+.tooltip {
+    background: #16161a;
+    color: #ffffff;
+    border: 1px solid #0002;
+}

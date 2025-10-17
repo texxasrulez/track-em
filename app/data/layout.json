@@ -1,0 +1,9 @@
+{
+    "order": [
+        "map",
+        "visitors",
+        "realtime",
+        "recent"
+    ],
+    "cols": 2
+}

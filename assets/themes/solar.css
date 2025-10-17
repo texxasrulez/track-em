@@ -1,0 +1,72 @@
+/* Track Em Theme: Solar */
+:root {
+    --bg: #16202c;
+    --panel: #11161d;
+    --muted: #16202c;
+    --text: #f6f6f4;
+    --sub: #cfd7df;
+    --accent: #ffca5f;
+    --accent2: #53d3f7;
+    --border: #223041;
+    --theme-pin-color: #ffca5f;
+	--pin-color: var(--theme-pin-color);
+	--icon-color: #ffca5f;
+}
+html,
+body {
+    background: var(--bg);
+    color: var(--text);
+}
+a {
+    color: var(--accent);
+}
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+.grid {
+    gap: 14px;
+}
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+th,
+td {
+    padding: 9px 10px;
+    border-bottom: 1px solid var(--border);
+}
+thead th {
+    background: var(--muted);
+    color: var(--sub);
+}
+tr:nth-child(even) td {
+    background: rgba(255, 255, 255, 0.03);
+}
+button,
+.button {
+    background: linear-gradient(180deg, var(--accent), #f5b335);
+    color: #111;
+    border: 1px solid #f0b426;
+    border-radius: 10px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+button:disabled {
+    opacity: 0.6;
+}
+input,
+select {
+    background: #0f141a;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 8px;
+}

@@ -1,0 +1,12 @@
+{
+  "id": "maps",
+  "name": "Visitor Map",
+  "version": "0.1.1",
+  "description": "Shows visitor locations using Leaflet.",
+  "configSchema": {
+    "fields": [
+      { "name": "tile_url", "label": "Tile URL", "type": "text", "default": "https://tile.openstreetmap.org/{z}/{x}/{y}.png" },
+      { "name": "cluster", "label": "Cluster markers", "type": "checkbox", "default": true }
+    ]
+  }
+}

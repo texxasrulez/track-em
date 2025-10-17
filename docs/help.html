@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Track ’Em — Help</title>
+<style>
+  :root {
+    --fg: #0f172a;
+    --bg: transparent;
+    --link: #0b5ee8;
+    --muted: #334155;
+    --code-bg: #f4f6fb;
+}
+  html, body { margin:0; padding: 14px 16px; color: var(--fg); background: var(--bg); font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif; }
+  h1, h2, h3 { margin: 0 0 .5rem; line-height: 1.2; }
+  p { margin: 0 0 .75rem; }
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code, pre { background: var(--code-bg); color: #fff; border: 1px solid var(--code-br); border-radius: 6px; }
+  pre { padding: .75rem .9rem; overflow: auto; }
+  .muted { color: var(--muted); }
+  ul { margin: .25rem 0 .9rem 1.2rem; }
+
+  /* Support theme switch from parent */
+  .theme-dark :root, html.theme-dark body { color: #fff; }
+  html.theme-dark a { color: #cfe8ff; }
+  html.theme-dark code, html.theme-dark pre { background: rgba(255,255,255,0.08); color: #fff; }
+
+  /* help dark theme */
+  html.theme-dark {
+    --fg: #f8fafc;
+    --link: #cfe8ff;
+    --muted: #cbd5e1;
+    --code-bg: rgba(255,255,255,0.08);
+  }
+  html, body { color: var(--fg); background: var(--bg); }
+</style>
+
+
+
+
+<style>
+/* Force Help area to light theme with dark text, regardless of parent theme */
+:root {
+  --help-bg: #ffffff;
+  --help-fg: #0f172a;
+  --help-link: #0b5ee8;
+  --help-muted: #334155;
+  --help-code-bg: #f4f6fb;
+  --help-code-fg: #0f172a;
+  --help-code-br: #e5e7eb;
+  --help-btn-bg: #eef2ff;
+  --help-btn-fg: #0f172a;
+  --help-btn-br: #cbd5e1;
+  --help-btn-bg-hover: #e0e7ff;
+}
+html, body {
+  background: var(--help-bg) !important;
+  color: var(--help-fg) !important;
+}
+a { color: var(--help-link); }
+.muted { color: var(--help-muted); }
+
+/* Code blocks */
+code, pre {
+  background: var(--help-code-bg) !important;
+  color: var(--help-code-fg) !important;
+  border: 1px solid var(--help-code-br);
+  border-radius: 6px;
+}
+pre { padding: .75rem .9rem; overflow: auto; }
+
+/* Copy button on code blocks */
+.te-copy-btn {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  background: var(--help-btn-bg);
+  border: 1px solid var(--help-btn-br);
+  color: var(--help-btn-fg);
+  border-radius: 4px;
+  padding: 2px 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+.te-copy-btn:hover { background: var(--help-btn-bg-hover); }
+</style>
+<style>
+/* Force-override inline Copy button styles */
+button[style*="background: rgba(255, 255, 255"], 
+button[style*="color: rgb(255, 255, 255"] {
+  background: #111 !important;
+  color: #f5f5f5 !important;
+  border-color: #000 !important;
+}
+button[style*="background: rgba(255, 255, 255"]:hover {
+  filter: brightness(1.1);
+}
+</style>
+</head>
+<body>
+  <h1>Tracking Integration</h1>
+  <p class="muted">This page shows exactly what to include to enable tracking, plus optional extras.</p>
+
+  <h2>Minimal required includes (absolute paths)</h2>
+  <p>Use this if Track ’Em is installed at <code>/track-em</code> on your server:</p>
+  <pre><code>&lt;script src="/track-em/assets/js/consent.js" defer&gt;&lt;/script&gt;
+&lt;script&gt;window.TE_ENDPOINT = '/track-em/track.php';&lt;/script&gt;
+&lt;script src="/track-em/assets/js/te.js" defer&gt;&lt;/script&gt;</code></pre>
+
+  <h2>Minimal required includes (subdirectory-safe)</h2>
+  <p>If Track ’Em runs in a subfolder (e.g., <code>/apps/track-em</code>), use dynamic paths:</p>
+  <pre><code>&lt;?= '\u003Cscript src="' ?&gt;&lt;?= \TrackEm\Core\Url::path('assets/js/consent.js') ?&gt;&lt;?= '" defer\u003E\u003C/script\u003E' ?&gt;
+&lt;script&gt;window.TE_ENDPOINT = '&lt;?= \TrackEm\Core\Url::path('track.php') ?&gt;';&lt;/script&gt;
+&lt;?= '\u003Cscript src="' ?&gt;&lt;?= \TrackEm\Core\Url::path('assets/js/te.js') ?&gt;&lt;?= '" defer\u003E\u003C/script\u003E' ?&gt;</code></pre>
+
+  <h2>Optional but recommended</h2>
+  <ul>
+    <li><strong>No-JS pixel</strong> for users without JavaScript:</li>
+  </ul>
+  <pre><code>&lt;noscript&gt;
+  &lt;img src="&lt;?= \TrackEm\Core\Url::path('track.php') ?&gt;?t=pageview&amp;ns=1"
+       alt="" width="1" height="1" style="position:absolute;left:-9999px"&gt;
+&lt;/noscript&gt;</code></pre>
+
+  <ul>
+    <li><strong>Place near the end of &lt;body&gt;</strong> so the page renders fast.</li>
+    <li><strong>Define <code>window.TE_ENDPOINT</code> before <code>te.js</code></strong> so the tracker knows where to post.</li>
+  </ul>
+
+  <h2>Where events go</h2>
+  <p class="muted">Events are sent to <code>track.php</code> and surfaced in the admin dashboard. Privacy controls live in <code>config/config.php</code>.</p>
+
+<script>
+// Copy to clipboard buttons
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('pre').forEach(block => {
+    const btn = document.createElement('button');
+    btn.textContent = 'Copy';
+    btn.style.position = 'absolute';
+    btn.style.right = '12px';
+    btn.style.top = '8px';
+    btn.style.background = 'rgba(255,255,255,0.1)';
+    btn.style.border = '1px solid rgba(255,255,255,0.3)';
+    btn.style.color = '#fff';
+    btn.style.borderRadius = '4px';
+    btn.style.padding = '2px 6px';
+    btn.style.cursor = 'pointer';
+    btn.style.fontSize = '0.8rem';
+    btn.addEventListener('click', () => {
+      navigator.clipboard.writeText(block.innerText.trim()).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 1500);
+      });
+    });
+    const wrapper = document.createElement('div');
+    wrapper.style.position = 'relative';
+    block.parentNode.insertBefore(wrapper, block);
+    wrapper.appendChild(block);
+    wrapper.appendChild(btn);
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,236 @@
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,Arial,Helvetica,sans-serif;background:#0b0e11;color:#e8e8e8}
+a{color:#9ed1ff;text-decoration:none;margin-right:12px}
+.topbar{display:flex;align-items:center;gap:16px;padding:12px 16px;background:#151a21;border-bottom:1px solid #1f2630}
+.topbar h1{font-size:18px;margin:0 12px 0 0;color:#e8e8e8}
+.topbar nav a.right{margin-left:auto}
+main{padding:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:#12161c;border:1px solid #1f2630;border-radius:12px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.card.small{max-width:360px;margin:60px auto}
+.card h3{margin-top:0}
+label{display:block;margin:8px 0}
+input,select,button{width:100%;padding:8px 10px;border-radius:8px;border:1px solid #e5e7eb;background:#ffffff;color:#0f172a}
+button{cursor:pointer}
+table{width:100%;border-collapse:collapse}
+th,td{border-bottom:1px solid #1f2630;padding:8px;text-align:left}
+.code{background:#0f1318;padding:12px;border-radius:8px;overflow:auto}
+.themes,.plugins{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.theme-tile,.plugin-tile{border:1px solid #1f2630;border-radius:10px;padding:12px;background:#0f1318}
+.error{background:#3b1114;color:#ffb4b9;border:1px solid #622027;padding:8px;border-radius:8px}
+.success{background:#113b1e;color:#b9ffcc;border:1px solid #1f5f2f;padding:8px;border-radius:8px}
+
+/* ==== Themes page scoped fixes (do not affect rest of app) ==== */
+.theme-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:16px;
+}
+.theme-card{
+  position:relative;
+  padding:12px !important;
+}
+.theme-card__head{
+  display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px;
+}
+.badge{
+  font-size:12px; line-height:1;
+  padding:4px 8px; border-radius:999px;
+  border:1px solid var(--border); background:var(--muted); color:var(--sub);
+}
+
+.swatches{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:6px 0 12px; }
+.sw{ display:block; height:30px; border-radius:8px; border:1px solid var(--border); }
+
+/* Kill any global full-width/button-block rules just inside theme cards */
+.theme-card .button,
+.theme-card button,
+.theme-card .btn{
+  display:inline-flex !important;
+  width:auto !important;
+  flex:0 0 auto !important;
+  align-items:center; justify-content:center;
+  padding:8px 12px;
+  border-radius:10px;
+  text-decoration:none;
+  cursor:pointer;
+  border:1px solid var(--border);
+  background:var(--muted);
+  color:var(--text);
+  white-space:nowrap;
+  box-sizing:border-box;
+}
+
+.theme-card .btn:hover{ filter:brightness(1.06); }
+.theme-card .btn:active{ transform:translateY(1px); }
+
+/* Row for small buttons (Preview / CSS) */
+.theme-card .actions-row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:10px;
+}
+
+/* Big block Activate button only */
+.theme-card .btn--block{
+  display:flex !important;
+  width:100% !important;
+}
+.theme-card .btn--primary{
+  background:linear-gradient(180deg,var(--accent),rgba(0,0,0,0)) !important;
+  border-color:var(--accent) !important;
+  color:#0b0f14 !important;
+}
+
+/* Don’t let generic form styles turn nested controls full-width */
+.theme-card form{ display:block; margin:0; }
+
+/* Tighten small screens */
+@media (max-width: 480px){
+  .theme-grid{ grid-template-columns:1fr; }
+  .theme-card .actions-row{ flex-direction:column; }
+}
+
+/* ==== Site-wide UI primitives (safe utilities) ========================== */
+/* Buttons */
+.btn, .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--muted);
+  color: var(--text);
+  white-space: nowrap;
+  box-sizing: border-box;
+  transition: transform .02s ease-in-out, filter .12s ease-in-out;
+}
+.btn:hover, .button:hover { filter: brightness(1.06); }
+.btn:active, .button:active { transform: translateY(1px); }
+.btn--primary { background: linear-gradient(180deg, var(--accent), rgba(0,0,0,0)); border-color: var(--accent); color: #0b0f14; }
+.btn--ghost   { background: transparent; }
+.btn--block   { display: flex; width: 100%; }
+
+/* Form layout */
+.form { display: block; }
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 16px;
+}
+.form-row { display: contents; } /* children place into grid cells */
+.form-label {
+  display: flex; align-items: center; justify-content: space-between;
+  font-weight: 500; color: var(--sub);
+}
+.form-ctl   { display: block; width: 100%; }
+.form-ctl input[type="text"],
+.form-ctl input[type="number"],
+.form-ctl input[type="password"],
+.form-ctl input[type="email"],
+.form-ctl select,
+.form-ctl textarea {
+  width: 100%;
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 6px 8px;
+  box-sizing: border-box;
+}
+.form-ctl .inline {
+  display: inline-flex; align-items: center; gap: 8px;
+}
+
+/* Section footer (actions) */
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.actions--left  { justify-content: flex-start; }
+.actions--right { justify-content: flex-end; }
+
+/* Cards: don’t let nested forms stretch random controls full-width */
+.card .button, .card button, .card .btn { width: auto; flex: 0 0 auto; }
+
+/* Responsive tweaks */
+@media (max-width: 720px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .form-label { justify-content: flex-start; }
+}
+
+header.topbar{position:sticky;top:0;z-index:999}
+nav a.active{font-weight:700}
+
+/* Theme-aware form controls: dark override */
+body[class$="-dark"] input,
+body[class$="-dark"] select,
+body[class$="-dark"] textarea,
+body[class$="-dark"] option,
+body[class*=" theme-"][class*="-dark"] input,
+body[class*=" theme-"][class*="-dark"] select,
+body[class*=" theme-"][class*="-dark"] textarea,
+body[class*=" theme-"][class*="-dark"] option{
+  background:#0f1318;
+  color:#e8e8e8;
+  border-color:#2a3442;
+}
+
+/* Dark theme override for .form-ctl controls */
+body[class$="-dark"] .form-ctl input[type="text"],
+body[class$="-dark"] .form-ctl input[type="number"],
+body[class$="-dark"] .form-ctl input[type="password"],
+body[class$="-dark"] .form-ctl input[type="email"],
+body[class$="-dark"] .form-ctl select,
+body[class$="-dark"] .form-ctl textarea,
+body[class*=" theme-"][class*="-dark"] .form-ctl input[type="text"],
+body[class*=" theme-"][class*="-dark"] .form-ctl input[type="number"],
+body[class*=" theme-"][class*="-dark"] .form-ctl input[type="password"],
+body[class*=" theme-"][class*="-dark"] .form-ctl input[type="email"],
+body[class*=" theme-"][class*="-dark"] .form-ctl select,
+body[class*=" theme-"][class*="-dark"] .form-ctl textarea {
+  background:#0f141a;
+  color:#e8e8e8;
+  border-color:#2a3442;
+}
+
+/* Stabilize and de-bounce the map gear button */
+#open-map-settings.map-gear{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:28px;
+  height:28px;
+  margin:0;
+  padding:0;
+  line-height:1;
+  font-size:18px;
+  font-weight:400;
+  border:1px solid transparent;
+  border-radius:6px;
+  background:transparent;
+  vertical-align:middle;
+  transition: box-shadow 120ms ease;
+  pointer-events:auto;
+  cursor:pointer;
+}
+#open-map-settings.map-gear:hover,
+#open-map-settings.map-gear:focus{
+  outline: none;
+  border-color: transparent;
+  background:transparent;
+  box-shadow: 0 0 0 2px rgba(99,102,241,.20);
+}
+#open-map-settings.map-gear{ transform: translateZ(0); }
+#open-map-settings.map-gear:hover{ transform: none !important; }
+
+
+/* Consistent padding/spacing for Settings cards */
+.card--settings{
+  padding: 1rem;
+  margin-top: 1.2rem;
+}
+@media (max-width: 720px){
+  .card--settings{ padding: .75rem; }
+}
