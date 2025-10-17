@@ -27,7 +27,7 @@ final class Theme
         $webDir = self::baseUrl() . '/' . self::THEME_DIR;
 
         $names = [
-            'cobalt'=>'Cobalt (default)',
+            'matrix'=>'matrix (default)',
             'noir'=>'Noir','solar'=>'Solar','forest'=>'Forest',
             'crimson'=>'Crimson','matrix'=>'Matrix',
         ];
@@ -71,13 +71,13 @@ final class Theme
         } catch (\Throwable $e) {}
 
         // 3) Default
-        return 'cobalt';
+        return 'matrix';
     }
 
     /** Persist activation (JSON) and set long-lived cookie */
     public static function setActive(string $id): void
     {
-        $id = preg_replace('/[^a-z0-9_-]/i', '', $id) ?: 'cobalt';
+        $id = preg_replace('/[^a-z0-9_-]/i', '', $id) ?: 'matrix';
 
         $pdo = DB::pdo();
         $payload = json_encode($id, JSON_UNESCAPED_SLASHES);
@@ -93,7 +93,7 @@ final class Theme
     /** Set preview cookie (soft, no DB write). */
     public static function setPreview(string $id, ?int $expires = null): void
     {
-        $id = preg_replace('/[^a-z0-9_-]/i', '', $id) ?: 'cobalt';
+        $id = preg_replace('/[^a-z0-9_-]/i', '', $id) ?: 'matrix';
         @setcookie('theme', $id, [
             'expires'  => $expires ?? (time()+3600),
             'path'     => self::baseUrl() === '' ? '/' : self::baseUrl(),
