@@ -15,6 +15,13 @@ If you are looking for something in depth like Matomo, this is not for you. This
 
 ---
 
+**Screenshot**
+-----------
+
+![Alt text](/assets/images/screenshot.png?raw=true "Track 'Em Screenshot")
+
+---
+
 ## Highlights
 
 - **Zero‑dependency PHP app** — no Composer, no Node. Just PHP 8.0+ and MySQL/MariaDB.
@@ -63,14 +70,6 @@ track-em/
 - MySQL or MariaDB.
 - Web server (Apache, Nginx, Caddy) that can serve the folder or a sub‑path.
 - Optional: **MaxMind GeoLite2** license key if you want local geo. A free key is available from MaxMind.
-
----
-
-**Screenshot**
------------
-With All Details enabled
-
-![Alt text](/assets/images/screenshot.png?raw=true "Track 'Em Screenshot")
 
 ---
 
