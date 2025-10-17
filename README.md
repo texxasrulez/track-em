@@ -66,6 +66,14 @@ track-em/
 
 ---
 
+**Screenshot**
+-----------
+With All Details enabled
+
+![Alt text](/assets/images/screenshot.png?raw=true "Track 'Em Screenshot")
+
+---
+
 ## Quick start (5 minutes)
 
 1. **Copy files** to your server (e.g., `/var/www/track-em`). The app happily lives at a sub‑path like `/track-em`.
