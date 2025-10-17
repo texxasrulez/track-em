@@ -7,7 +7,9 @@
 [![GitHub Forks](https://img.shields.io/github/forks/texxasrulez/track-em?style=plastic&logo=github&logoColor=white&label=Forks&labelColor=blue&color=darkorange)](https://github.com/texxasrulez/track-em/forks)
 [![Donate Paypal](https://img.shields.io/badge/Paypal-Money_Please!-blue.svg?style=plastic&labelColor=blue&color=forestgreen&logo=paypal)](https://www.paypal.me/texxasrulez)
 
-Track 'Em is a no‑nonsense, PHP‑native tracker and tiny dashboard you can drop into any site or subfolder. It records page views and lightweight metadata, respects user privacy, and gives you simple, fast admin views — **no external SaaS, no cookies unless you enable consent**, and no build toolchain.
+Track 'Em is a no‑nonsense, PHP‑native tracker and tiny dashboard you can drop into any site or subfolder.
+It records page views and lightweight metadata, respects user privacy, and gives you simple, fast admin views — **no external SaaS, no cookies unless you enable consent**, and no build toolchain.
+If you are looking for something in depth like Matomo, this is not for you. This is a lightweight tracker built for the enthusiest that does not want their system resources getting hogged up.
 
 ---
 
