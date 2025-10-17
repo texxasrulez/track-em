@@ -6,7 +6,6 @@
 [![GitHub Contributors](https://img.shields.io/github/contributors/texxasrulez/track-em?style=plastic&logo=github&logoColor=white&label=Contributors&labelColor=blue&color=orchid)](https://github.com/texxasrulez/track-em/graphs/contributors)
 [![GitHub Forks](https://img.shields.io/github/forks/texxasrulez/track-em?style=plastic&logo=github&logoColor=white&label=Forks&labelColor=blue&color=darkorange)](https://github.com/texxasrulez/track-em/forks)
 [![Donate Paypal](https://img.shields.io/badge/Paypal-Money_Please!-blue.svg?style=plastic&labelColor=blue&color=forestgreen&logo=paypal)](https://www.paypal.me/texxasrulez)
-
 #
 
 Track 'Em is a no‑nonsense, PHP‑native tracker and tiny dashboard you can drop into any site or subfolder. 
