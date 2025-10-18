@@ -7,7 +7,63 @@
 </script>
 
 <style>
-.visitor-ip img { vertical-align: middle; margin-right: 0.75rem; }
+.visitor-ip img {
+    vertical-align: middle;
+    margin-right: 0.75rem;
+}
+.te-pin-svg {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+.card-handle {
+    position: relative;
+    position: relative;
+    z-index: 1;
+    position: relative;
+    z-index: 1;
+    position: relative;
+}
+.map-gear:focus {
+    outline: none;
+}
+.map-gear {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 6px;
+    border: 1px solid var(--border, #2a3340);
+    border-radius: 8px;
+    background: #fff0;
+    color: inherit;
+    cursor: pointer;
+    transition: background-color 0.08s linear;
+    box-shadow: none;
+    outline: none;
+    contain: paint;
+    will-change: background-color;
+    backface-visibility: hidden;
+    user-select: none;
+    pointer-events: auto;
+    -webkit-tap-highlight-color: #fff0;
+}
+.map-gear:hover,
+.map-gear:focus {
+    background: rgb(0 0 0 / 0.06);
+}
+.card-handle:hover .map-gear {
+    border-color: var(--border, #2a3340) !important;
+    box-shadow: none !important;
+}
+body.gear-hovering .card-handle,
+body.gear-hovering .card-handle * {
+    transition: none !important;
+    animation: none !important;
+    box-shadow: none !important;
+}
+body.gear-hovering .card-handle:hover .map-gear {
+    border-color: var(--border, #2a3340) !important;
+}
 </style>
 <?php $__base = rtrim(str_replace('\\','/', dirname($_SERVER['SCRIPT_NAME'] ?? '/')), '/'); if ($__base === '/') $__base = ''; ?>
 <?php
@@ -41,6 +97,8 @@ $__map = isset($__dash['map']) && is_array($__dash['map']) ? $__dash['map'] : ar
 </div>
 
 <style>
+
+
 .icon {
     width: 14px;
     height: 14px;
@@ -122,17 +180,7 @@ $__map = isset($__dash['map']) && is_array($__dash['map']) ? $__dash['map'] : ar
     -webkit-user-drag: none;
     user-select: none;
 }
-.map-gear {
-    border: 1px solid var(--border, #2a3340);
-    background: transparent;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    color: inherit;
-    border-radius: 8px;
-    padding: 2px 6px;
-}
+.map-gear{border:1px solid var(--border,#2a3340);background:transparent;cursor:pointer;display:inline-flex;align-items:center;gap:6px;color:inherit;border-radius:8px;padding:2px 6px;transition:border-color .12s ease, box-shadow .12s ease;}
 .sheet {
     position: fixed;
     left: 0;
@@ -225,6 +273,10 @@ $__map = isset($__dash['map']) && is_array($__dash['map']) ? $__dash['map'] : ar
 .card-handle:active {
     cursor: grabbing;
 }
+
+.map-gear:hover,.map-gear:focus{border-color:var(--accent,#3b82f6);box-shadow:0 0 0 2px rgba(0,0,0,.06)}
+
+
 </style>
 
 <div class="grid" id="dash-grid" style="display:grid;grid-template-columns:repeat(2, 1fr);gap:12px">
@@ -240,7 +292,7 @@ $__map = isset($__dash['map']) && is_array($__dash['map']) ? $__dash['map'] : ar
 
   <div class="card" data-id="map" draggable="false" id="map-card">
     <div class="card-handle">
-      Map <button type="button" id="open-map-settings" class="map-gear" title="Map settings" aria-haspopup="dialog" aria-expanded="false">⚙</button>
+      Map <button type="button" id="open-map-settings"  title="Map settings" aria-haspopup="dialog" aria-expanded="false" class="map-gear">⚙</button>
     </div>
     <div id="map" style="height:300px"></div>
     <div id="map-error" class="error" style="display:none"></div>
@@ -603,7 +655,7 @@ function teFetchQ(ep, qs, opts){
     seedForm(); applyInteraction(); applyBase(); anchorSheet();
   });
   saveBtn.addEventListener('click', function(){
-    readForm(); saveCfg(); applyInteraction(); applyBase(); sheet.style.display='none'; sheet.setAttribute('aria-hidden','true');
+    readForm(); saveCfg(); applyInteraction(); applyBase(); render(lastRows||[]); render(lastRows||[]); render(lastRows||[]); sheet.style.display='none'; sheet.setAttribute('aria-hidden','true');
     if (map) { map.invalidateSize(); }
   });
   document.addEventListener('click', function(e){
@@ -611,6 +663,16 @@ function teFetchQ(ep, qs, opts){
   });
 
   // Map helpers
+
+  function __pinColor(){
+    try{
+      var v = getComputedStyle(document.documentElement).getPropertyValue('--pin-color') || getComputedStyle(document.documentElement).getPropertyValue('--theme-pin-color');
+      v = (v||'').trim();
+      if (!v) return '#4CC9F0';
+      return v;
+    }catch(e){ return '#4CC9F0'; }
+  }
+
   function ensureMap(){
     if (map) return map;
     map = L.map('map', {zoomControl:true});
@@ -795,11 +857,34 @@ function render(rows){
     cluster.clearLayers();
     var size = Math.max(6, Math.min(24, parseInt((cfg.marker_size||12),10)));
     var count=0;
+    var pinColor = __pinColor();
     rows.forEach(function(row){
       var la=parseFloat(row.lat), lo=parseFloat(row.lon);
       if(!isFinite(la)||!isFinite(lo)) return;
-      var icon=L.divIcon({className:'te-pin', iconSize:[size,size]});
-      L.marker([la,lo],{icon:icon}).bindPopup(popupHtml(row)).addTo(cluster);
+      if ((cfg.marker_style||'dot') === 'marker') {
+        var h = Math.round(size * 1.4);
+        var svg = `
+  <svg width="${size}" height="${h}" viewBox="0 0 24 34" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="pinGlow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="2.2" result="blur"/>
+        <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0   0 0 0 0 0.6   0 0 0 0 0.3   0 0 0 0.6 0" result="colored"/>
+        <feMerge>
+          <feMergeNode in="colored"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+    <path d="M12 1c6 0 11 4.7 11 10.5 0 6.2-8.8 20-10.5 20.4C11.1 32.2 1 17.4 1 11.5 1 5.7 6 1 12 1z"
+          fill="${pinColor}" stroke="rgba(0,0,0,0.55)" stroke-width="2" filter="url(#pinGlow)" />
+    <circle cx="12" cy="11" r="3" fill="rgba(255,255,255,0.7)"/>
+  </svg>`;
+        var icon = L.divIcon({ className: 'te-pin-svg', html: svg, iconSize: [size, h], iconAnchor: [Math.round(size/2), h], popupAnchor: [0, -Math.round(size*0.7)] });
+        L.marker([la,lo], {icon: icon}).bindPopup(popupHtml(row)).addTo(cluster);
+      } else {
+        var cm = L.circleMarker([la,lo], { radius: Math.max(3, Math.round(size/2)), color: 'rgba(0,0,0,0.55)', weight: 2, fillColor: __pinColor(), fillOpacity: 0.95 });
+        cm.bindPopup(popupHtml(row)).addTo(cluster);
+      }
       count++;
     });
     if(count && cfg.auto_fit){
@@ -893,3 +978,4 @@ function render(rows){
   };
 })();
 </script>
+<script type="module" src="<?php echo $__base; ?>/assets/js/detect-env.js"></script>

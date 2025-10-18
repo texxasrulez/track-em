@@ -20,7 +20,7 @@ $API  = ($BASE === '' ? '' : $BASE) . '/index.php?p=';
       <input type="hidden" name="section" value="dashboard">
             <input type="hidden" name="csrf" value="<?= Security::csrfToken() ?>"/>
 <label>Default row limit (Recent/Geo):
-        <input type="number" min="10" max="10000" step="10" name="dash_row_limit"
+        <input type="number" style="width:95%" min="10" max="10000" step="10" name="dash_row_limit"
                value="<?= (int)($cfg['dashboard']['row_limit'] ?? 200) ?>">
       </label>
       <label><input type="checkbox" name="dash_show_icons" value="1"
