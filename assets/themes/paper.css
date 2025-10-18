@@ -11,6 +11,26 @@
     --theme-pin-color: #8b5cf6;
 	--pin-color: var(--theme-pin-color);
 	--icon-color: #0f172a;
+	--btn-text: #000;
+	
+	--badge-muted: #a1d99b;
+	--badge-sub: #006d2c;
+	--badge-border: #006d2c;
+    
+	--te-surface: var(--bg);
+	--te-surface-hover: var(--accent2);
+	--te-border: var(--border);
+	--te-text: var(--text);
+	
+	--te-primary-bg: var(--panel);
+    --te-primary-border: var(--border);
+    --te-primary-text: var(--text);
+    --te-primary-hover: #a6a6a6;
+    
+	--te-danger-bg: #ff9999;
+    --te-danger-border: #b31b1b;
+    --te-danger-text: #b31b1b;
+    --te-danger-hover: #ff4040;
 }
 html,
 body {
@@ -53,9 +73,9 @@ thead th {
     color: var(--text);
 }
 .badge {
-    background: var(--muted);
-    color: var(--sub);
-    border: 1px solid var(--border);
+    background: var(--badge-muted);
+    color: var(--badge-sub);
+    border: 1px solid var(--badge-border);
 }
 .tooltip {
     background: #1b1b18;

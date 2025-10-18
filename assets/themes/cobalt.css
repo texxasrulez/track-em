@@ -1,21 +1,21 @@
-/* Track Em Theme: Light */
+/* Track Em Theme: Cobalt */
 :root {
-    --bg: #f8fafc;
-    --panel: #ffffff;
-    --muted: #f1f5f9;
-    --text: #0f172a;
-    --sub: #334155;
-    --accent: #2563eb;
-    --accent2: #0ea5e9;
-    --border: #e2e8f0;
-    --theme-pin-color: #2563eb;
+    --bg: #0f172a; /* deep cobalt base */
+    --panel: #1e293b; /* darker panel */
+    --muted: #334155; /* soft muted slate */
+    --text: #e2e8f0; /* light gray text */
+    --sub: #60a5fa; /* lighter blue for subtext */
+    --accent: #3b82f6; /* vivid cobalt blue */
+    --accent2: #1d4ed8; /* strong blue hover */
+    --border: #475569; /* medium slate border */
+    --theme-pin-color: #60a5fa; /* cobalt accent pin */
 	--pin-color: var(--theme-pin-color);
-	--icon-color: #e8e8e8;
-	--btn-text: #000;
+	--icon-color: #93c5fd;
+	--btn-text: #ffffff;
 	
-	--badge-muted: #a1d99b;
-	--badge-sub: #006d2c;
-	--badge-border: #006d2c;
+	--badge-muted: #1e40af; /* darker cobalt badge */
+	--badge-sub: #93c5fd; /* light blue badge text */
+	--badge-border: #2563eb; /* cobalt border */
     
 	--te-surface: var(--bg);
 	--te-surface-hover: var(--accent2);
@@ -25,13 +25,14 @@
 	--te-primary-bg: var(--panel);
     --te-primary-border: var(--border);
     --te-primary-text: var(--text);
-    --te-primary-hover: #a6a6a6;
+    --te-primary-hover: var(--accent2);
     
-	--te-danger-bg: #ff9999;
-    --te-danger-border: #b31b1b;
-    --te-danger-text: #b31b1b;
-    --te-danger-hover: #ff4040;
+	--te-danger-bg: #ef4444;
+    --te-danger-border: #b91c1c;
+    --te-danger-text: #fca5a5;
+    --te-danger-hover: #dc2626;
 }
+
 html,
 body {
     background: var(--bg);
@@ -48,13 +49,13 @@ a {
     background: var(--panel);
     border: 1px solid var(--border);
     border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(2, 6, 23, 0.05);
+    box-shadow: 0 8px 24px rgba(2, 6, 23, 0.3);
 }
 input,
 select,
 button {
-    background: #fff;
-    color: #0f172a;
+    background: #1e293b;
+    color: #e2e8f0;
     border: 1px solid var(--border);
 }
 table {
@@ -78,7 +79,7 @@ thead th {
     border: 1px solid var(--badge-border);
 }
 .tooltip {
-    background: #0f172a;
-    color: #f8fafc;
-    border: 1px solid #0b1220;
+    background: #1e3a8a !important;
+    color: #f1f5f9 !important;
+    border: 1px solid #60a5fa !important;
 }

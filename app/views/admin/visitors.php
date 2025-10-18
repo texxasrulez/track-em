@@ -115,7 +115,8 @@ if ($__base === '/') $__base = '';
         var line = ((r.ip||'')+' '+(r.path||'')+' '+(r.country||'')+' '+(r.city||'')+' '+ua.browser+' '+ua.os).toLowerCase();
         if (qv && line.indexOf(qv)===-1) continue;
         out += '<tr>'+
-               '<td>'+(<?php if($__show_icons): ?>'<img class="ua-icon" src="<?php echo $__base; ?>/assets/icons/ip.svg" width="14" height="14" alt="ip"> '+<?php endif; ?>(r.ip||''))+'</td>'+
+         out += '<tr>'+
+               '<td>'+(<?php if($__show_icons): ?>'<img class=\'ua-icon\' src=\''+BASE+\'\' width=\'14\' height=\'14\' alt=\'ip\'> '+<?php endif; ?>+"<span class=\'has-tip\' data-tip=\'"+(r.ip||'')+(r.city?(' • '+r.city):'')+(r.country?(', '+r.country):'')+"\'>"+(r.ip||'')+"</span>")+'</td>'+
                '<td style="max-width:420px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+(r.path||'')+'">'+(r.path||'')+'</td>'+
                '<td>'+fmtTime(r.ts||0)+'</td>'+
                '<td>'+iconHTML(ua.bkey,ua.browser)+'</td>'+
@@ -160,5 +161,56 @@ if ($__base === '/') $__base = '';
       mo.observe(target, {childList:true, subtree:true});
     }
   } catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var tipEl = null;
+  function showTip(e){
+    var t = e.currentTarget.getAttribute('data-tip') || '';
+    if(!t) return;
+    hideTip();
+    tipEl = document.createElement('div');
+    tipEl.className = 'tooltip';
+    tipEl.textContent = t;
+    document.body.appendChild(tipEl);
+    position(e);
+  }
+  function position(e){
+    if(!tipEl) return;
+    var x = (e.clientX || 0) + 12;
+    var y = (e.clientY || 0) + 12;
+    var maxX = window.innerWidth - tipEl.offsetWidth - 8;
+    var maxY = window.innerHeight - tipEl.offsetHeight - 8;
+    if (x > maxX) x = maxX;
+    if (y > maxY) y = maxY;
+    tipEl.style.left = x + 'px';
+    tipEl.style.top = y + 'px';
+  }
+  function hideTip(){
+    if(tipEl && tipEl.parentNode){ tipEl.parentNode.removeChild(tipEl); }
+    tipEl = null;
+  }
+  function bind(container){
+    container = container || document;
+    var els = container.querySelectorAll('[data-tip]');
+    els.forEach(function(el){
+      el.addEventListener('mouseenter', showTip);
+      el.addEventListener('mousemove', position);
+      el.addEventListener('mouseleave', hideTip);
+      if (el.hasAttribute('title')) el.setAttribute('data-tip', el.getAttribute('title')), el.removeAttribute('title');
+    });
+  }
+  bind();
+  if (window.MutationObserver){
+    var target = document.querySelector('#vis-table tbody') || document.body;
+    var mo = new MutationObserver(function(muts){
+      muts.forEach(function(m){
+        (m.addedNodes||[]).forEach(function(n){ if(n.nodeType===1) bind(n); });
+      });
+    });
+    mo.observe(target, {childList:true, subtree:true});
+  }
+  window.addEventListener('scroll', function(){ if(tipEl) hideTip(); }, {passive:true});
 })();
 </script>

@@ -1,36 +1,37 @@
-/* Track Em Theme: Pastel */
+
+/* Track Em Theme: CobaltNightHighGlow */
 :root {
-    --bg: #f7f7ff;
-    --panel: #ffffff;
-    --muted: #f1f0ff;
-    --text: #16161a;
-    --sub: #555770;
-    --accent: #cf224d;
-    --accent2: #94b3fd;
-    --border: #e7e7ff;
-    --theme-pin-color: #cf224d;
+    --bg: #050811;
+    --panel: #0a0f1e;
+    --muted: #1e293b;
+    --text: #e0f2fe;
+    --sub: #60a5fa;
+    --accent: #3b82f6;
+    --accent2: #60a5fa;
+    --border: #1e3a8a;
+    --theme-pin-color: #60a5fa;
 	--pin-color: var(--theme-pin-color);
-	--icon-color: #0f172a;
-	--btn-text: #fff;
-	
-	--badge-muted: #a1d99b;
-	--badge-sub: #006d2c;
-	--badge-border: #006d2c;
-    
+	--icon-color: #93c5fd;
+	--btn-text: #ffffff;
+
+	--badge-muted: #1e40af;
+	--badge-sub: #93c5fd;
+	--badge-border: #2563eb;
+
 	--te-surface: var(--bg);
 	--te-surface-hover: var(--accent2);
 	--te-border: var(--border);
 	--te-text: var(--text);
-	
+
 	--te-primary-bg: var(--panel);
     --te-primary-border: var(--border);
     --te-primary-text: var(--text);
-    --te-primary-hover: #a6a6a6;
-    
-	--te-danger-bg: #ff9999;
-    --te-danger-border: #b31b1b;
-    --te-danger-text: #b31b1b;
-    --te-danger-hover: #ff4040;
+    --te-primary-hover: var(--accent2);
+
+	--te-danger-bg: #991b1b;
+    --te-danger-border: #ef4444;
+    --te-danger-text: #fee2e2;
+    --te-danger-hover: #b91c1c;
 }
 html,
 body {
@@ -39,6 +40,10 @@ body {
 }
 a {
     color: var(--accent);
+    transition: color 0.2s ease-in-out;
+}
+a:hover {
+    color: var(--accent2);
 }
 .topbar {
     background: var(--panel);
@@ -47,15 +52,21 @@ a {
 .card {
     background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(86, 86, 120, 0.06);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(30, 64, 175, 0.4);
 }
 input,
 select,
 button {
-    background: #fff;
-    color: #16161a;
+    background: #1e293b;
+    color: #e0f2fe;
     border: 1px solid var(--border);
+}
+input:focus,
+select:focus,
+button:hover {
+    border-color: var(--accent);
+    outline: none;
 }
 table {
     border-collapse: separate;
@@ -78,7 +89,7 @@ thead th {
     border: 1px solid var(--badge-border);
 }
 .tooltip {
-    background: #16161a;
-    color: #ffffff;
-    border: 1px solid #0002;
+    background: #0a1123 !important;
+    color: #dbeafe !important;
+    border: 1px solid #60a5fa !important;
 }

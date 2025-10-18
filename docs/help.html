@@ -10,7 +10,7 @@
     --bg: transparent;
     --link: #0b5ee8;
     --muted: #334155;
-    --code-bg: #f4f6fb;
+    --code-bg: #000;
 }
   html, body { margin:0; padding: 14px 16px; color: var(--fg); background: var(--bg); font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif; }
   h1, h2, h3 { margin: 0 0 .5rem; line-height: 1.2; }
@@ -47,7 +47,7 @@
   --help-fg: #0f172a;
   --help-link: #0b5ee8;
   --help-muted: #334155;
-  --help-code-bg: #f4f6fb;
+  --help-code-bg: #dddddd;
   --help-code-fg: #0f172a;
   --help-code-br: #e5e7eb;
   --help-btn-bg: #eef2ff;
@@ -56,8 +56,8 @@
   --help-btn-bg-hover: #e0e7ff;
 }
 html, body {
-  background: var(--help-bg) !important;
-  color: var(--help-fg) !important;
+  background: #d6d6d6 !important;
+  color: var(--text) !important;
 }
 a { color: var(--help-link); }
 .muted { color: var(--help-muted); }
@@ -76,7 +76,7 @@ pre { padding: .75rem .9rem; overflow: auto; }
   position: absolute;
   right: 12px;
   top: 8px;
-  background: var(--help-btn-bg);
+  background: var(--accent);
   border: 1px solid var(--help-btn-br);
   color: var(--help-btn-fg);
   border-radius: 4px;
@@ -90,9 +90,9 @@ pre { padding: .75rem .9rem; overflow: auto; }
 /* Force-override inline Copy button styles */
 button[style*="background: rgba(255, 255, 255"], 
 button[style*="color: rgb(255, 255, 255"] {
-  background: #111 !important;
-  color: #f5f5f5 !important;
-  border-color: #000 !important;
+  background: var(--panel) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
 }
 button[style*="background: rgba(255, 255, 255"]:hover {
   filter: brightness(1.1);

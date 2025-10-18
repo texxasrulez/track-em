@@ -1,0 +1,96 @@
+/* Track Em Theme: Matrix Classic */
+:root {
+    --bg: #000000; /* pure black */
+    --panel: #0a0a0a; /* slightly lifted for panels */
+    --muted: #111111; /* near-black muted zone */
+    --text: #00ff00; /* phosphor green text */
+    --sub: #00cc66; /* softer subtext green */
+    --accent: #00ff99; /* neon green accent */
+    --accent2: #00cc44; /* hover neon green */
+    --border: #003300; /* deep matrix border green */
+    --theme-pin-color: #00ff66;
+	--pin-color: var(--theme-pin-color);
+	--icon-color: #33ff99;
+	--btn-text: #000000;
+	
+	--badge-muted: #003300;
+	--badge-sub: #00ff66;
+	--badge-border: #00ff99;
+    
+	--te-surface: var(--bg);
+	--te-surface-hover: var(--accent2);
+	--te-border: var(--border);
+	--te-text: var(--text);
+	
+	--te-primary-bg: var(--panel);
+    --te-primary-border: var(--border);
+    --te-primary-text: var(--text);
+    --te-primary-hover: var(--accent2);
+    
+	--te-danger-bg: #330000;
+    --te-danger-border: #ff0000;
+    --te-danger-text: #ff6666;
+    --te-danger-hover: #cc0000;
+}
+html,
+body {
+    background: var(--bg);
+    color: var(--text);
+}
+a {
+    color: var(--accent);
+    transition: color 0.2s ease-in-out;
+}
+a:hover {
+    color: var(--accent2);
+}
+.topbar {
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+}
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0, 255, 100, 0.15);
+}
+input,
+select,
+button {
+    background: #001900;
+    color: #00ff66;
+    border: 1px solid var(--border);
+}
+input:focus,
+select:focus,
+button:hover {
+    border-color: var(--accent);
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 255, 80, 0.5);
+}
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+th,
+td {
+    border-bottom: 1px solid var(--border);
+}
+thead th {
+    background: var(--muted);
+    color: var(--accent);
+}
+.badge {
+    background: var(--badge-muted);
+    color: var(--badge-sub);
+    border: 1px solid var(--badge-border);
+}
+.tooltip {
+    background: #001900 !important;
+    color: #00ff99 !important;
+    border: 1px solid #00ff66 !important;
+    box-shadow: 0 0 10px rgba(0, 255, 100, 0.3);
+}

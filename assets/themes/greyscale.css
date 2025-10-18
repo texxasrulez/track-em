@@ -1,16 +1,16 @@
-/* Track Em Theme: Pastel */
+/* Track Em Theme: Greyscale */
 :root {
-    --bg: #f7f7ff;
-    --panel: #ffffff;
-    --muted: #f1f0ff;
-    --text: #16161a;
-    --sub: #555770;
-    --accent: #cf224d;
-    --accent2: #94b3fd;
-    --border: #e7e7ff;
-    --theme-pin-color: #cf224d;
+    --bg: #dddddd;
+    --panel: #d6d6d6;
+    --muted: #cccccc;
+    --text: #000000;
+    --sub: #334155;
+    --accent: #333333;
+    --accent2: #bbbbbb;
+    --border: #666666;
+    --theme-pin-color: #999999;
 	--pin-color: var(--theme-pin-color);
-	--icon-color: #0f172a;
+	--icon-color: #e8e8e8;
 	--btn-text: #fff;
 	
 	--badge-muted: #a1d99b;
@@ -25,7 +25,7 @@
 	--te-primary-bg: var(--panel);
     --te-primary-border: var(--border);
     --te-primary-text: var(--text);
-    --te-primary-hover: #a6a6a6;
+    --te-primary-hover: var(--accent2);
     
 	--te-danger-bg: #ff9999;
     --te-danger-border: #b31b1b;
@@ -47,14 +47,14 @@ a {
 .card {
     background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(86, 86, 120, 0.06);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(2, 6, 23, 0.05);
 }
 input,
 select,
 button {
     background: #fff;
-    color: #16161a;
+    color: #0f172a;
     border: 1px solid var(--border);
 }
 table {
@@ -78,7 +78,7 @@ thead th {
     border: 1px solid var(--badge-border);
 }
 .tooltip {
-    background: #16161a;
-    color: #ffffff;
-    border: 1px solid #0002;
+    background: #333333 !important;
+    color: #eeeeee !important;
+    border: 1px solid #000000 !important;
 }

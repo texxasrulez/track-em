@@ -1,3 +1,5 @@
+-- Track Em schema (MySQL 8.0+ recommended, MariaDB >=10.3 ok)
+
 CREATE TABLE IF NOT EXISTS users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(64) NOT NULL UNIQUE,
@@ -8,18 +10,12 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS visits (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  ip VARCHAR(45) NOT NULL,
+  ip VARCHAR(45) NOT NULL,            -- IPv4/IPv6 string, optionally masked
   user_agent VARCHAR(512) NOT NULL,
   referrer VARCHAR(512) NULL,
   path VARCHAR(512) NOT NULL,
   ts INT NOT NULL,
-  meta JSON NULL,
-  lat DECIMAL(9,6) NULL,
-  lon DECIMAL(9,6) NULL,
-  city VARCHAR(64) NULL,
-  country VARCHAR(64) NULL,
-  INDEX idx_visits_ts (ts),
-  INDEX idx_visits_ip (ip)
+  meta JSON NULL
 );
 
 CREATE TABLE IF NOT EXISTS settings (
@@ -33,6 +29,7 @@ CREATE TABLE IF NOT EXISTS plugins (
   config JSON NULL
 );
 
+-- NEW: lightweight geolocation cache for map rendering
 CREATE TABLE IF NOT EXISTS geo_cache (
   ip VARCHAR(45) PRIMARY KEY,
   lat DECIMAL(9,6) NULL,
@@ -42,6 +39,9 @@ CREATE TABLE IF NOT EXISTS geo_cache (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+
+-- Extend visits with optional geolocation columns
+-- IF NOT EXISTS is supported in MySQL 8.0.29+; harmless if older (installer runs idempotent)
 ALTER TABLE visits ADD COLUMN IF NOT EXISTS lat DECIMAL(9,6) NULL;
 ALTER TABLE visits ADD COLUMN IF NOT EXISTS lon DECIMAL(9,6) NULL;
 ALTER TABLE visits ADD COLUMN IF NOT EXISTS city VARCHAR(64) NULL;

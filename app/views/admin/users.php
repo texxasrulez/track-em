@@ -3,6 +3,7 @@
   .form input[type="text"],
   .form input[type="password"],
   .form select {
+    background-color: var(--bg);
     width: 180px;         /* Adjust this to your liking */
     display: inline-block;
     margin-right: 6px;
@@ -11,6 +12,7 @@
   .form-inline input[type="text"],
   .form-inline input[type="password"],
   .form-inline select {
+    background-color: var(--bg);
     width: 140px;
   }
 
@@ -38,8 +40,8 @@
   <h3>Users</h3>
 
   <form class="form form-row" method="POST" action="?p=admin.users" style="margin-bottom:12px">
-        <input type="hidden" name="csrf" value="<?= Security::csrfToken() ?>"/>
-<input type="hidden" name="action" value="create"/>
+	<input type="hidden" name="csrf" value="<?= Security::csrfToken() ?>"/>
+	<input type="hidden" name="action" value="create"/>
     <input type="text" name="username" placeholder="Username" required />
     <select name="role">
       <option value="admin">admin</option>
@@ -59,8 +61,8 @@
         <td><?= (int)$u['id'] ?></td>
         <td>
           <form method="POST" action="?p=admin.users" class="form form-inline">
-                <input type="hidden" name="csrf" value="<?= Security::csrfToken() ?>"/>
-<input type="hidden" name="action" value="update"/>
+            <input type="hidden" name="csrf" value="<?= Security::csrfToken() ?>"/>
+			<input type="hidden" name="action" value="update"/>
             <input type="hidden" name="id" value="<?= (int)$u['id'] ?>"/>
             <input type="text" name="username" value="<?= htmlspecialchars($u['username']) ?>" required />
             <select name="role">
@@ -75,8 +77,8 @@
         <td><?= htmlspecialchars($u['created_at']) ?></td>
         <td>
           <form method="POST" action="?p=admin.users" onsubmit="return confirm('Delete user <?= htmlspecialchars($u['username']) ?>
-    <input type="hidden" name="csrf" value="<?= Security::csrfToken() ?>"/>
-    <input type="hidden" name="csrf" value="<?= Security::csrfToken() ?>"/>
+			<input type="hidden" name="csrf" value="<?= Security::csrfToken() ?>"/>
+			<input type="hidden" name="csrf" value="<?= Security::csrfToken() ?>"/>
             <input type="hidden" name="action" value="delete"/>
             <input type="hidden" name="id" value="<?= (int)$u['id'] ?>"/>
             <button type="submit" class="button danger">Delete</button>

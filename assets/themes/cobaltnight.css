@@ -1,0 +1,96 @@
+/* Track Em Theme: Cobalt Night */
+:root {
+    --bg: #0a0f1e; /* almost black with a hint of cobalt */
+    --panel: #111827; /* dark navy panel */
+    --muted: #1e293b; /* dimmed slate */
+    --text: #e5e7eb; /* soft light gray for eyes at night */
+    --sub: #60a5fa; /* gentle blue subtext */
+    --accent: #2563eb; /* bright cobalt core */
+    --accent2: #1d4ed8; /* intense hover blue */
+    --border: #374151; /* muted border slate */
+    --theme-pin-color: #3b82f6; /* electric blue pin */
+	--pin-color: var(--theme-pin-color);
+	--icon-color: #93c5fd; /* cool icon glow */
+	--btn-text: #f8fafc; /* near white text */
+	
+	--badge-muted: #1e3a8a; /* deep cobalt badge */
+	--badge-sub: #93c5fd; /* pale blue text */
+	--badge-border: #3b82f6; /* cobalt outline */
+    
+	--te-surface: var(--bg);
+	--te-surface-hover: var(--accent2);
+	--te-border: var(--border);
+	--te-text: var(--text);
+	
+	--te-primary-bg: var(--panel);
+    --te-primary-border: var(--border);
+    --te-primary-text: var(--text);
+    --te-primary-hover: var(--accent2);
+    
+	--te-danger-bg: #7f1d1d;
+    --te-danger-border: #dc2626;
+    --te-danger-text: #fca5a5;
+    --te-danger-hover: #991b1b;
+}
+
+html,
+body {
+    background: var(--bg);
+    color: var(--text);
+}
+a {
+    color: var(--accent);
+    transition: color 0.2s ease-in-out;
+}
+a:hover {
+    color: var(--accent2);
+}
+.topbar {
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+}
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+input,
+select,
+button {
+    background: #1e293b;
+    color: #f1f5f9;
+    border: 1px solid var(--border);
+}
+input:focus,
+select:focus,
+button:hover {
+    border-color: var(--accent);
+    outline: none;
+}
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+th,
+td {
+    border-bottom: 1px solid var(--border);
+}
+thead th {
+    background: var(--muted);
+    color: var(--text);
+}
+.badge {
+    background: var(--badge-muted);
+    color: var(--badge-sub);
+    border: 1px solid var(--badge-border);
+}
+.tooltip {
+    background: #0f172a !important;
+    color: #e0f2fe !important;
+    border: 1px solid #3b82f6 !important;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}

@@ -10,6 +10,7 @@ function h($s){ return htmlspecialchars((string)$s, ENT_QUOTES); }
   .form input[type="text"],
   .form input[type="password"],
   .form select {
+    background-color: var(--bg);
     width: 180px;         /* Adjust this to your liking */
     display: inline-block;
     margin-right: 6px;
@@ -18,6 +19,7 @@ function h($s){ return htmlspecialchars((string)$s, ENT_QUOTES); }
   .form-inline input[type="text"],
   .form-inline input[type="password"],
   .form-inline select {
+    background-color: var(--bg);
     width: 140px;
   }
 
@@ -98,7 +100,7 @@ function h($s){ return htmlspecialchars((string)$s, ENT_QUOTES); }
 
     var actions = '<div class="actions actions-right">' +
       (enabled
-        ? '<button class="button" data-act="disable" data-key="'+k+'">Disable</button>'
+        ? '<button class="button btn" data-act="disable" data-key="'+k+'">Disable</button>'
         : '<button class="button btn" data-act="enable" data-key="'+k+'">Enable</button>') +
       ' <button class="button danger" data-act="remove" data-key="'+k+'">Remove</button>' +
       '</div>';

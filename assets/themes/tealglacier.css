@@ -1,36 +1,37 @@
-/* Track Em Theme: Pastel */
+
+/* Track Em Theme: TealGlacier */
 :root {
-    --bg: #f7f7ff;
-    --panel: #ffffff;
-    --muted: #f1f0ff;
-    --text: #16161a;
-    --sub: #555770;
-    --accent: #cf224d;
-    --accent2: #94b3fd;
-    --border: #e7e7ff;
-    --theme-pin-color: #cf224d;
+    --bg: #061015;
+    --panel: #0d1b22;
+    --muted: #12232b;
+    --text: #cffafe;
+    --sub: #67e8f9;
+    --accent: #06b6d4;
+    --accent2: #0891b2;
+    --border: #1c3a45;
+    --theme-pin-color: #22d3ee;
 	--pin-color: var(--theme-pin-color);
-	--icon-color: #0f172a;
-	--btn-text: #fff;
-	
-	--badge-muted: #a1d99b;
-	--badge-sub: #006d2c;
-	--badge-border: #006d2c;
-    
+	--icon-color: #a5f3fc;
+	--btn-text: #ecfeff;
+
+	--badge-muted: #083344;
+	--badge-sub: #a5f3fc;
+	--badge-border: #06b6d4;
+
 	--te-surface: var(--bg);
 	--te-surface-hover: var(--accent2);
 	--te-border: var(--border);
 	--te-text: var(--text);
-	
+
 	--te-primary-bg: var(--panel);
     --te-primary-border: var(--border);
     --te-primary-text: var(--text);
-    --te-primary-hover: #a6a6a6;
-    
-	--te-danger-bg: #ff9999;
-    --te-danger-border: #b31b1b;
-    --te-danger-text: #b31b1b;
-    --te-danger-hover: #ff4040;
+    --te-primary-hover: var(--accent2);
+
+	--te-danger-bg: #7f1d1d;
+    --te-danger-border: #dc2626;
+    --te-danger-text: #fecaca;
+    --te-danger-hover: #991b1b;
 }
 html,
 body {
@@ -39,6 +40,10 @@ body {
 }
 a {
     color: var(--accent);
+    transition: color 0.2s ease-in-out;
+}
+a:hover {
+    color: var(--accent2);
 }
 .topbar {
     background: var(--panel);
@@ -47,15 +52,21 @@ a {
 .card {
     background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(86, 86, 120, 0.06);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 input,
 select,
 button {
-    background: #fff;
-    color: #16161a;
+    background: #12232b;
+    color: #cffafe;
     border: 1px solid var(--border);
+}
+input:focus,
+select:focus,
+button:hover {
+    border-color: var(--accent);
+    outline: none;
 }
 table {
     border-collapse: separate;
@@ -78,7 +89,7 @@ thead th {
     border: 1px solid var(--badge-border);
 }
 .tooltip {
-    background: #16161a;
-    color: #ffffff;
-    border: 1px solid #0002;
+    background: #0a2a33 !important;
+    color: #e0f2fe !important;
+    border: 1px solid #22d3ee !important;
 }

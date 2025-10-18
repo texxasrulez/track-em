@@ -1,23 +1,115 @@
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,Arial,Helvetica,sans-serif;background:#0b0e11;color:#e8e8e8}
-a{color:#9ed1ff;text-decoration:none;margin-right:12px}
-.topbar{display:flex;align-items:center;gap:16px;padding:12px 16px;background:#151a21;border-bottom:1px solid #1f2630}
-.topbar h1{font-size:18px;margin:0 12px 0 0;color:#e8e8e8}
-.topbar nav a.right{margin-left:auto}
-main{padding:16px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.card{background:#12161c;border:1px solid #1f2630;border-radius:12px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,.2)}
-.card.small{max-width:360px;margin:60px auto}
-.card h3{margin-top:0}
-label{display:block;margin:8px 0}
-input,select,button{width:100%;padding:8px 10px;border-radius:8px;border:1px solid #e5e7eb;background:#ffffff;color:#0f172a}
-button{cursor:pointer}
-table{width:100%;border-collapse:collapse}
-th,td{border-bottom:1px solid #1f2630;padding:8px;text-align:left}
-.code{background:#0f1318;padding:12px;border-radius:8px;overflow:auto}
-.themes,.plugins{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
-.theme-tile,.plugin-tile{border:1px solid #1f2630;border-radius:10px;padding:12px;background:#0f1318}
-.error{background:#3b1114;color:#ffb4b9;border:1px solid #622027;padding:8px;border-radius:8px}
-.success{background:#113b1e;color:#b9ffcc;border:1px solid #1f5f2f;padding:8px;border-radius:8px}
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: system-ui, Arial, Helvetica, sans-serif;
+    background: #0b0e11;
+    color: #e8e8e8;
+}
+a {
+    color: #9ed1ff;
+    text-decoration: none;
+    margin-right: 12px;
+}
+.topbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    background: #151a21;
+    border-bottom: 1px solid #1f2630;
+}
+.topbar h1 {
+    font-size: 18px;
+    margin: 0 12px 0 0;
+    color: #e8e8e8;
+}
+.topbar nav a.right {
+    margin-left: auto;
+}
+main {
+    padding: 16px;
+}
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+.card {
+    background: #12161c;
+    border: 1px solid #1f2630;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+.card.small {
+    max-width: 360px;
+    margin: 60px auto;
+}
+.card h3 {
+    margin-top: 0;
+}
+label {
+    display: block;
+    margin: 8px 0;
+}
+input,
+select,
+button {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: #0f172a;
+}
+button {
+    cursor: pointer;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th,
+td {
+    border-bottom: 1px solid #1f2630;
+    padding: 8px;
+    text-align: left;
+}
+.code {
+    background: #0f1318;
+    padding: 12px;
+    border-radius: 8px;
+    overflow: auto;
+}
+.themes,
+.plugins {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+}
+.theme-tile,
+.plugin-tile {
+    border: 1px solid #1f2630;
+    border-radius: 10px;
+    padding: 12px;
+    background: #0f1318;
+}
+.error {
+    background: #3b1114;
+    color: #ffb4b9;
+    border: 1px solid #622027;
+    padding: 8px;
+    border-radius: 8px;
+}
+.success {
+    background: #113b1e;
+    color: #b9ffcc;
+    border: 1px solid #1f5f2f;
+    padding: 8px;
+    border-radius: 8px;
+}
 
 /* ==== Themes page scoped fixes (do not affect rest of app) ==== */
 .theme-grid{
@@ -78,8 +170,8 @@ th,td{border-bottom:1px solid #1f2630;padding:8px;text-align:left}
 }
 .theme-card .btn--primary{
   background:linear-gradient(180deg,var(--accent),rgba(0,0,0,0)) !important;
-  border-color:var(--accent) !important;
-  color:#0b0f14 !important;
+  border-color:var(--border) !important;
+  color: var(--btn-text) !important;
 }
 
 /* Don’t let generic form styles turn nested controls full-width */
@@ -109,11 +201,26 @@ th,td{border-bottom:1px solid #1f2630;padding:8px;text-align:left}
   box-sizing: border-box;
   transition: transform .02s ease-in-out, filter .12s ease-in-out;
 }
-.btn:hover, .button:hover { filter: brightness(1.06); }
-.btn:active, .button:active { transform: translateY(1px); }
-.btn--primary { background: linear-gradient(180deg, var(--accent), rgba(0,0,0,0)); border-color: var(--accent); color: #0b0f14; }
-.btn--ghost   { background: transparent; }
-.btn--block   { display: flex; width: 100%; }
+.btn:hover,
+.button:hover {
+    filter: brightness(1.06);
+}
+.btn:active,
+.button:active {
+    transform: translateY(1px);
+}
+.btn--primary {
+    background: linear-gradient(180deg, var(--accent), rgba(0, 0, 0, 0));
+    border-color: var(--accent);
+    color: #0b0f14;
+}
+.btn--ghost {
+    background: transparent;
+}
+.btn--block {
+    display: flex;
+    width: 100%;
+}
 
 /* Form layout */
 .form { display: block; }
@@ -234,3 +341,23 @@ body[class*=" theme-"][class*="-dark"] .form-ctl textarea {
 @media (max-width: 720px){
   .card--settings{ padding: .75rem; }
 }
+
+
+/* Base tooltip layout; colors provided by active theme via .tooltip rules */
+.tooltip{
+  position: fixed;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.2;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(8px, 8px);
+  /* colors are set in theme files: background, color, border */
+}
+.has-tip{
+  cursor: help;
+  text-decoration: dotted underline 1px;
+  text-underline-offset: 2px;
+}
+

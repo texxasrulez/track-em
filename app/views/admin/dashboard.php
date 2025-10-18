@@ -1,5 +1,3 @@
-
-<?php /* Ensure analytics widgets render for admins even if consent cookie is missing */ ?>
 <script>
   (function(){
     try {
@@ -600,17 +598,16 @@ function render(rows){
       tbody.appendChild(tr);
     });
 
-    // ----- IP tooltip portal (restored) -----
     <?php if ($__ip_tooltips): ?>
     (function(){
       var portal = document.getElementById('ip-portal');
       if (!portal){
         portal = document.createElement('div');
         portal.id = 'ip-portal';
+        portal.className = 'tooltip';
         var s = portal.style;
         s.position='fixed'; s.zIndex='99999'; s.minWidth='220px'; s.maxWidth='360px';
-        s.padding='8px 10px'; s.borderRadius='8px'; s.background='rgba(13,22,35,0.98)'; s.color='#eaf2ff';
-        s.border='1px solid #1e2a3c'; s.boxShadow='0 8px 24px rgba(0,0,0,.35)';
+        s.padding='8px 10px'; s.borderRadius='8px';
         s.fontSize='12px'; s.lineHeight='1.3'; s.display='none'; s.pointerEvents='none';
         document.body.appendChild(portal);
       }

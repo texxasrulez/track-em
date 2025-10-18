@@ -6,6 +6,35 @@ $lockPath  = __DIR__ . '/config/.installed.lock';
 $schemaPath= __DIR__ . '/sql/schema.sql';
 $pluginsDir= __DIR__ . '/plugins';
 
+
+/**
+ * Split SQL into statements; removes -- and /* */ comments; ignores semicolons in strings.
+ */
+function split_sql(string $sql): array {
+  if (substr($sql, 0, 3) === "\xEF\xBB\xBF") $sql = substr($sql, 3);
+  $out = []; $cur = ''; $in = null; $len = strlen($sql);
+  for ($i=0;$i<$len;$i++) {
+    $ch = $sql[$i]; $nx = $i+1<$len ? $sql[$i+1] : '';
+    if ($in===null && $ch==='-' && $nx==='-') { while ($i<$len && $sql[$i] !== "\n") $i++; continue; }
+    if ($in===null && $ch==='#') { while ($i<$len && $sql[$i] !== "\n") $i++; continue; }
+    if ($in===null && $ch==='/' && $nx==='*') { $i+=2; while ($i+1<$len && !($sql[$i]=='*' && $sql[$i+1]=='/')) $i++; $i++; continue; }
+    if ($ch===\"'\" or $ch=='\"') {
+      if ($in===null) { $in=$ch; $cur.=$ch; continue; }
+      if ($in===$ch) {
+        $prev = $i>0 ? $sql[$i-1] : '';
+        $next = $i+1<$len ? $sql[$i+1] : '';
+        if ($ch===\"'\" && $next===\"'\") { $cur.=$ch.$next; $i++; continue; }
+        if ($prev=='\\') { $cur.=$ch; continue; }
+        $in=null; $cur.=$ch; continue;
+      }
+      $cur.=$ch; continue;
+    }
+    if ($in===null && $ch===';') { $stmt=trim($cur); if ($stmt!=='') $out[] =($stmt); $cur=''; continue; }
+    $cur.=$ch;
+  }
+  $stmt=trim($cur); if ($stmt!=='') $out[]=$stmt;
+  return $out;
+}
 function h($s){ return htmlspecialchars((string)$s, ENT_QUOTES); }
 
 /* --- session/CSRF (robust behind proxies) --- */
@@ -69,8 +98,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
 
       /* 1) Run extended schema (idempotent) */
       $sql = file_get_contents($schemaPath);
-      foreach (array_filter(array_map('trim', explode(";", $sql))) as $stmt) {
-        if ($stmt !== '') $pdo->exec($stmt);
+      foreach (split_sql($sql) as $stmt) {
+        $pdo->exec($stmt);
       }
 
       /* 2) Ensure admin user exists */
