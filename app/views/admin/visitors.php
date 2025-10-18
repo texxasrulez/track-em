@@ -48,6 +48,7 @@ if ($__base === '/') $__base = '';
     var b='Other', o='Other', bk='other', ok='other';
     if(/Edg\//i.test(ua)){b='Edge';bk='edge';}
     else if(/OPR\//i.test(ua)){b='Opera';bk='opera';}
+    else if(/Brave\\/|Brave/i.test(ua)){b='Brave';bk='brave';}
     else if(/Chrome\//i.test(ua)){b='Chrome';bk='chrome';}
     else if(/Firefox\//i.test(ua)){b='Firefox';bk='firefox';}
     else if(/Safari\//i.test(ua)){b='Safari';bk='safari';}

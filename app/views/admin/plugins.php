@@ -48,7 +48,7 @@ function h($s){ return htmlspecialchars((string)$s, ENT_QUOTES); }
   <p class="note">Manage plugins. Upload zips, enable/disable, or remove. Actions apply immediately.</p>
 
   <form id="plg-upload" class="form form-row" enctype="multipart/form-data" method="post" action="?p=api.plugins.install" style="margin-bottom:12px">
-    <input type="file" name="plugin_zip" accept=".zip" required class="ms-popup"/>
+    <input style="width:10vw" type="file" name="plugin_zip" accept=".zip" required class="ms-popup"/>
     <button type="submit" class="button btn">Upload &amp; Install</button>
   </form>
 
