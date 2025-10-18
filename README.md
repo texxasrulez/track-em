@@ -334,10 +334,3 @@ Apache usually works out of the box with `index.php?p=...` routing; you can add 
 - **Locales**: run `php cli/validate_locales.php`.
 
 ---
-
-## License
-
-See `LICENSE` if present. If absent, this copy is provided as‑is by the repository owner.
-
----
-
