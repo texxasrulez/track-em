@@ -26,11 +26,15 @@
     --te-primary-border: var(--border);
     --te-primary-text: var(--text);
     --te-primary-hover: #a6a6a6;
+
+	--te-danger-bg: #991b1b;
+    --te-danger-border: #ef4444;
+    --te-danger-text: #ffe4e6;
+    --te-danger-hover: #b91c1c;
     
-	--te-danger-bg: #ff9999;
-    --te-danger-border: #b31b1b;
-    --te-danger-text: #b31b1b;
-    --te-danger-hover: #ff4040;
+	--tt-bg: var(--bg);
+	--tt-text: var(--text);
+	--tt-border: var(--border);
 }
 html,
 body {
@@ -94,4 +98,10 @@ select {
     background: var(--badge-muted);
     color: var(--badge-sub);
     border: 1px solid var(--badge-border);
+}
+.tooltip {
+    background: var(--tt-bg) !important;
+    color: var(--tt-text) !important;
+    border: 1px solid var(--tt-border) !important;
+    box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
 }

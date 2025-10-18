@@ -1,13 +1,13 @@
 /* Track Em Theme: Matrix Classic */
 :root {
-    --bg: #000000; /* pure black */
-    --panel: #0a0a0a; /* slightly lifted for panels */
-    --muted: #111111; /* near-black muted zone */
-    --text: #00ff00; /* phosphor green text */
-    --sub: #00cc66; /* softer subtext green */
-    --accent: #00ff99; /* neon green accent */
-    --accent2: #00cc44; /* hover neon green */
-    --border: #003300; /* deep matrix border green */
+    --bg: #000000;
+    --panel: #0a0a0a;
+    --muted: #111111;
+    --text: #00ff00;
+    --sub: #00cc66;
+    --accent: #00ff99;
+    --accent2: #00cc44;
+    --border: #003300;
     --theme-pin-color: #00ff66;
 	--pin-color: var(--theme-pin-color);
 	--icon-color: #33ff99;
@@ -26,11 +26,15 @@
     --te-primary-border: var(--border);
     --te-primary-text: var(--text);
     --te-primary-hover: var(--accent2);
+
+	--te-danger-bg: #991b1b;
+    --te-danger-border: #ef4444;
+    --te-danger-text: #ffe4e6;
+    --te-danger-hover: #b91c1c;
     
-	--te-danger-bg: #330000;
-    --te-danger-border: #ff0000;
-    --te-danger-text: #ff6666;
-    --te-danger-hover: #cc0000;
+	--tt-bg: var(--bg);
+	--tt-text: var(--text);
+	--tt-border: var(--border);
 }
 html,
 body {
@@ -89,8 +93,8 @@ thead th {
     border: 1px solid var(--badge-border);
 }
 .tooltip {
-    background: #001900 !important;
-    color: #00ff99 !important;
-    border: 1px solid #00ff66 !important;
-    box-shadow: 0 0 10px rgba(0, 255, 100, 0.3);
+    background: var(--tt-bg) !important;
+    color: var(--tt-text) !important;
+    border: 1px solid var(--tt-border) !important;
+    box-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
 }

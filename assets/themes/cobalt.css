@@ -1,21 +1,21 @@
 /* Track Em Theme: Cobalt */
 :root {
-    --bg: #0f172a; /* deep cobalt base */
-    --panel: #1e293b; /* darker panel */
-    --muted: #334155; /* soft muted slate */
-    --text: #e2e8f0; /* light gray text */
-    --sub: #60a5fa; /* lighter blue for subtext */
-    --accent: #3b82f6; /* vivid cobalt blue */
-    --accent2: #1d4ed8; /* strong blue hover */
-    --border: #475569; /* medium slate border */
-    --theme-pin-color: #60a5fa; /* cobalt accent pin */
+    --bg: #0f172a;
+    --panel: #1e293b;
+    --muted: #334155;
+    --text: #e2e8f0;
+    --sub: #60a5fa;
+    --accent: #3b82f6;
+    --accent2: #1d4ed8;
+    --border: #475569;
+    --theme-pin-color: #60a5fa;
 	--pin-color: var(--theme-pin-color);
 	--icon-color: #93c5fd;
 	--btn-text: #ffffff;
 	
-	--badge-muted: #1e40af; /* darker cobalt badge */
-	--badge-sub: #93c5fd; /* light blue badge text */
-	--badge-border: #2563eb; /* cobalt border */
+	--badge-muted: #1e40af;
+	--badge-sub: #93c5fd; 
+	--badge-border: #2563eb;
     
 	--te-surface: var(--bg);
 	--te-surface-hover: var(--accent2);
@@ -26,11 +26,15 @@
     --te-primary-border: var(--border);
     --te-primary-text: var(--text);
     --te-primary-hover: var(--accent2);
+
+	--te-danger-bg: #991b1b;
+    --te-danger-border: #ef4444;
+    --te-danger-text: #ffe4e6;
+    --te-danger-hover: #b91c1c;
     
-	--te-danger-bg: #ef4444;
-    --te-danger-border: #b91c1c;
-    --te-danger-text: #fca5a5;
-    --te-danger-hover: #dc2626;
+	--tt-bg: var(--bg);
+	--tt-text: var(--text);
+	--tt-border: var(--border);
 }
 
 html,
@@ -79,7 +83,8 @@ thead th {
     border: 1px solid var(--badge-border);
 }
 .tooltip {
-    background: #1e3a8a !important;
-    color: #f1f5f9 !important;
-    border: 1px solid #60a5fa !important;
+    background: var(--tt-bg) !important;
+    color: var(--tt-text) !important;
+    border: 1px solid var(--tt-border) !important;
+    box-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
 }

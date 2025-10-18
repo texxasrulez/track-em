@@ -1,21 +1,21 @@
 /* Track Em Theme: Cobalt Night */
 :root {
-    --bg: #0a0f1e; /* almost black with a hint of cobalt */
-    --panel: #111827; /* dark navy panel */
-    --muted: #1e293b; /* dimmed slate */
-    --text: #e5e7eb; /* soft light gray for eyes at night */
-    --sub: #60a5fa; /* gentle blue subtext */
-    --accent: #2563eb; /* bright cobalt core */
-    --accent2: #1d4ed8; /* intense hover blue */
-    --border: #374151; /* muted border slate */
-    --theme-pin-color: #3b82f6; /* electric blue pin */
+    --bg: #0a0f1e;
+    --panel: #111827;
+    --muted: #1e293b;
+    --text: #e5e7eb;
+    --sub: #60a5fa;
+    --accent: #2563eb;
+    --accent2: #1d4ed8;
+    --border: #374151;
+    --theme-pin-color: #3b82f6;
 	--pin-color: var(--theme-pin-color);
-	--icon-color: #93c5fd; /* cool icon glow */
-	--btn-text: #f8fafc; /* near white text */
+	--icon-color: #93c5fd;
+	--btn-text: #f8fafc;
 	
-	--badge-muted: #1e3a8a; /* deep cobalt badge */
-	--badge-sub: #93c5fd; /* pale blue text */
-	--badge-border: #3b82f6; /* cobalt outline */
+	--badge-muted: #1e3a8a;
+	--badge-sub: #93c5fd;
+	--badge-border: #3b82f6;
     
 	--te-surface: var(--bg);
 	--te-surface-hover: var(--accent2);
@@ -26,11 +26,15 @@
     --te-primary-border: var(--border);
     --te-primary-text: var(--text);
     --te-primary-hover: var(--accent2);
+
+	--te-danger-bg: #991b1b;
+    --te-danger-border: #ef4444;
+    --te-danger-text: #ffe4e6;
+    --te-danger-hover: #b91c1c;
     
-	--te-danger-bg: #7f1d1d;
-    --te-danger-border: #dc2626;
-    --te-danger-text: #fca5a5;
-    --te-danger-hover: #991b1b;
+	--tt-bg: var(--bg);
+	--tt-text: var(--text);
+	--tt-border: var(--border);
 }
 
 html,
@@ -89,8 +93,8 @@ thead th {
     border: 1px solid var(--badge-border);
 }
 .tooltip {
-    background: #0f172a !important;
-    color: #e0f2fe !important;
-    border: 1px solid #3b82f6 !important;
+    background: var(--tt-bg) !important;
+    color: var(--tt-text) !important;
+    border: 1px solid var(--tt-border) !important;
     box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
 }

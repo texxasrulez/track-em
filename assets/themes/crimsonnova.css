@@ -1,4 +1,3 @@
-
 /* Track Em Theme: CrimsonNova */
 :root {
     --bg: #0d0609;
@@ -32,6 +31,10 @@
     --te-danger-border: #ef4444;
     --te-danger-text: #ffe4e6;
     --te-danger-hover: #b91c1c;
+    
+	--tt-bg: var(--bg);
+	--tt-text: var(--text);
+	--tt-border: var(--border);
 }
 html,
 body {
@@ -89,7 +92,8 @@ thead th {
     border: 1px solid var(--badge-border);
 }
 .tooltip {
-    background: #2b0f16 !important;
-    color: #ffe4e6 !important;
-    border: 1px solid #f43f5e !important;
+    background: var(--tt-bg) !important;
+    color: var(--tt-text) !important;
+    border: 1px solid var(--tt-border) !important;
+    box-shadow: 0 0 10px rgba(244, 63, 94, 0.5);
 }

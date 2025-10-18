@@ -28,10 +28,14 @@
     --te-primary-text: var(--text);
     --te-primary-hover: var(--accent2);
 
-	--te-danger-bg: #7f1d1d;
-    --te-danger-border: #dc2626;
-    --te-danger-text: #fecaca;
-    --te-danger-hover: #991b1b;
+	--te-danger-bg: #991b1b;
+    --te-danger-border: #ef4444;
+    --te-danger-text: #ffe4e6;
+    --te-danger-hover: #b91c1c;
+    
+	--tt-bg: var(--bg);
+	--tt-text: var(--text);
+	--tt-border: var(--border);
 }
 html,
 body {
@@ -89,7 +93,8 @@ thead th {
     border: 1px solid var(--badge-border);
 }
 .tooltip {
-    background: #0b2219 !important;
-    color: #ccfbf1 !important;
-    border: 1px solid #10b981 !important;
+    background: var(--tt-bg) !important;
+    color: var(--tt-text) !important;
+    border: 1px solid var(--tt-border) !important;
+    box-shadow: 0 0 10px rgba(52, 211, 1531, 0.5);
 }
