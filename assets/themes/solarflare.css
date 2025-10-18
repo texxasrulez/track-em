@@ -23,7 +23,7 @@
 	--te-border: var(--border);
 	--te-text: var(--text);
 
-	--te-primary-bg: var(--panel);
+	--te-primary-bg: var(--muted);
     --te-primary-border: var(--border);
     --te-primary-text: var(--text);
     --te-primary-hover: var(--accent2);
@@ -50,8 +50,11 @@ a:hover {
     color: var(--accent2);
 }
 .topbar {
+	position: fixed;
     background: var(--panel);
     border-bottom: 1px solid var(--border);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+	z-index: 9999 !important;
 }
 .card {
     background: var(--panel);

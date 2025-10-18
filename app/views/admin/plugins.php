@@ -87,7 +87,7 @@ function h($s){ return htmlspecialchars((string)$s, ENT_QUOTES); }
       cfgHtml =
         '<div class="form" style="margin-top:8px">' +
         '<input type="hidden" name="csrf" value="'+CSRF+'"/>' +
-        '  <label>Banner message<br/><input type="text" name="message" value="'+esc(msg)+'" style="width:100%"/></label>' +
+        '  <label>Banner message<br/><input type="text" name="message" value="'+esc(msg)+'" style="width:95%"/></label>' +
         '  <label style="display:block;margin-top:6px">Position<br/>' +
         '    <select name="position">' +
         '      <option value="bottom"'+(pos==='bottom'?' selected':'')+'>Bottom</option>' +

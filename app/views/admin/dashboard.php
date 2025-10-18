@@ -6,7 +6,6 @@
   })();
 </script>
 
-
 <style>
 .visitor-ip img { vertical-align: middle; margin-right: 0.75rem; }
 </style>
@@ -42,43 +41,190 @@ $__map = isset($__dash['map']) && is_array($__dash['map']) ? $__dash['map'] : ar
 </div>
 
 <style>
-:root{--pin-color: var(--theme-pin-color, #4CC9F0)}
-.icon{width:14px;height:14px;vertical-align:middle;margin-right:6px;opacity:.9;fill:currentColor;stroke:none}
-.badge{display:inline-flex;align-items:center;gap:6px;padding:2px 6px;border-radius:999px;border:1px solid var(--border,#2a3340);background:var(--muted,#0f1318);color:var(--text,#e8e8e8);font-size:11px}
-.error{margin-top:8px;font-size:12px;color:#ffb4b4;white-space:pre-wrap}
-.hint{margin:6px 0;font-size:12px;opacity:.8}
-#realtime .item{display:flex;gap:8px;align-items:center;padding:4px 0;border-bottom:1px dashed #2a334055}
-#realtime .id{font-weight:600;opacity:.85}
-#realtime .time{opacity:.75;font-size:12px}
-#realtime .ip{opacity:.85}
-#realtime .path{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.card{user-select:none; overflow:visible}
-.card.dragging{opacity:.6}
-.card-placeholder{border:2px dashed #6b7280;border-radius:12px;height:48px;margin:6px 0;min-height:48px}
-.te-pin{width:12px;height:12px;border-radius:50%;background:var(--pin-color);border:2px solid rgba(0,0,0,.55);box-shadow:0 0 0 2px rgba(0,0,0,.15)}
-#map, #map * { -webkit-user-drag: none; user-select: none; }
-.map-gear{border:1px solid var(--border,#2a3340);background:transparent;cursor:pointer;display:inline-flex;align-items:center;gap:6px;color:inherit;border-radius:8px;padding:2px 6px}
-.sheet{
-  position:fixed; left:0; top:0;
-  width:360px; max-width:92vw; max-height:80vh;
-  overflow:auto;background:var(--muted,#0f1318);color:var(--text,#e8e8e8);
-  border:1px solid var(--border,#2a3340);box-shadow:0 20px 40px rgba(0,0,0,.35);
-  border-radius:12px;padding:12px;display:none;z-index:99998
+.icon {
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    margin-right: 6px;
+    opacity: 0.9;
+    fill: currentColor;
+    stroke: none;
 }
-.sheet h4{margin:0 0 8px 0}
-.sheet .row{display:flex;gap:8px;align-items:center;margin:6px 0}
-.sheet label{font-size:13px;min-width:140px}
-.sheet input[type="text"], .sheet select, .sheet input[type="number"]{width:100%;padding:6px;border-radius:8px;border:1px solid var(--border,#2a3340);background:transparent;color:inherit}
-.sheet .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.sheet .btns{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
-.sheet button{padding:6px 10px;border-radius:8px;border:1px solid var(--border,#2a3340);background:transparent;color:inherit;cursor:pointer}
-.sheet .subtle{opacity:.8}
-.sheet select{appearance:none;background-color:var(--muted,#0f1318);color:var(--text,#e8e8e8);border:1px solid var(--border,#2a3340)}
-.sheet select:focus{outline:none;box-shadow:0 0 0 2px rgba(76,201,240,.25);border-color:var(--accent,#4CC9F0)}
-.sheet select option{background-color:var(--muted,#0f1318);color:var(--text,#e8e8e8)}
-.sheet select option:checked{background-color:#1e293b;color:#e6f6ff}
-.card-handle{cursor:grab;margin:-4px 0 8px;font-weight:bold;display:flex;align-items:center;gap:8px}
-.card-handle:active{cursor:grabbing}
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 6px;
+    border-radius: 999px;
+    border: 1px solid var(--border, #2a3340);
+    background: var(--muted, #0f1318);
+    color: var(--text, #e8e8e8);
+    font-size: 11px;
+}
+.error {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #ffb4b4;
+    white-space: pre-wrap;
+}
+.hint {
+    margin: 6px 0;
+    font-size: 12px;
+    opacity: 0.8;
+}
+#realtime .item {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 4px 0;
+    border-bottom: 1px dashed #2a3340;
+}
+#realtime .id {
+    font-weight: 600;
+    opacity: 0.85;
+}
+#realtime .time {
+    opacity: 0.75;
+    font-size: 12px;
+}
+#realtime .ip {
+    opacity: 0.85;
+}
+#realtime .path {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.card {
+    user-select: none;
+    overflow: visible;
+}
+.card.dragging {
+    opacity: 0.6;
+}
+.card-placeholder {
+    border: 2px dashed #6b7280;
+    border-radius: 12px;
+    height: 48px;
+    margin: 6px 0;
+    min-height: 48px;
+}
+.te-pin {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--pin-color);
+    border: 2px solid rgba(0, 0, 0, 0.55);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.15);
+}
+#map,
+#map * {
+    -webkit-user-drag: none;
+    user-select: none;
+}
+.map-gear {
+    border: 1px solid var(--border, #2a3340);
+    background: transparent;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: inherit;
+    border-radius: 8px;
+    padding: 2px 6px;
+}
+.sheet {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 360px;
+    max-width: 92vw;
+    max-height: 80vh;
+    overflow: auto;
+    background: var(--muted, #0f1318);
+    color: var(--text, #e8e8e8);
+    border: 1px solid var(--border, #2a3340);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+    border-radius: 12px;
+    padding: 12px;
+    display: none;
+    z-index: 99998;
+}
+.sheet h4 {
+    margin: 0 0 8px 0;
+}
+.sheet .row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin: 6px 0;
+}
+.sheet label {
+    font-size: 13px;
+    min-width: 140px;
+}
+.sheet input[type="text"],
+.sheet select,
+.sheet input[type="number"] {
+    width: 100%;
+    padding: 6px;
+    border-radius: 8px;
+    border: 1px solid var(--border, #2a3340);
+    background: transparent;
+    color: inherit;
+}
+.sheet .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+.sheet .btns {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+.sheet button {
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border, #2a3340);
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+}
+.sheet .subtle {
+    opacity: 0.8;
+}
+.sheet select {
+    appearance: none;
+    background-color: var(--muted, #0f1318);
+    color: var(--text, #e8e8e8);
+    border: 1px solid var(--border, #2a3340);
+}
+.sheet select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(76, 201, 240, 0.25);
+    border-color: var(--accent, #4cc9f0);
+}
+.sheet select option {
+    background-color: var(--muted, #0f1318);
+    color: var(--text, #e8e8e8);
+}
+.sheet select option:checked {
+    background-color: #1e293b;
+    color: #e6f6ff;
+}
+.card-handle {
+    cursor: grab;
+    margin: -4px 0 8px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.card-handle:active {
+    cursor: grabbing;
+}
 </style>
 
 <div class="grid" id="dash-grid" style="display:grid;grid-template-columns:repeat(2, 1fr);gap:12px">

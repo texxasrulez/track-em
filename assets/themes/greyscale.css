@@ -3,7 +3,7 @@
     --bg: #dddddd;
     --panel: #d6d6d6;
     --muted: #cccccc;
-    --text: #000000;
+    --text: #1e1e1e;
     --sub: #334155;
     --accent: #333333;
     --accent2: #bbbbbb;
@@ -22,7 +22,7 @@
 	--te-border: var(--border);
 	--te-text: var(--text);
 	
-	--te-primary-bg: var(--panel);
+	--te-primary-bg: var(--muted);
     --te-primary-border: var(--border);
     --te-primary-text: var(--text);
     --te-primary-hover: var(--accent2);
@@ -45,19 +45,22 @@ a {
     color: var(--accent);
 }
 .topbar {
+	position: fixed;
     background: var(--panel);
     border-bottom: 1px solid var(--border);
+    box-shadow: 0 8px 24px rgba(42, 42, 42, 0.4);
+	z-index: 9999 !important;
 }
 .card {
     background: var(--panel);
     border: 1px solid var(--border);
     border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(2, 6, 23, 0.05);
+    box-shadow: 0 8px 24px rgba(42, 42, 42, 0.4);
 }
 input,
 select,
 button {
-    background: #fff;
+    background: #d6d6d6;
     color: #0f172a;
     border: 1px solid var(--border);
 }
@@ -85,5 +88,5 @@ thead th {
     background: var(--tt-bg) !important;
     color: var(--tt-text) !important;
     border: 1px solid var(--tt-border) !important;
-    box-shadow: 0 0 10px rgba(95, 95, 95, 0.5);
+    box-shadow: 0 8px 24px rgba(42, 42, 42, 0.4);
 }

@@ -1,11 +1,11 @@
-* {
+{
     box-sizing: border-box;
 }
 body {
     margin: 0;
     font-family: system-ui, Arial, Helvetica, sans-serif;
     background: #0b0e11;
-    color: #e8e8e8;
+    color: var(--text);
 }
 a {
     color: #9ed1ff;
@@ -204,6 +204,7 @@ td {
 .btn:hover,
 .button:hover {
     filter: brightness(1.06);
+    border: 1px solid var(--border) !important;
 }
 .btn:active,
 .button:active {

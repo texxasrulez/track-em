@@ -22,7 +22,7 @@
 	--te-border: var(--border);
 	--te-text: var(--text);
 	
-	--te-primary-bg: var(--panel);
+	--te-primary-bg: var(--muted);
     --te-primary-border: var(--border);
     --te-primary-text: var(--text);
     --te-primary-hover: #a6a6a6;
@@ -43,6 +43,13 @@ body {
 }
 a {
     color: var(--accent);
+}
+.topbar {
+	position: fixed;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+	z-index: 9999 !important;
 }
 .card {
     background: var(--panel);
