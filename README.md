@@ -1,7 +1,7 @@
 # Track 'Em — Privacy‑friendly, self‑hosted site analytics (PHP)
 
 [![Github License](https://img.shields.io/github/license/texxasrulez/track-em?style=plastic&logo=github&label=License&labelColor=blue&color=coral)](https://github.com/texxasrulez/track-em/LICENSE)
-[![Github All Releases](https://img.shields.io/github/downloads/track-em/track-em/total.svg)]()
+[![Github All Releases](https://img.shields.io/github/downloads/track-em/track-em/total.svg)](https://github.com/texxasrulez/track-em/)
 [![GitHub Stars](https://img.shields.io/github/stars/texxasrulez/track-em?style=plastic&logo=github&label=Stars&labelColor=blue&color=deepskyblue)](https://github.com/texxasrulez/track-em/stargazers)
 [![GitHub Issues](https://img.shields.io/github/issues/texxasrulez/track-em?style=plastic&logo=github&label=Issues&labelColor=blue&color=aqua)](https://github.com/texxasrulez/track-em/issues)
 [![GitHub Contributors](https://img.shields.io/github/contributors/texxasrulez/track-em?style=plastic&logo=github&logoColor=white&label=Contributors&labelColor=blue&color=orchid)](https://github.com/texxasrulez/track-em/graphs/contributors)
