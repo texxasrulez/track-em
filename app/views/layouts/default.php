@@ -103,13 +103,13 @@ function te_active($p, $needle) {
 </head>
 <body class="theme-<?= htmlspecialchars($themeId, ENT_QUOTES) ?>">
   <header class="topbar">
-    <a href="?p=admin"><img src="assets/images/header-logo.png" height="40px"></a><h1 class="te-title">Track 'Em</h1>
+    <a href="?p=admin"><img src="assets/images/header-logo.svg" height="50px"></a>
     <nav>
       <a href="?p=admin" class="button btn <?= te_active($__p,'admin') ? 'active' : '' ?>"><?= I18n::t('nav_dashboard','Dashboard') ?></a>
       <a href="?p=admin.settings" class="button btn <?= te_active($__p,'admin.settings') ? 'active' : '' ?>"><?= I18n::t('nav_settings','Settings') ?></a>
-      <a href="?p=admin.users" class="button btn <?= te_active($__p,'admin.users') ? 'active' : '' ?>"><?= I18n::t('nav_users','Users') ?></a>
       <a href="?p=admin.themes" class="button btn <?= te_active($__p,'admin.themes') ? 'active' : '' ?>"><?= I18n::t('nav_themes','Themes') ?></a>
       <a href="?p=admin.plugins" class="button btn <?= te_active($__p,'admin.plugins') ? 'active' : '' ?>"><?= I18n::t('nav_plugins','Plugins') ?></a>
+      <a href="?p=admin.users" class="button btn <?= te_active($__p,'admin.users') ? 'active' : '' ?>"><?= I18n::t('nav_users','Users') ?></a>
       <a href="?p=admin.help" class="button btn <?= te_active($__p,'admin.help') ? 'active' : '' ?>"><?= I18n::t('nav_help','Help') ?></a>
       <a href="?p=logout" class="button btn right <?= te_active($__p,'logout') ? 'active' : '' ?>"><?= I18n::t('nav_logout','Logout') ?></a>
     </nav>

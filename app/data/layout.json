@@ -2,8 +2,8 @@
     "order": [
         "map",
         "visitors",
-        "realtime",
-        "recent"
+        "recent",
+        "realtime"
     ],
     "cols": 2
 }
