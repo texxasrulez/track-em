@@ -8,29 +8,29 @@ if ($__base === '/') $__base = '';
 <?php $__base = rtrim(str_replace('\\','/', dirname($_SERVER['SCRIPT_NAME'] ?? '/')), '/'); if ($__base === '/') $__base = ''; ?>
 <?php /* Recent Visits with Browser + OS (logo + label) */ ?>
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-  <h3 style="margin:0">Recent Visits</h3>
+  <h3 style="margin:0"><?= I18n::t('recent_visits','Recent Visits') ?></h3>
   <div style="display:flex;gap:8px;align-items:center">
     <input id="q" placeholder="Search..." style="padding:6px 10px;border-radius:8px;border:1px solid var(--border,#2a3340);background:transparent;color:inherit;min-width:260px">
     <select id="limit" style="padding:6px;border-radius:8px;border:1px solid var(--border,#2a3340);background:transparent;color:inherit">
-      <option value="50" selected>50</option>
-      <option value="100">100</option>
-      <option value="200">200</option>
-      <option value="500">500</option>
+      <option value="50" selected><?= I18n::t('50','50') ?></option>
+      <option value="100"><?= I18n::t('100','100') ?></option>
+      <option value="200"><?= I18n::t('200','200') ?></option>
+      <option value="500"><?= I18n::t('500','500') ?></option>
     </select>
-    <button id="refresh" style="padding:6px 10px;border-radius:8px;border:1px solid var(--border,#2a3340);background:transparent;color:inherit;cursor:pointer">Refresh</button>
+    <button id="refresh" style="padding:6px 10px;border-radius:8px;border:1px solid var(--border,#2a3340);background:transparent;color:inherit;cursor:pointer"><?= I18n::t('refresh','Refresh') ?></button>
   </div>
 </div>
 
 <div class="table wrap">
   <table id="vis-table" style="width:100%">
     <thead><tr>
-      <th style="text-align:left">IP</th>
-      <th style="text-align:left">Path</th>
-      <th style="text-align:left">Time</th>
-      <th style="text-align:left">Browser</th>
-      <th style="text-align:left">OS</th>
-      <th style="text-align:left">City</th>
-      <th style="text-align:left">Country</th>
+      <th style="text-align:left"><?= I18n::t('ip','IP') ?></th>
+      <th style="text-align:left"><?= I18n::t('path','Path') ?></th>
+      <th style="text-align:left"><?= I18n::t('time','Time') ?></th>
+      <th style="text-align:left"><?= I18n::t('browser','Browser') ?></th>
+      <th style="text-align:left"><?= I18n::t('os','OS') ?></th>
+      <th style="text-align:left"><?= I18n::t('city','City') ?></th>
+      <th style="text-align:left"><?= I18n::t('country','Country') ?></th>
     </tr></thead>
     <tbody id="vis-tbody"></tbody>
   </table>

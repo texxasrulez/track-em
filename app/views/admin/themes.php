@@ -1,17 +1,18 @@
 <?php
 use TrackEm\Core\Security;
 use TrackEm\Core\Theme;
+use TrackEm\Core\I18n;
 
 $themes = Theme::list();
 $active = Theme::activeId();
 function h($s){ return htmlspecialchars((string)$s, ENT_QUOTES); }
 ?>
 <div class="card">
-  <h3>Themes</h3>
-  <p>Preview temporarily (cookie) or activate to persist for everyone.</p>
+  <h3><?= I18n::t('themes','Themes') ?></h3>
+  <p><?= I18n::t('theme_description','Preview temporarily (cookie) or activate to persist for everyone.') ?></p>
 
   <?php if (!$themes): ?>
-    <div class="error" style="margin-top:8px">No theme CSS files found in <code>assets/themes/</code>.</div>
+    <div class="error" style="margin-top:8px"><?= I18n::t('theme_error','No theme CSS files found in') ?> <code><?= I18n::t('theme_error_2','assets/themes/') ?></code>.</div>
   <?php else: ?>
     <div class="theme-grid">
       <?php foreach ($themes as $t):
@@ -20,7 +21,7 @@ function h($s){ return htmlspecialchars((string)$s, ENT_QUOTES); }
         <div class="card theme-card">
           <div class="theme-card__head">
             <strong class="theme-card__title"><?= h($t['name']) ?></strong>
-            <?php if ($t['id'] === $active): ?><span class="badge">Active</span><?php endif; ?>
+            <?php if ($t['id'] === $active): ?><span class="badge"><?= I18n::t('active','Active') ?></span><?php endif; ?>
           </div>
 
           <div class="swatches">
@@ -30,8 +31,8 @@ function h($s){ return htmlspecialchars((string)$s, ENT_QUOTES); }
           </div>
 
           <div class="actions-row">
-            <a class="button btn" href="?p=admin.themes&preview=<?= h($t['id']) ?>">Preview</a>
-            <a class="button btn" href="<?= h($t['href']) ?>" target="_blank" rel="noopener">CSS</a>
+            <a class="button btn" href="?p=admin.themes&preview=<?= h($t['id']) ?>"><?= I18n::t('preview','Preview') ?></a>
+            <a class="button btn" href="<?= h($t['href']) ?>" target="_blank" rel="noopener"><?= I18n::t('css','CSS') ?></a>
           </div>
 
           <form class="form" method="post">

@@ -1,4 +1,5 @@
 <?php
+use TrackEm\Core\I18n;
 use TrackEm\Core\Security;
 use TrackEm\Core\Theme;
 
@@ -44,12 +45,12 @@ function h($s){ return htmlspecialchars((string)$s, ENT_QUOTES); }
 }
 </style>
 <div class="card">
-  <h3>Plugins</h3>
-  <p class="note">Manage plugins. Upload zips, enable/disable, or remove. Actions apply immediately.</p>
+  <h3><?= I18n::t('plugins','Plugins') ?></h3>
+  <p class="note"><?= I18n::t('plugins_note','Manage plugins. Upload zips, enable/disable, or remove. Actions apply immediately.') ?></p>
 
   <form id="plg-upload" class="form form-row" enctype="multipart/form-data" method="post" action="?p=api.plugins.install" style="margin-bottom:12px">
     <input style="width:10vw" type="file" name="plugin_zip" accept=".zip" required class="ms-popup"/>
-    <button type="submit" class="button btn">Upload &amp; Install</button>
+    <button type="submit" class="button btn"><?= I18n::t('upload_install','Upload &amp; Install') ?></button>
   </form>
 
   <div id="plg-error" class="alert" style="display:none"></div>

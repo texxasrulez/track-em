@@ -1,3 +1,6 @@
+<?php
+use TrackEm\Core\I18n;
+?>
 <script>
   (function(){
     try {
@@ -75,22 +78,22 @@ $__ip_tooltips = !empty($__dash['ip_tooltips']);
 $__map = isset($__dash['map']) && is_array($__dash['map']) ? $__dash['map'] : array();
 ?>
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:12px;flex-wrap:wrap">
-  <h3 style="margin:0">Dashboard</h3>
+  <h3 style="margin:0"><?= I18n::t('nav_dashboard','Dashboard') ?></h3>
   <div style="display:flex;gap:12px;align-items:center;">
     <label>Grid columns:
       <select id="grid-cols">
-        <option value="1">1</option>
-        <option value="2" selected>2</option>
-        <option value="3">3</option>
+        <option value="1"><?= I18n::t('1','1') ?></option>
+        <option value="2" selected><?= I18n::t('2','2') ?></option>
+        <option value="3"><?= I18n::t('3','3') ?></option>
       </select>
     </label>
     <label>Timeframe:
       <select id="timeframe">
-        <option value="day">Today</option>
-        <option value="week">This Week</option>
-        <option value="month">This Month</option>
-        <option value="year">This Year</option>
-        <option value="all" selected>All time</option>
+        <option value="day"><?= I18n::t('today','Today') ?></option>
+        <option value="week"><?= I18n::t('this_week','This Week') ?></option>
+        <option value="month"><?= I18n::t('this_month','This Month') ?></option>
+        <option value="year"><?= I18n::t('this_year','This Year') ?></option>
+        <option value="all" selected><?= I18n::t('all_time','All time') ?></option>
       </select>
     </label>
   </div>
@@ -281,11 +284,11 @@ $__map = isset($__dash['map']) && is_array($__dash['map']) ? $__dash['map'] : ar
 
 <div class="grid" id="dash-grid" style="display:grid;grid-template-columns:repeat(2, 1fr);gap:12px">
   <div class="card" data-id="recent" draggable="false">
-    <div class="card-handle">Recent Visits</div>
-    <div class="hint">API: <code id="api-url"></code></div>
+    <div class="card-handle"><?= I18n::t('recent_visits','Recent Visits') ?></div>
+    <div class="hint"><?= I18n::t('api','API') ?>: <code id="api-url"></code></div>
     <div id="recent-error" class="error" style="display:none"></div>
     <table>
-      <thead><tr><th>ID</th><th>IP</th><th>Path</th><th>Browser</th><th>OS</th><th>When</th></tr></thead>
+      <thead><tr><th><?= I18n::t('id','ID') ?></th><th><?= I18n::t('ip','IP') ?></th><th><?= I18n::t('path','Path') ?></th><th><?= I18n::t('browser','Browser') ?></th><th><?= I18n::t('os','OS') ?></th><th><?= I18n::t('when','When') ?></th></tr></thead>
       <tbody id="recent-body"></tbody>
     </table>
   </div>
@@ -299,57 +302,57 @@ $__map = isset($__dash['map']) && is_array($__dash['map']) ? $__dash['map'] : ar
   </div>
 
   <div class="card" data-id="realtime" draggable="false">
-    <div class="card-handle">Realtime</div>
+    <div class="card-handle"><?= I18n::t('realtime','Realtime') ?></div>
     <div id="realtime-error" class="error" style="display:none"></div>
     <div id="realtime"></div>
   </div>
 </div>
 
 <div id="map-settings-sheet" class="sheet" aria-hidden="true" role="dialog">
-  <h4>Map settings</h4>
-  <div class="row"><label>Basemap</label>
+  <h4><?= I18n::t('map_settings','Map settings') ?></h4>
+  <div class="row"><label><?= I18n::t('basemap','Basemap') ?></label>
     <select id="ms-basemap">
-      <option value="osm">OpenStreetMap</option>
-      <option value="carto-positron">Carto Positron</option>
-      <option value="carto-darkmatter">Carto DarkMatter</option>
-      <option value="esri-satellite">Esri Satellite</option>
+      <option value="osm"><?= I18n::t('openstreetmap','OpenStreetMap') ?></option>
+      <option value="carto-positron"><?= I18n::t('carto_positron','Carto Positron') ?></option>
+      <option value="carto-darkmatter"><?= I18n::t('carto_darkmatter','Carto DarkMatter') ?></option>
+      <option value="esri-satellite"><?= I18n::t('esri_satellite','Esri Satellite') ?></option>
     </select>
   </div>
   <div class="grid">
-    <div class="row"><label>Max zoom</label><input type="number" id="ms-maxzoom" min="0" max="22"></div>
-    <div class="row"><label>Refresh (s)</label><input type="number" id="ms-refresh" min="5" max="3600"></div>
+    <div class="row"><label><?= I18n::t('max_zoom','Max zoom') ?></label><input type="number" id="ms-maxzoom" min="0" max="22"></div>
+    <div class="row"><label><?= I18n::t('refresh_s','Refresh (s)') ?></label><input type="number" id="ms-refresh" min="5" max="3600"></div>
   </div>
-  <div class="row"><label><input type="checkbox" id="ms-remember"> Remember last view</label></div>
-  <div class="row"><label><input type="checkbox" id="ms-autofit"> Auto-fit on load</label></div>
-  <div class="row"><label><input type="checkbox" id="ms-scroll"> Scroll wheel zoom</label></div>
-  <div class="row"><label><input type="checkbox" id="ms-dragging"> Dragging</label></div>
-  <div class="row"><label><input type="checkbox" id="ms-locate"> Show locate button</label></div>
+  <div class="row"><label><input type="checkbox" id="ms-remember"> <?= I18n::t('rem_last_view','Remember last view') ?></label></div>
+  <div class="row"><label><input type="checkbox" id="ms-autofit"> <?= I18n::t('auto_fit_load','Auto-fit on load') ?></label></div>
+  <div class="row"><label><input type="checkbox" id="ms-scroll"> <?= I18n::t('scroll_wheel_zoom','Scroll wheel zoom') ?></label></div>
+  <div class="row"><label><input type="checkbox" id="ms-dragging"> <?= I18n::t('dragging','Dragging') ?></label></div>
+  <div class="row"><label><input type="checkbox" id="ms-locate"> <?= I18n::t('show_loc_btn','Show locate button') ?></label></div>
   <hr style="border:none;border-top:1px solid var(--border,#2a3340);margin:8px 0">
-  <div class="row"><label><input type="checkbox" id="ms-cluster" disabled title="Clustering depends on server plugin"> Enable clustering</label></div>
+  <div class="row"><label><input type="checkbox" id="ms-cluster" disabled title="Clustering depends on server plugin"> <?= I18n::t('enable_clustering','Enable clustering') ?></label></div>
   <div class="grid">
-    <div class="row"><label>Cluster radius</label><input type="number" id="ms-cluster-radius" min="10" max="120"></div>
-    <div class="row"><label>Disable @ zoom</label><input type="number" id="ms-cluster-disable" min="0" max="22"></div>
+    <div class="row"><label><?= I18n::t('cluster_radius','Cluster radius') ?></label><input type="number" id="ms-cluster-radius" min="10" max="120"></div>
+    <div class="row"><label><?= I18n::t('disable_at_zoom','Disable @ zoom') ?></label><input type="number" id="ms-cluster-disable" min="0" max="22"></div>
   </div>
-  <div class="row"><label><input type="checkbox" id="ms-spiderfy"> Spiderfy on max zoom</label></div>
+  <div class="row"><label><input type="checkbox" id="ms-spiderfy"> <?= I18n::t('spider_on_max_zoom','Spiderfy on max zoom') ?></label></div>
   <hr style="border:none;border-top:1px solid var(--border,#2a3340);margin:8px 0">
-  <div class="row"><label>Marker style</label>
-    <select id="ms-marker-style"><option value="dot">Dot</option><option value="marker">Marker</option></select>
+  <div class="row"><label><?= I18n::t('marker_style','Marker style') ?></label>
+    <select id="ms-marker-style"><option value="dot"><?= I18n::t('dot','Dot') ?></option><option value="marker"><?= I18n::t('marker','Marker') ?></option></select>
   </div>
-  <div class="row"><label>Dot size (px)</label><input type="number" id="ms-marker-size" min="6" max="24"></div>
-  <div class="row subtle">Popup fields:</div>
+  <div class="row"><label><?= I18n::t('dot_size_px','Dot size (px)') ?></label><input type="number" id="ms-marker-size" min="6" max="24"></div>
+  <div class="row subtle"><?= I18n::t('popup_fields','Popup fields') ?>:</div>
   <div class="grid">
-    <label><input type="checkbox" class="ms-popup" value="ip"> IP</label>
-    <label><input type="checkbox" class="ms-popup" value="path"> Path</label>
-    <label><input type="checkbox" class="ms-popup" value="ts"> Time</label>
-    <label><input type="checkbox" class="ms-popup" value="city"> City</label>
-    <label><input type="checkbox" class="ms-popup" value="country"> Country</label>
-    <label><input type="checkbox" class="ms-popup" value="coords"> Coords</label>
+    <label><input type="checkbox" class="ms-popup" value="ip"> <?= I18n::t('ip','IP') ?></label>
+    <label><input type="checkbox" class="ms-popup" value="path"> <?= I18n::t('path','Path') ?></label>
+    <label><input type="checkbox" class="ms-popup" value="ts"> <?= I18n::t('time','Time') ?></label>
+    <label><input type="checkbox" class="ms-popup" value="city"> <?= I18n::t('city','City') ?></label>
+    <label><input type="checkbox" class="ms-popup" value="country"> <?= I18n::t('country','Country') ?></label>
+    <label><input type="checkbox" class="ms-popup" value="coords"> <?= I18n::t('coords','Coords') ?></label>
   </div>
-  <div class="row"><label><input type="checkbox" id="ms-mask-ip"> Mask IP (a.b.c.0)</label></div>
+  <div class="row"><label><input type="checkbox" id="ms-mask-ip"> <?= I18n::t('mask_ip_abc','Mask IP (a.b.c.0)') ?></label></div>
   <div class="btns">
-    <button id="ms-reset" type="button">Reset</button>
-    <button id="ms-close" type="button">Close</button>
-    <button id="ms-save" type="button"><strong>Save</strong></button>
+    <button id="ms-reset" type="button"><?= I18n::t('reset','Reset') ?></button>
+    <button id="ms-close" type="button"><?= I18n::t('close','Close') ?></button>
+    <button id="ms-save" type="button"><strong><?= I18n::t('save','Save') ?></strong></button>
   </div>
 </div>
 

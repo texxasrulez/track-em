@@ -1,4 +1,8 @@
-<?php use TrackEm\Core\Security; ?>
+<?php
+use TrackEm\Core\Security;
+use TrackEm\Core\Theme;
+use TrackEm\Core\I18n;
+?>
 <style>
   .form input[type="text"],
   .form input[type="password"],
@@ -44,16 +48,16 @@
 	<input type="hidden" name="action" value="create"/>
     <input type="text" name="username" placeholder="Username" required />
     <select name="role">
-      <option value="admin">admin</option>
-      <option value="user" selected>user</option>
+      <option value="admin"><?= I18n::t('admin','admin') ?></option>
+      <option value="user" selected><?= I18n::t('user','user') ?></option>
     </select>
     <input type="password" name="password" placeholder="Password (optional)" />
-    <button type="submit" class="button btn">Add User</button>
+    <button type="submit" class="button btn"><?= I18n::t('add_user','Add User') ?></button>
   </form>
 
   <table>
     <thead>
-      <tr><th>ID</th><th>Username</th><th>Role</th><th>Created</th><th>Actions</th></tr>
+      <tr><th><?= I18n::t('id','ID') ?></th><th><?= I18n::t('username','Username') ?></th><th><?= I18n::t('role','Role') ?></th><th><?= I18n::t('created','Created') ?></th><th><?= I18n::t('actions','Actions') ?></th></tr>
     </thead>
     <tbody>
       <?php foreach ($users as $u): ?>
@@ -66,11 +70,11 @@
             <input type="hidden" name="id" value="<?= (int)$u['id'] ?>"/>
             <input type="text" name="username" value="<?= htmlspecialchars($u['username']) ?>" required />
             <select name="role">
-              <option value="admin" <?= $u['role']==='admin'?'selected':'' ?>>admin</option>
-              <option value="user"  <?= $u['role']!=='admin'?'selected':'' ?>>user</option>
+              <option value="admin" <?= $u['role']==='admin'?'selected':'' ?>><?= I18n::t('admin','admin') ?></option>
+              <option value="user"  <?= $u['role']!=='admin'?'selected':'' ?>><?= I18n::t('user','user') ?></option>
             </select>
             <input type="password" name="password" placeholder="New password (leave blank to keep)"/>
-            <button type="submit" class="button btn">Save</button>
+            <button type="submit" class="button btn"><?= I18n::t('save','Save') ?></button>
           </form>
         </td>
         <td><?= htmlspecialchars($u['role']) ?></td>
@@ -81,7 +85,7 @@
 			<input type="hidden" name="csrf" value="<?= Security::csrfToken() ?>"/>
             <input type="hidden" name="action" value="delete"/>
             <input type="hidden" name="id" value="<?= (int)$u['id'] ?>"/>
-            <button type="submit" class="button danger">Delete</button>
+            <button type="submit" class="button danger"><?= I18n::t('delete','Delete') ?></button>
           </form>
         </td>
       </tr>
