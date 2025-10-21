@@ -337,7 +337,7 @@ Apache usually works out of the box with `index.php?p=...` routing; you can add 
 ---
 
 ## Donations
-This project uses a library written by a Ukranian citizen who is asking for help. Lets help out Ukraine.
+This project uses a library written by a Ukranian citizen who is asking for help for his fellow Ukranians from Russian aggression. Lets help out Ukraine.
 
 https://leafletjs.com/
 
