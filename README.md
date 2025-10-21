@@ -335,3 +335,10 @@ Apache usually works out of the box with `index.php?p=...` routing; you can add 
 - **Locales**: run `php cli/validate_locales.php`.
 
 ---
+
+## Donations
+This project uses a library written by a Ukraniann citizen. Lets help out Ukraine.
+
+https://leafletjs.com/
+
+---
