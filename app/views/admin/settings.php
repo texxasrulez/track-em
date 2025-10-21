@@ -12,6 +12,47 @@ $mmdb = (string)($geo['mmdb_path'] ?? (dirname(__DIR__,2).'/data/GeoLite2-City.m
 $BASE = rtrim(dirname($_SERVER['SCRIPT_NAME'] ?? ''), '/\\');
 $API  = ($BASE === '' ? '' : $BASE) . '/index.php?p=';
 ?>
+<style>
+  .form input[type="text"],
+  .form input[type="password"],
+  .form select {
+    background-color: var(--muted);
+    color: var(--text);
+    border-color: var(--border);
+    width: 180px;         /* Adjust this to your liking */
+    display: inline-block;
+    margin-right: 6px;
+  }
+
+  .form-inline input[type="text"],
+  .form-inline input[type="password"],
+  .form-inline select {
+    background-color: var(--muted);
+    color: var(--text);
+    border-color: var(--border);
+    width: 140px;
+  }
+
+  .form button {
+    padding: 4px 10px;
+  }
+
+  table {
+    width: auto;
+  }
+
+  table td, table th {
+    padding: 6px 8px;
+  }
+  .card table {
+  width: 100%;
+}
+.card td form {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+</style>
 
 <div class="grid">
   <div class="card card--settings">
@@ -19,7 +60,7 @@ $API  = ($BASE === '' ? '' : $BASE) . '/index.php?p=';
     <form method="post" action="?p=admin.settings">
       <input type="hidden" name="section" value="dashboard">
             <input type="hidden" name="csrf" value="<?= Security::csrfToken() ?>"/>
-<label><?= I18n::t('default_row_limit','Default row limit (Recent/Geo)') ?>:
+			<label><?= I18n::t('default_row_limit','Default row limit (Recent/Geo)') ?>:
         <input type="number" style="width:95%" min="10" max="10000" step="10" name="dash_row_limit"
                value="<?= (int)($cfg['dashboard']['row_limit'] ?? 200) ?>">
       </label>
@@ -33,7 +74,7 @@ $API  = ($BASE === '' ? '' : $BASE) . '/index.php?p=';
 
   <!-- GEO SETTINGS -->
   <div class="card card--settings">
-    <h3>Geo Settings</h3>
+    <h3><?= I18n::t('geo_settings','Geo Settings') ?></h3>
 
     <?php if (!empty($flash_geo)): ?>
       <div class="<?= $flash_geo['ok'] ? 'success' : 'error' ?>" style="margin-bottom:10px">
@@ -91,14 +132,14 @@ $API  = ($BASE === '' ? '' : $BASE) . '/index.php?p=';
         <div class="form-ctl  mm-web-box">
           <input type="text" name="mm_license_key" value="<?= h($geo['mm_license_key'] ?? '') ?>"/>
         
-<div class="form-label mm-local-box"><span><?= I18n::t('geolite_db','GeoLite2 Database') ?></span></div>
-<div class="form-ctl  mm-local-box">
-  <button type="button" class="btn" id="btn-mmdb-download"><?= I18n::t('geolite_db_dwnld','Download / Update GeoLite2') ?></button>
-  <div class="note"><?= I18n::t('maxmind_key_note','Uses your MaxMind license key to download GeoLite2-City.mmdb into the configured path.') ?></div>
-  <pre id="mmdb-download-out" style="margin-top:6px;max-height:160px;overflow:auto;background:#111;color:#9f9;padding:8px;border-radius:6px;display:none"></pre>
-</div>
+		<div class="form-label mm-local-box"><span><?= I18n::t('geolite_db','GeoLite2 Database') ?></span></div>
+		<div class="form-ctl  mm-local-box">
+		  <button type="button" class="btn" id="btn-mmdb-download"><?= I18n::t('geolite_db_dwnld','Download / Update GeoLite2') ?></button>
+		  <div class="note"><?= I18n::t('maxmind_key_note','Uses your MaxMind license key to download GeoLite2-City.mmdb into the configured path.') ?></div>
+		  <pre id="mmdb-download-out" style="margin-top:6px;max-height:160px;overflow:auto;background:#111;color:#9f9;padding:8px;border-radius:6px;display:none"></pre>
+		</div>
 
-</div>
+		</div>
 
         <!-- Timeouts / caps -->
         <div class="form-label"><span><?= I18n::t('timeout_sec','Timeout (sec)') ?></span></div>

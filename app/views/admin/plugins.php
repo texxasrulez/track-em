@@ -11,7 +11,8 @@ function h($s){ return htmlspecialchars((string)$s, ENT_QUOTES); }
   .form input[type="text"],
   .form input[type="password"],
   .form select {
-    background-color: var(--bg);
+    background-color: var(--muted);
+    color: var(--text);
     width: 180px;         /* Adjust this to your liking */
     display: inline-block;
     margin-right: 6px;
@@ -20,7 +21,8 @@ function h($s){ return htmlspecialchars((string)$s, ENT_QUOTES); }
   .form-inline input[type="text"],
   .form-inline input[type="password"],
   .form-inline select {
-    background-color: var(--bg);
+    background-color: var(--muted);
+    color: var(--text);
     width: 140px;
   }
 

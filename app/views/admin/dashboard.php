@@ -21,11 +21,7 @@ use TrackEm\Core\I18n;
 }
 .card-handle {
     position: relative;
-    position: relative;
     z-index: 1;
-    position: relative;
-    z-index: 1;
-    position: relative;
 }
 .map-gear:focus {
     outline: none;
@@ -277,9 +273,16 @@ $__map = isset($__dash['map']) && is_array($__dash['map']) ? $__dash['map'] : ar
     cursor: grabbing;
 }
 
-.map-gear:hover,.map-gear:focus{border-color:var(--accent,#3b82f6);box-shadow:0 0 0 2px rgba(0,0,0,.06)}
 
 
+/* Ensure form controls in sheet rows don't shrink to peanuts */
+.sheet .row input[type="text"],
+.sheet .row input[type="number"],
+.sheet .row select,
+.sheet .row textarea {
+    flex: 1 1 140px;
+    min-width: 120px;
+}
 </style>
 
 <div class="grid" id="dash-grid" style="display:grid;grid-template-columns:repeat(2, 1fr);gap:12px">
@@ -420,11 +423,14 @@ function teFetchQ(ep, qs, opts){
   function cards() { var list = grid.querySelectorAll('.card[data-id]'); var arr = []; for (var i=0;i<list.length;i++) { arr.push(list[i]); } return arr; }
 
   function applyOrder(ids) {
-    if (!ids || !ids.length) return;
-    var map = {}; var cs = cards();
-    for (var i=0;i<cs.length;i++) { var id = cs[i].getAttribute('data-id'); if (id) map[id] = cs[i]; }
-    for (var j=0;j<ids.length;j++) { var el = map[ids[j]]; if (el && el.parentNode === grid) grid.appendChild(el); }
-  }
+  if (!ids || !ids.length) return;
+  var current = snapshotOrder();
+  var same = current.length === ids.length && current.every(function(v,i){ return v===ids[i]; });
+  if (same) return;
+  var map = {}; var cs = cards();
+  for (var i=0;i<cs.length;i++) { var id = cs[i].getAttribute('data-id'); if (id) map[id] = cs[i]; }
+  for (var j=0;j<ids.length;j++) { var el = map[ids[j]]; if (el && el.parentNode === grid) grid.appendChild(el); }
+}
 
   function snapshotOrder() { var cs = cards(); var out = []; for (var i=0;i<cs.length;i++) { var id = cs[i].getAttribute('data-id'); if (id) out.push(id); } return out; }
 
@@ -466,7 +472,16 @@ function teFetchQ(ep, qs, opts){
       .catch(function(){ if (!usedLocal) loadLocal(); });
 
     var ticks = 0, maxTicks = 25;
-    var iv = setInterval(function(){ ticks += 1; if (LAST_ORDER && LAST_ORDER.length) applyOrder(LAST_ORDER); if (ticks >= maxTicks) clearInterval(iv); }, 200);
+var iv = setInterval(function(){
+  ticks += 1;
+  if (LAST_ORDER && LAST_ORDER.length) {
+    applyOrder(LAST_ORDER);
+    var cur = snapshotOrder();
+    var same = cur.length === LAST_ORDER.length && cur.every(function(v,i){ return v===LAST_ORDER[i]; });
+    if (same) { clearInterval(iv); return; }
+  }
+  if (ticks >= maxTicks) clearInterval(iv);
+}, 200);
   }
 
   function nearestCard(x, y) {

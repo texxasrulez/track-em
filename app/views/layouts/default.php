@@ -85,6 +85,9 @@ function te_active($p, $needle) {
   .form input[type="password"],
   .form input[type="number"],
   .form select {
+    background-color: var(--muted);
+    color: var(--text);
+    border-color: var(--border);
     width: 220px;
     display: inline-block;
     margin-right: 8px;
@@ -92,6 +95,9 @@ function te_active($p, $needle) {
   .form.form-inline input[type="text"],
   .form.form-inline input[type="password"],
   .form.form-inline select {
+    background-color: var(--muted);
+    color: var(--text);
+    border-color: var(--border);
     width: 160px;
   }
 

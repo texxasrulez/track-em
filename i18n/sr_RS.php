@@ -82,6 +82,7 @@ return [
   'save_dashboard'				=> 'Save Dashboard',
   'save_geo_settings'			=> 'Save Geo Settings',
   'scroll_wheel_zoom'			=> 'Scroll wheel zoom',
+  'security_and_limits'			=> 'Security &amp; Limits',
   'settings_readonly' 			=> 'This demo page renders config read-only for now.',
   'show_loc_btn'				=> 'Show locate button',
   'show_row_icons'				=> 'Show row icons',
