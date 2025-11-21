@@ -1,4 +1,4 @@
-# Track 'Em — Privacy‑friendly, self‑hosted site analytics (PHP)
+# Track 'Em - Privacy‑friendly, self‑hosted site analytics (PHP)
 
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/texxasrulez/track-em/total?style=plastic&logo=github&logoColor=white&label=Downloads&labelColor=blue&color=aqua)
 [![Github License](https://img.shields.io/github/license/texxasrulez/track-em?style=plastic&logo=github&label=License&labelColor=blue&color=coral)](https://github.com/texxasrulez/track-em/LICENSE)
@@ -8,7 +8,7 @@
 [![GitHub Forks](https://img.shields.io/github/forks/texxasrulez/track-em?style=plastic&logo=github&logoColor=white&label=Forks&labelColor=blue&color=darkorange)](https://github.com/texxasrulez/track-em/forks)
 [![Donate Paypal](https://img.shields.io/badge/Paypal-Money_Please!-blue.svg?style=plastic&labelColor=blue&color=forestgreen&logo=paypal)](https://www.paypal.me/texxasrulez)
 
-Track 'Em is a no‑nonsense, PHP‑native tracker and tiny dashboard you can drop into any site or subfolder. It records page views and lightweight metadata, respects user privacy, and gives you simple, fast admin views — **no external SaaS, no cookies unless you enable consent**, and no build toolchain.
+Track 'Em is a no‑nonsense, PHP‑native tracker and tiny dashboard you can drop into any site or subfolder. It records page views and lightweight metadata, respects user privacy, and gives you simple, fast admin views - **no external SaaS, no cookies unless you enable consent**, and no build toolchain.
 
 ---
 
@@ -21,14 +21,14 @@ Track 'Em is a no‑nonsense, PHP‑native tracker and tiny dashboard you can dr
 
 ## Highlights
 
-- **Zero‑dependency PHP app** — no Composer, no Node. Just PHP 8.0+ and MySQL/MariaDB.
-- **Privacy first** — honors Do‑Not‑Track; optional consent banner; IP anonymization/masking.
-- **Geo** — pluggable providers: free `ip-api.com` (with proxy option) or local **MaxMind GeoLite2 City** `.mmdb`.
-- **Fast** — single PDO connection; prepared statements; no ORM.
-- **Admin UI** — visitors table, charts/widgets, themes, plugins, and full settings.
-- **Plugins** — first‑party widgets: `visitors`, `realtime`, `maps`, `consent_banner`.
-- **I18n** — simple label files under `i18n/` with a validator, plus per‑session language switching.
-- **Operational sanity** — retention script, rate limiting on API, cron for Geo DB refresh.
+- **Zero‑dependency PHP app** - no Composer, no Node. Just PHP 8.0+ and MySQL/MariaDB.
+- **Privacy first** - honors Do‑Not‑Track; optional consent banner; IP anonymization/masking.
+- **Geo** - pluggable providers: free `ip-api.com` (with proxy option) or local **MaxMind GeoLite2 City** `.mmdb`.
+- **Fast** - single PDO connection; prepared statements; no ORM.
+- **Admin UI** - visitors table, charts/widgets, themes, plugins, and full settings.
+- **Plugins** - first‑party widgets: `visitors`, `realtime`, `maps`, `consent_banner`.
+- **I18n** - simple label files under `i18n/` with a validator, plus per‑session language switching.
+- **Operational sanity** - retention script, rate limiting on API, cron for Geo DB refresh.
 
 ---
 
@@ -153,22 +153,22 @@ return array (
 Key options (practical notes):
 
 - `base_url`: The mount path (e.g., `''` when at web root, or `/track-em` in a subfolder). Affects asset links and redirects.
-- `database`: MySQL/MariaDB connection — defaults live in code, but set these explicitly in production.
+- `database`: MySQL/MariaDB connection - defaults live in code, but set these explicitly in production.
 - `theme.active`: `"default"` or `"dark"` (runtime CSS is generated; placeholders exist under `/themes`).
 - `i18n.default`: Default locale like `en_US`. Upload `i18n/{LOCALE}.php` files to add languages.
 - `privacy`:
-  - `respect_dnt` — Skip tracking when the browser's Do‑Not‑Track is on.
-  - `require_consent` — Show/use the consent banner plugin and only track after "Allow".
-  - `ip_anonymize` + `ip_mask_bits` — Masks the lower bits of IPs before storing.
+  - `respect_dnt` - Skip tracking when the browser's Do‑Not‑Track is on.
+  - `require_consent` - Show/use the consent banner plugin and only track after "Allow".
+  - `ip_anonymize` + `ip_mask_bits` - Masks the lower bits of IPs before storing.
 - `geo`:
-  - `enabled` — store lat/lon + city/country when available.
-  - `provider` — `"ip-api"` (HTTP/HTTPS via proxy) or `"maxmind_local"`.
-  - `ip_api_base` — Point to your own HTTPS proxy if you don't want direct HTTP calls.
-  - `mm_license_key`, `mmdb_path` — For MaxMind local DB (auto‑download supported).
+  - `enabled` - store lat/lon + city/country when available.
+  - `provider` - `"ip-api"` (HTTP/HTTPS via proxy) or `"maxmind_local"`.
+  - `ip_api_base` - Point to your own HTTPS proxy if you don't want direct HTTP calls.
+  - `mm_license_key`, `mmdb_path` - For MaxMind local DB (auto‑download supported).
 - `rate_limit`:
-  - `enabled` — Throttle API endpoints.
-  - `window_sec`, `max_events` — e.g., 60 seconds, 120 events.
-- `retention.days` — Used by `scripts/retention_purge.php` to delete old rows.
+  - `enabled` - Throttle API endpoints.
+  - `window_sec`, `max_events` - e.g., 60 seconds, 120 events.
+- `retention.days` - Used by `scripts/retention_purge.php` to delete old rows.
 
 ---
 
@@ -228,11 +228,11 @@ Key screens:
 
 Built‑in plugins ship under `app/plugins/` and are managed via the **Plugins** screen and API.
 
-- `consent_banner` — drops a minimalist banner. Config keys:
+- `consent_banner` - drops a minimalist banner. Config keys:
 - `message`, `position` (`top`|`bottom`).
-- `visitors` — dashboard widget; no config.
-- `realtime` — near‑real‑time updates via server polling; no config.
-- `maps` — shows a map widget when geo is enabled.
+- `visitors` - dashboard widget; no config.
+- `realtime` - near‑real‑time updates via server polling; no config.
+- `maps` - shows a map widget when geo is enabled.
 
 Plugin assets are served via `?p=api.plugins.asset&plugin={id}&file=...`. Per‑plugin JSON configs are persisted under `storage/plugins/{id}/config.json` (the controller writes them atomically).
 
