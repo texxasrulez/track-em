@@ -15,7 +15,7 @@ Track 'Em is a no‑nonsense, PHP‑native tracker and tiny dashboard you can dr
 
 ## **Screenshot**
 
-![Alt text](/assets/images/screenshot.png?raw=true "Track Em Screenshot")
+![Alt text](assets/images/screenshot.png?raw=true "Track Em Screenshot")
 
 ---
 
