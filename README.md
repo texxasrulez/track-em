@@ -1,5 +1,6 @@
 # Track 'Em - Privacy‑friendly, self‑hosted site analytics (PHP)
 
+![Downloads](https://img.shields.io/github/downloads/texxasrulez/track-em/total?style=plastic&logo=github&logoColor=white&label=Downloads&labelColor=aqua&color=blue)
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/texxasrulez/track-em/total?style=plastic&logo=github&logoColor=white&label=Downloads&labelColor=blue&color=aqua)
 [![Github License](https://img.shields.io/github/license/texxasrulez/track-em?style=plastic&logo=github&label=License&labelColor=blue&color=coral)](https://github.com/texxasrulez/track-em/LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/texxasrulez/track-em?style=plastic&logo=github&label=Stars&labelColor=blue&color=deepskyblue)](https://github.com/texxasrulez/track-em/stargazers)
@@ -12,8 +13,7 @@ Track 'Em is a no‑nonsense, PHP‑native tracker and tiny dashboard you can dr
 
 ---
 
-**Screenshot**
------------
+## **Screenshot**
 
 ![Alt text](/assets/images/screenshot.png?raw=true "Track Em Screenshot")
 
@@ -95,17 +95,25 @@ track-em/
 ```html
 <script>
   // If Track 'Em is not at site root, set TE_ENDPOINT explicitly
-  window.TE_ENDPOINT = '/track-em/track.php';
+  window.TE_ENDPOINT = "/track-em/track.php";
 </script>
 <script async src="/track-em/assets/js/te.js"></script>
 ```
+
 This sends a small JSON payload (`path`, `lang`, `screen` info). If `fetch()` fails, it falls back to a 1×1 GIF ping.
 
 ### Pixel‑only fallback (no JS)
 
 ```html
-<img src="/track-em/track.php?p=/the/page&ts=<?=time()?>" alt="" width="1" height="1" style="position:absolute;left:-9999px;" />
+<img
+  src="/track-em/track.php?p=/the/page&ts=<?=time()?>"
+  alt=""
+  width="1"
+  height="1"
+  style="position:absolute;left:-9999px;"
+/>
 ```
+
 Append `?debug=1` to `track.php` while testing to get JSON back instead of a GIF.
 
 ---
@@ -116,38 +124,33 @@ Copy `config/config.sample.php` → `config/config.php` and adjust. Full sample 
 
 ```php
 <?php
-return array (
-  'base_url' => '',
-  'database' => 
-  array (
-    'host' => '127.0.0.1',
-    'port' => 3306,
-    'name' => '',
-    'user' => '',
-    'pass' => '',
-  ),
-  'theme' => 
-  array (
-    'active' => 'default',
-  ),
-  'i18n' => 
-  array (
-    'default' => 'en_US',
-  ),
-  'privacy' => 
-  array (
-    'respect_dnt' => true,
-    'require_consent' => false,
-    'ip_anonymize' => true,
-    'ip_mask_bits' => 16,
-  ),
-  'geo' => [
-  'enabled' => true,
-  'provider'   => 'ip-api',
-  'ip_api_base'=> 'http://ip-api.com/json'  // or point to your own HTTPS proxy
-],
-);
-
+return [
+  "base_url" => "",
+  "database" => [
+    "host" => "127.0.0.1",
+    "port" => 3306,
+    "name" => "",
+    "user" => "",
+    "pass" => "",
+  ],
+  "theme" => [
+    "active" => "default",
+  ],
+  "i18n" => [
+    "default" => "en_US",
+  ],
+  "privacy" => [
+    "respect_dnt" => true,
+    "require_consent" => false,
+    "ip_anonymize" => true,
+    "ip_mask_bits" => 16,
+  ],
+  "geo" => [
+    "enabled" => true,
+    "provider" => "ip-api",
+    "ip_api_base" => "http://ip-api.com/json", // or point to your own HTTPS proxy
+  ],
+];
 ```
 
 Key options (practical notes):
@@ -214,6 +217,7 @@ Public entry points are parameterized via `?p=`. Core routes:
 - `logout`
 
 Key screens:
+
 - **Dashboard**: simple metrics and widgets.
 - **Visitors**: filterable table, recent activity.
 - **Themes**: pick theme; runtime CSS vars sanitized.
@@ -337,6 +341,7 @@ Apache usually works out of the box with `index.php?p=...` routing; you can add 
 ---
 
 ## Donations
+
 This project uses a library written by a Ukranian citizen who is asking for help for his fellow Ukranians from Russian aggression. Lets help out Ukraine.
 
 https://leafletjs.com/
