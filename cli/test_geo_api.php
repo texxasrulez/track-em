@@ -4,10 +4,102 @@ declare(strict_types=1);
 
 $_SERVER["SCRIPT_NAME"] = "/cli/test_geo_api.php";
 $_SERVER["REQUEST_METHOD"] = "GET";
+$_SERVER["HTTP_HOST"] = "localhost";
+
+$sessionDir = sys_get_temp_dir() . "/trackem_test_sessions";
+if (!is_dir($sessionDir)) {
+    @mkdir($sessionDir, 0775, true);
+}
+ini_set("session.save_path", $sessionDir);
+
+$dataFile = __DIR__ . "/../app/data/visits.json";
+$cleanupDataFile = !is_file($dataFile);
+$seedRows = [
+    [
+        "id" => 1,
+        "ip" => "192.0.2.10",
+        "path" => "/",
+        "ts" => 1714600000,
+        "lat" => 32.7,
+        "lon" => -94.0,
+        "city" => "Longview",
+        "country" => "United States",
+        "user_agent" => "CLI Test",
+    ],
+    [
+        "id" => 2,
+        "ip" => "192.0.2.11",
+        "path" => "/pricing",
+        "ts" => 1714600100,
+        "lat" => 40.7,
+        "lon" => -74.0,
+        "city" => "New York",
+        "country" => "United States",
+        "user_agent" => "CLI Test",
+    ],
+    [
+        "id" => 3,
+        "ip" => "198.51.100.8",
+        "path" => "/docs",
+        "ts" => 1714600200,
+        "lat" => 51.5,
+        "lon" => -0.1,
+        "city" => "London",
+        "country" => "United Kingdom",
+        "user_agent" => "CLI Test",
+    ],
+    [
+        "id" => 4,
+        "ip" => "203.0.113.22",
+        "path" => "/contact",
+        "ts" => 1714600300,
+        "lat" => 48.8,
+        "lon" => 2.3,
+        "city" => "Paris",
+        "country" => "France",
+        "user_agent" => "CLI Test",
+    ],
+    [
+        "id" => 5,
+        "ip" => "203.0.113.23",
+        "path" => "/blog",
+        "ts" => 1714600400,
+        "lat" => 35.7,
+        "lon" => 139.7,
+        "city" => "Tokyo",
+        "country" => "Japan",
+        "user_agent" => "CLI Test",
+    ],
+    [
+        "id" => 6,
+        "ip" => "203.0.113.24",
+        "path" => "/checkout",
+        "ts" => 1714600500,
+        "lat" => -33.9,
+        "lon" => 151.2,
+        "city" => "Sydney",
+        "country" => "Australia",
+        "user_agent" => "CLI Test",
+    ],
+];
+@file_put_contents(
+    $dataFile,
+    json_encode(["items" => $seedRows], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES),
+    LOCK_EX,
+);
+register_shutdown_function(static function () use ($dataFile, $cleanupDataFile): void {
+    if ($cleanupDataFile && is_file($dataFile)) {
+        @unlink($dataFile);
+    }
+});
 
 require_once __DIR__ . "/../app/core/Bootstrap.php";
 
 use TrackEm\Controllers\ApiController;
+use TrackEm\Core\Security;
+
+Security::startSecureSession();
+$_SESSION["uid"] = 1;
 
 $cases = [
     [
@@ -26,7 +118,7 @@ $cases = [
         "label" => "paged-limit",
         "params" => ["limit" => 5, "page" => 2],
         "assert" => function (array $json): bool {
-            if (($json["page"] ?? null) !== 2) {
+            if (($json["page"] ?? null) !== 2 || ($json["pages"] ?? 0) < 2) {
                 return false;
             }
             return ($json["count"] ?? 0) <= 5;
