@@ -1,0 +1,23 @@
+{
+  "enabled": true,
+  "run_on_admin_load": true,
+  "admin_cooldown_minutes": 5,
+  "max_jobs_per_tick": 3,
+  "jobs": [
+    {
+      "job_id": "traffic_alerts.checks",
+      "interval_minutes": 15,
+      "active": true
+    },
+    {
+      "job_id": "anomaly_digest.refresh",
+      "interval_minutes": 60,
+      "active": true
+    },
+    {
+      "job_id": "static_reports.generate",
+      "interval_minutes": 360,
+      "active": true
+    }
+  ]
+}

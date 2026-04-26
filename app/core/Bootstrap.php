@@ -9,27 +9,28 @@ namespace TrackEm\Core;
  *   e.g. TrackEm\Core\Config => app/core/Config.php
  */
 spl_autoload_register(function ($class) {
-    if (strncmp($class, 'TrackEm\\', 9) !== 0) {
+    if (strncmp($class, "TrackEm\\", 9) !== 0) {
         return;
     }
-    $rel   = substr($class, 9);                 // strip 'TrackEm\'
-    $parts = explode('\\', $rel);               // [Core, Config] or [Controllers, AdminController]
+    $rel = substr($class, 9); // strip 'TrackEm\'
+    $parts = explode("\\", $rel); // [Core, Config] or [Controllers, AdminController]
     if ($parts) {
-        $parts[0] = strtolower($parts[0]);      // Core -> core, Controllers -> controllers, etc.
+        $parts[0] = strtolower($parts[0]); // Core -> core, Controllers -> controllers, etc.
     }
-    $path = __DIR__ . '/../' . implode('/', $parts) . '.php';
+    $path = __DIR__ . "/../" . implode("/", $parts) . ".php";
     if (is_file($path)) {
         require_once $path;
     }
 });
 
 /** Hard-require the core we need during boot to avoid autoload timing issues. */
-require_once __DIR__ . '/Config.php';
-require_once __DIR__ . '/Security.php';
-require_once __DIR__ . '/I18n.php';
-require_once __DIR__ . '/Controller.php';   // <-- base Controller
-require_once __DIR__ . '/Router.php';
-require_once __DIR__ . '/HookManager.php';
+require_once __DIR__ . "/Config.php";
+require_once __DIR__ . "/Security.php";
+require_once __DIR__ . "/I18n.php";
+require_once __DIR__ . "/Controller.php"; // <-- base Controller
+require_once __DIR__ . "/Router.php";
+require_once __DIR__ . "/HookManager.php";
+require_once __DIR__ . "/PluginDispatcher.php";
 
 Config::boot();
 Security::startSecureSession();

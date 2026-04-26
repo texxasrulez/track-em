@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "dashboard_notice": true,
+  "email_enabled": false,
+  "email_recipient": "",
+  "webhook_enabled": false,
+  "webhook_url": "",
+  "webhook_include_detail": false,
+  "spike_threshold_percent": 200,
+  "drop_threshold_percent": 60,
+  "new_country_alert": true,
+  "same_source_threshold": 40,
+  "bot_like_threshold": 60,
+  "probing_threshold": 25,
+  "quiet_hours_enabled": false,
+  "quiet_hours_start": "23:00",
+  "quiet_hours_end": "07:00",
+  "cooldown_minutes": 60,
+  "check_interval_minutes": 5
+}

@@ -1,0 +1,7 @@
+{
+  "id": "event_tracking",
+  "name": "Event Tracking",
+  "version": "0.1.0",
+  "description": "Lightweight named event tracking for simple clicks, downloads, plays, and custom JavaScript events.",
+  "admin_route": "event_tracking.admin"
+}

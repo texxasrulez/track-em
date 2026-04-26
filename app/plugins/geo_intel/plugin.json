@@ -1,0 +1,7 @@
+{
+  "id": "geo_intel",
+  "name": "Geo Intel",
+  "version": "0.1.0",
+  "description": "Show lightweight country and optional city summaries from existing geo-enriched visits.",
+  "admin_route": "geo_intel.admin"
+}

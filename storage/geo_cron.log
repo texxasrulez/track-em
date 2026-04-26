@@ -4,3 +4,10 @@ Fri Oct 17 12:00:04 2025 (1555831): Fatal Error Insufficient shared memory for i
 Sat Oct 18 12:00:06 2025 (2802404): Fatal Error Insufficient shared memory for interned strings buffer! (tried to allocate 134217936 bytes)
 Sun Oct 19 12:00:13 2025 (3881631): Fatal Error Insufficient shared memory for interned strings buffer! (tried to allocate 134217936 bytes)
 Mon Oct 20 12:00:17 2025 (1096225): Fatal Error Insufficient shared memory for interned strings buffer! (tried to allocate 134217936 bytes)
+Tue Oct 21 12:00:11 2025 (808354): Fatal Error Insufficient shared memory for interned strings buffer! (tried to allocate 134217936 bytes)
+[2025-10-22T17:00:14+00:00] GeoLite2 download: {"ok":true,"msg":"Downloaded","path":"\/home\/gene\/web\/genesworld.net\/public_html\/track-em\/cli\/..\/data\/GeoLite2-City.mmdb"}
+[2025-10-22T17:00:14+00:00] Backfill checked=0 updated=0
+Thu Oct 23 12:00:09 2025 (3255732): Fatal Error Insufficient shared memory for interned strings buffer! (tried to allocate 134217936 bytes)
+Fri Oct 24 12:00:03 2025 (139120): Fatal Error Insufficient shared memory for interned strings buffer! (tried to allocate 134217936 bytes)
+[2025-10-25T17:00:15+00:00] GeoLite2 download: {"ok":true,"msg":"Downloaded","path":"\/home\/gene\/web\/genesworld.net\/public_html\/track-em\/cli\/..\/data\/GeoLite2-City.mmdb"}
+[2025-10-25T17:00:15+00:00] Backfill checked=0 updated=0

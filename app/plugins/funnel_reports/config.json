@@ -1,0 +1,12 @@
+{
+  "enabled": true,
+  "report_range": "30d",
+  "funnels": [
+    {
+      "id": "main_funnel",
+      "name": "Main Funnel",
+      "active": true,
+      "steps_text": "Landing|contains_path|/\nProduct View|contains_path|/product\nCheckout|contains_path|/checkout\nPurchase|exact_path|/thank-you"
+    }
+  ]
+}

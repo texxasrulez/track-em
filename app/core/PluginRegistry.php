@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace TrackEm\Core;
 
-require_once __DIR__ . '/DB.php';
-require_once __DIR__ . '/Config.php';
+require_once __DIR__ . "/DB.php";
+require_once __DIR__ . "/Config.php";
 
 use PDO;
 
@@ -16,7 +16,7 @@ final class PluginRegistry
     public function __construct(?PDO $pdo = null, ?string $dir = null)
     {
         $this->pdo = $pdo ?: DB::pdo();
-        $this->dir = $dir ?: (__DIR__ . '/../../plugins');
+        $this->dir = $dir ?: __DIR__ . "/../plugins";
         $this->ensureTable();
         $this->syncWithFilesystem();
     }
@@ -26,15 +26,17 @@ final class PluginRegistry
         $out = [];
         $manifests = $this->discover();
         foreach ($manifests as $man) {
-            $row = $this->getDbRow((string)$man['id']);
+            $row = $this->getDbRow((string) $man["id"]);
             $out[] = [
-                'id'          => (string)$man['id'],
-                'name'        => (string)($man['name'] ?? $man['id']),
-                'version'     => (string)($man['version'] ?? '0.0.0'),
-                'description' => (string)($man['description'] ?? ''),
-                'schema'      => $this->normalizeSchema($man['configSchema'] ?? []),
-                'enabled'     => (int)($row['enabled'] ?? 0),
-                'config'      => $this->jsonDecode((string)($row['config'] ?? '{}')),
+                "id" => (string) $man["id"],
+                "name" => (string) ($man["name"] ?? $man["id"]),
+                "version" => (string) ($man["version"] ?? "0.0.0"),
+                "description" => (string) ($man["description"] ?? ""),
+                "schema" => $this->normalizeSchema($man["configSchema"] ?? []),
+                "enabled" => (int) ($row["enabled"] ?? 0),
+                "config" => $this->jsonDecode(
+                    (string) ($row["config"] ?? "{}"),
+                ),
             ];
         }
         return $out;
@@ -45,7 +47,7 @@ final class PluginRegistry
         $st = $this->pdo->prepare(
             "INSERT INTO plugins (id, enabled, config)
              VALUES (?, ?, COALESCE((SELECT config FROM plugins WHERE id=?), '{}'))
-             ON DUPLICATE KEY UPDATE enabled=VALUES(enabled)"
+             ON DUPLICATE KEY UPDATE enabled=VALUES(enabled)",
         );
         $st->execute([$id, $enabled ? 1 : 0, $id]);
     }
@@ -56,17 +58,21 @@ final class PluginRegistry
         $st = $this->pdo->prepare(
             "INSERT INTO plugins (id, enabled, config)
              VALUES (?, 1, ?)
-             ON DUPLICATE KEY UPDATE config=VALUES(config)"
+             ON DUPLICATE KEY UPDATE config=VALUES(config)",
         );
         $st->execute([$id, $json]);
     }
 
     public function getConfig(string $id, array $default = []): array
     {
-        $st = $this->pdo->prepare("SELECT config FROM plugins WHERE id=? LIMIT 1");
+        $st = $this->pdo->prepare(
+            "SELECT config FROM plugins WHERE id=? LIMIT 1",
+        );
         $st->execute([$id]);
         $row = $st->fetch();
-        return $row ? $this->jsonDecode((string)($row['config'] ?? '{}')) : $default;
+        return $row
+            ? $this->jsonDecode((string) ($row["config"] ?? "{}"))
+            : $default;
     }
 
     /* ---------- internals ---------- */
@@ -78,7 +84,7 @@ final class PluginRegistry
                 id VARCHAR(64) PRIMARY KEY,
                 enabled TINYINT(1) NOT NULL DEFAULT 1,
                 config JSON NULL
-             )"
+             )",
         );
     }
 
@@ -86,8 +92,10 @@ final class PluginRegistry
     {
         $manifests = $this->discover();
         foreach ($manifests as $man) {
-            $id = (string)$man['id'];
-            $st = $this->pdo->prepare("INSERT IGNORE INTO plugins (id, enabled, config) VALUES (?, 1, '{}')");
+            $id = (string) $man["id"];
+            $st = $this->pdo->prepare(
+                "INSERT IGNORE INTO plugins (id, enabled, config) VALUES (?, 1, '{}')",
+            );
             $st->execute([$id]);
         }
     }
@@ -95,25 +103,31 @@ final class PluginRegistry
     private function discover(): array
     {
         $out = [];
-        if (!is_dir($this->dir)) return $out;
+        if (!is_dir($this->dir)) {
+            return $out;
+        }
 
         $list = scandir($this->dir);
-        if (!is_array($list)) return $out;
+        if (!is_array($list)) {
+            return $out;
+        }
 
         foreach ($list as $d) {
-            if ($d === '.' || $d === '..') continue;
-            $file = $this->dir . '/' . $d . '/plugin.json';
+            if ($d === "." || $d === "..") {
+                continue;
+            }
+            $file = $this->dir . "/" . $d . "/plugin.json";
             if (is_file($file)) {
-                $data = (string)file_get_contents($file);
+                $data = (string) file_get_contents($file);
                 $j = $this->jsonDecode($data);
-                if (isset($j['id'])) {
+                if (isset($j["id"])) {
                     $out[] = $j;
                 }
             }
         }
         usort($out, function ($a, $b) {
-            $ai = (string)($a['id'] ?? '');
-            $bi = (string)($b['id'] ?? '');
+            $ai = (string) ($a["id"] ?? "");
+            $bi = (string) ($b["id"] ?? "");
             return strcmp($ai, $bi);
         });
         return $out;
@@ -121,7 +135,9 @@ final class PluginRegistry
 
     private function getDbRow(string $id): ?array
     {
-        $st = $this->pdo->prepare("SELECT id, enabled, config FROM plugins WHERE id=? LIMIT 1");
+        $st = $this->pdo->prepare(
+            "SELECT id, enabled, config FROM plugins WHERE id=? LIMIT 1",
+        );
         $st->execute([$id]);
         $row = $st->fetch();
         return $row ?: null;
@@ -129,21 +145,31 @@ final class PluginRegistry
 
     private function normalizeSchema($schema): array
     {
-        if (!is_array($schema)) return ['fields' => []];
-        $fieldsIn = isset($schema['fields']) && is_array($schema['fields']) ? $schema['fields'] : [];
+        if (!is_array($schema)) {
+            return ["fields" => []];
+        }
+        $fieldsIn =
+            isset($schema["fields"]) && is_array($schema["fields"])
+                ? $schema["fields"]
+                : [];
         $fieldsOut = [];
         foreach ($fieldsIn as $f) {
-            if (!is_array($f) || empty($f['name'])) continue;
+            if (!is_array($f) || empty($f["name"])) {
+                continue;
+            }
             $fieldsOut[] = [
-                'name'    => (string)$f['name'],
-                'label'   => (string)($f['label'] ?? $f['name']),
-                'type'    => (string)($f['type'] ?? 'text'), // text|number|checkbox|select
-                'help'    => (string)($f['help'] ?? ''),
-                'options' => isset($f['options']) && is_array($f['options']) ? $f['options'] : [],
-                'default' => $f['default'] ?? null,
+                "name" => (string) $f["name"],
+                "label" => (string) ($f["label"] ?? $f["name"]),
+                "type" => (string) ($f["type"] ?? "text"), // text|number|checkbox|select
+                "help" => (string) ($f["help"] ?? ""),
+                "options" =>
+                    isset($f["options"]) && is_array($f["options"])
+                        ? $f["options"]
+                        : [],
+                "default" => $f["default"] ?? null,
             ];
         }
-        return ['fields' => $fieldsOut];
+        return ["fields" => $fieldsOut];
     }
 
     private function jsonDecode(string $s): array

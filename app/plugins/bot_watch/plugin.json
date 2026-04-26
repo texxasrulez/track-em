@@ -1,0 +1,7 @@
+{
+  "id": "bot_watch",
+  "name": "Bot Watch",
+  "version": "0.1.0",
+  "description": "Flags likely bot, scraper, and probing behavior for admin review without blocking traffic.",
+  "admin_route": "bot_watch.admin"
+}

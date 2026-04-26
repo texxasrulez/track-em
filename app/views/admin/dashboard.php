@@ -1,14 +1,5 @@
 <?php
-use TrackEm\Core\I18n;
-?>
-<script>
-  (function(){
-    try {
-      document.cookie = 'te_consent=allow; path=/; SameSite=Lax';
-    } catch(e) {}
-  })();
-</script>
-
+use TrackEm\Core\I18n; ?>
 <style>
 .visitor-ip img {
     vertical-align: middle;
@@ -18,6 +9,17 @@ use TrackEm\Core\I18n;
     background: transparent !important;
     border: 0 !important;
     box-shadow: none !important;
+}
+.te-dot-marker-wrap {
+    background: transparent !important;
+    border: 0 !important;
+}
+.te-dot-marker {
+    display: block;
+    border-radius: 999px;
+    border: 2px solid rgba(0, 0, 0, 0.55);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
 }
 .card-handle {
     position: relative;
@@ -64,32 +66,50 @@ body.gear-hovering .card-handle:hover .map-gear {
     border-color: var(--border, #2a3340) !important;
 }
 </style>
-<?php $__base = rtrim(str_replace('\\','/', dirname($_SERVER['SCRIPT_NAME'] ?? '/')), '/'); if ($__base === '/') $__base = ''; ?>
+<?php
+$__base = rtrim(
+    str_replace("\\", "/", dirname($_SERVER["SCRIPT_NAME"] ?? "/")),
+    "/",
+);
+if ($__base === "/") {
+    $__base = "";
+}
+?>
 <?php
 $__cfg = \TrackEm\Core\Config::instance()->all();
-$__dash = isset($__cfg['dashboard']) && is_array($__cfg['dashboard']) ? $__cfg['dashboard'] : array();
-$__row_limit = (int)(isset($__dash['row_limit']) ? $__dash['row_limit'] : 200);
-$__show_icons = !empty($__dash['show_icons']);
-$__ip_tooltips = !empty($__dash['ip_tooltips']);
-$__map = isset($__dash['map']) && is_array($__dash['map']) ? $__dash['map'] : array();
+$__dash =
+    isset($__cfg["dashboard"]) && is_array($__cfg["dashboard"])
+        ? $__cfg["dashboard"]
+        : [];
+$__row_limit = (int) (isset($__dash["row_limit"]) ? $__dash["row_limit"] : 200);
+$__show_icons = !empty($__dash["show_icons"]);
+$__ip_tooltips = !empty($__dash["ip_tooltips"]);
+$__map =
+    isset($__dash["map"]) && is_array($__dash["map"]) ? $__dash["map"] : [];
 ?>
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:12px;flex-wrap:wrap">
-  <h3 style="margin:0"><?= I18n::t('nav_dashboard','Dashboard') ?></h3>
+  <h3 style="margin:0"><?= I18n::t("nav_dashboard", "Dashboard") ?></h3>
   <div style="display:flex;gap:12px;align-items:center;">
-    <label>Grid columns:
+    <label><?= I18n::t("grid_columns", "Grid columns") ?>:
       <select id="grid-cols">
-        <option value="1"><?= I18n::t('1','1') ?></option>
-        <option value="2" selected><?= I18n::t('2','2') ?></option>
-        <option value="3"><?= I18n::t('3','3') ?></option>
+        <option value="1"><?= I18n::t("1", "1") ?></option>
+        <option value="2" selected><?= I18n::t("2", "2") ?></option>
+        <option value="3"><?= I18n::t("3", "3") ?></option>
       </select>
     </label>
-    <label>Timeframe:
+    <label><?= I18n::t("timeframe", "Timeframe") ?>:
       <select id="timeframe">
-        <option value="day"><?= I18n::t('today','Today') ?></option>
-        <option value="week"><?= I18n::t('this_week','This Week') ?></option>
-        <option value="month"><?= I18n::t('this_month','This Month') ?></option>
-        <option value="year"><?= I18n::t('this_year','This Year') ?></option>
-        <option value="all" selected><?= I18n::t('all_time','All time') ?></option>
+        <option value="day"><?= I18n::t("today", "Today") ?></option>
+        <option value="week"><?= I18n::t("this_week", "This Week") ?></option>
+        <option value="month"><?= I18n::t(
+            "this_month",
+            "This Month",
+        ) ?></option>
+        <option value="year"><?= I18n::t("this_year", "This Year") ?></option>
+        <option value="all" selected><?= I18n::t(
+            "all_time",
+            "All time",
+        ) ?></option>
       </select>
     </label>
   </div>
@@ -117,6 +137,21 @@ $__map = isset($__dash['map']) && is_array($__dash['map']) ? $__dash['map'] : ar
     background: var(--muted, #0f1318);
     color: var(--text, #e8e8e8);
     font-size: 11px;
+}
+.repeat-badge {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 6px;
+    padding: 2px 6px;
+    border-radius: 999px;
+    border: 1px solid var(--border, #2a3340);
+    font-size: 11px;
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.06);
+}
+#recent-auto-indicator {
+    font-size: 12px;
+    opacity: 0.75;
 }
 .error {
     margin-top: 8px;
@@ -184,7 +219,7 @@ $__map = isset($__dash['map']) && is_array($__dash['map']) ? $__dash['map'] : ar
     position: fixed;
     left: 0;
     top: 0;
-    width: 360px;
+    width: 460px;
     max-width: 92vw;
     max-height: 80vh;
     overflow: auto;
@@ -209,6 +244,7 @@ $__map = isset($__dash['map']) && is_array($__dash['map']) ? $__dash['map'] : ar
 .sheet label {
     font-size: 13px;
     min-width: 140px;
+    overflow-wrap: anywhere;
 }
 .sheet input[type="text"],
 .sheet select,
@@ -222,7 +258,7 @@ $__map = isset($__dash['map']) && is_array($__dash['map']) ? $__dash['map'] : ar
 }
 .sheet .grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
 }
 .sheet .btns {
@@ -287,11 +323,61 @@ $__map = isset($__dash['map']) && is_array($__dash['map']) ? $__dash['map'] : ar
 
 <div class="grid" id="dash-grid" style="display:grid;grid-template-columns:repeat(2, 1fr);gap:12px">
   <div class="card" data-id="recent" draggable="false">
-    <div class="card-handle"><?= I18n::t('recent_visits','Recent Visits') ?></div>
-    <div class="hint"><?= I18n::t('api','API') ?>: <code id="api-url"></code></div>
+    <div class="card-handle"><?= I18n::t(
+        "recent_visits",
+        "Recent Visits",
+    ) ?></div>
+    <div class="hint"><?= I18n::t(
+        "api",
+        "API",
+    ) ?>: <code id="api-url"></code></div>
     <div id="recent-error" class="error" style="display:none"></div>
+    <div class="recent-controls" style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0;flex-wrap:wrap">
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px">
+        <?= I18n::t("per_page", "Per page") ?>:
+        <select id="recent-per" style="padding:4px 8px;border-radius:6px;border:1px solid var(--border,#2a3340);background:transparent;color:inherit">
+          <option value="25">25</option>
+          <option value="50" selected>50</option>
+          <option value="100">100</option>
+          <option value="200">200</option>
+        </select>
+      </label>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <button id="recent-refresh" type="button" style="padding:4px 8px;border-radius:6px;border:1px solid var(--border,#2a3340);background:transparent;color:inherit;cursor:pointer">
+          <?= I18n::t("refresh", "Refresh") ?>
+        </button>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px">
+          <input type="checkbox" id="recent-auto" checked>
+          <span id="recent-auto-text" data-label="<?= I18n::t(
+              "auto_refresh_label",
+              "Auto refresh",
+          ) ?>"><?= I18n::t("auto_refresh_label", "Auto refresh") ?></span>
+        </label>
+        <span id="recent-auto-indicator"> </span>
+        <span id="recent-page-info" style="font-size:12px;opacity:.75"> </span>
+        <div style="display:flex;gap:6px;align-items:center">
+          <button id="recent-prev" type="button" style="padding:4px 8px;border-radius:6px;border:1px solid var(--border,#2a3340);background:transparent;color:inherit;cursor:pointer">&lsaquo; <?= I18n::t(
+              "prev",
+              "Prev",
+          ) ?></button>
+          <button id="recent-next" type="button" style="padding:4px 8px;border-radius:6px;border:1px solid var(--border,#2a3340);background:transparent;color:inherit;cursor:pointer"><?= I18n::t(
+              "next",
+              "Next",
+          ) ?> &rsaquo;</button>
+        </div>
+      </div>
+    </div>
     <table>
-      <thead><tr><th><?= I18n::t('id','ID') ?></th><th><?= I18n::t('ip','IP') ?></th><th><?= I18n::t('path','Path') ?></th><th><?= I18n::t('browser','Browser') ?></th><th><?= I18n::t('os','OS') ?></th><th><?= I18n::t('when','When') ?></th></tr></thead>
+      <thead><tr><th><?= I18n::t("id", "ID") ?></th><th><?= I18n::t(
+    "ip",
+    "IP",
+) ?></th><th><?= I18n::t("path", "Path") ?></th><th><?= I18n::t(
+    "browser",
+    "Browser",
+) ?></th><th><?= I18n::t("os", "OS") ?></th><th><?= I18n::t(
+    "when",
+    "When",
+) ?></th></tr></thead>
       <tbody id="recent-body"></tbody>
     </table>
   </div>
@@ -305,57 +391,141 @@ $__map = isset($__dash['map']) && is_array($__dash['map']) ? $__dash['map'] : ar
   </div>
 
   <div class="card" data-id="realtime" draggable="false">
-    <div class="card-handle"><?= I18n::t('realtime','Realtime') ?></div>
+    <div class="card-handle"><?= I18n::t("realtime", "Realtime") ?></div>
     <div id="realtime-error" class="error" style="display:none"></div>
     <div id="realtime"></div>
   </div>
 </div>
 
 <div id="map-settings-sheet" class="sheet" aria-hidden="true" role="dialog">
-  <h4><?= I18n::t('map_settings','Map settings') ?></h4>
-  <div class="row"><label><?= I18n::t('basemap','Basemap') ?></label>
+  <h4><?= I18n::t("map_settings", "Map settings") ?></h4>
+  <div class="row"><label><?= I18n::t("basemap", "Basemap") ?></label>
     <select id="ms-basemap">
-      <option value="osm"><?= I18n::t('openstreetmap','OpenStreetMap') ?></option>
-      <option value="carto-positron"><?= I18n::t('carto_positron','Carto Positron') ?></option>
-      <option value="carto-darkmatter"><?= I18n::t('carto_darkmatter','Carto DarkMatter') ?></option>
-      <option value="esri-satellite"><?= I18n::t('esri_satellite','Esri Satellite') ?></option>
+      <option value="osm"><?= I18n::t(
+          "openstreetmap",
+          "OpenStreetMap",
+      ) ?></option>
+      <option value="carto-positron"><?= I18n::t(
+          "carto_positron",
+          "Carto Positron",
+      ) ?></option>
+      <option value="carto-darkmatter"><?= I18n::t(
+          "carto_darkmatter",
+          "Carto DarkMatter",
+      ) ?></option>
+      <option value="esri-satellite"><?= I18n::t(
+          "esri_satellite",
+          "Esri Satellite",
+      ) ?></option>
     </select>
   </div>
   <div class="grid">
-    <div class="row"><label><?= I18n::t('max_zoom','Max zoom') ?></label><input type="number" id="ms-maxzoom" min="0" max="22"></div>
-    <div class="row"><label><?= I18n::t('refresh_s','Refresh (s)') ?></label><input type="number" id="ms-refresh" min="5" max="3600"></div>
+    <div class="row"><label><?= I18n::t(
+        "max_zoom",
+        "Max zoom",
+    ) ?></label><input type="number" id="ms-maxzoom" min="0" max="22"></div>
+    <div class="row"><label><?= I18n::t(
+        "refresh_s",
+        "Refresh (s)",
+    ) ?></label><input type="number" id="ms-refresh" min="5" max="3600"></div>
   </div>
-  <div class="row"><label><input type="checkbox" id="ms-remember"> <?= I18n::t('rem_last_view','Remember last view') ?></label></div>
-  <div class="row"><label><input type="checkbox" id="ms-autofit"> <?= I18n::t('auto_fit_load','Auto-fit on load') ?></label></div>
-  <div class="row"><label><input type="checkbox" id="ms-scroll"> <?= I18n::t('scroll_wheel_zoom','Scroll wheel zoom') ?></label></div>
-  <div class="row"><label><input type="checkbox" id="ms-dragging"> <?= I18n::t('dragging','Dragging') ?></label></div>
-  <div class="row"><label><input type="checkbox" id="ms-locate"> <?= I18n::t('show_loc_btn','Show locate button') ?></label></div>
+  <div class="row"><label><input type="checkbox" id="ms-remember"> <?= I18n::t(
+      "rem_last_view",
+      "Remember last view",
+  ) ?></label></div>
+  <div class="row"><label><input type="checkbox" id="ms-autofit"> <?= I18n::t(
+      "auto_fit_load",
+      "Auto-fit on load",
+  ) ?></label></div>
+  <div class="row"><label><input type="checkbox" id="ms-scroll"> <?= I18n::t(
+      "scroll_wheel_zoom",
+      "Scroll wheel zoom",
+  ) ?></label></div>
+  <div class="row"><label><input type="checkbox" id="ms-dragging"> <?= I18n::t(
+      "dragging",
+      "Dragging",
+  ) ?></label></div>
+  <div class="row"><label><input type="checkbox" id="ms-locate"> <?= I18n::t(
+      "show_loc_btn",
+      "Show locate button",
+  ) ?></label></div>
   <hr style="border:none;border-top:1px solid var(--border,#2a3340);margin:8px 0">
-  <div class="row"><label><input type="checkbox" id="ms-cluster" disabled title="Clustering depends on server plugin"> <?= I18n::t('enable_clustering','Enable clustering') ?></label></div>
+  <div class="row"><label><input type="checkbox" id="ms-cluster"> <?= I18n::t(
+      "enable_clustering",
+      "Enable clustering",
+  ) ?></label></div>
   <div class="grid">
-    <div class="row"><label><?= I18n::t('cluster_radius','Cluster radius') ?></label><input type="number" id="ms-cluster-radius" min="10" max="120"></div>
-    <div class="row"><label><?= I18n::t('disable_at_zoom','Disable @ zoom') ?></label><input type="number" id="ms-cluster-disable" min="0" max="22"></div>
+    <div class="row"><label><?= I18n::t(
+        "cluster_radius",
+        "Cluster radius",
+    ) ?></label><input type="number" id="ms-cluster-radius" min="10" max="120"></div>
+    <div class="row"><label><?= I18n::t(
+        "disable_at_zoom",
+        "Disable @ zoom",
+    ) ?></label><input type="number" id="ms-cluster-disable" min="0" max="22"></div>
   </div>
-  <div class="row"><label><input type="checkbox" id="ms-spiderfy"> <?= I18n::t('spider_on_max_zoom','Spiderfy on max zoom') ?></label></div>
+  <div class="row"><label><input type="checkbox" id="ms-spiderfy"> <?= I18n::t(
+      "spider_on_max_zoom",
+      "Spiderfy on max zoom",
+  ) ?></label></div>
   <hr style="border:none;border-top:1px solid var(--border,#2a3340);margin:8px 0">
-  <div class="row"><label><?= I18n::t('marker_style','Marker style') ?></label>
-    <select id="ms-marker-style"><option value="dot"><?= I18n::t('dot','Dot') ?></option><option value="marker"><?= I18n::t('marker','Marker') ?></option></select>
+  <div class="row"><label><?= I18n::t("marker_style", "Marker style") ?></label>
+    <select id="ms-marker-style"><option value="dot"><?= I18n::t(
+        "dot",
+        "Dot",
+    ) ?></option><option value="marker"><?= I18n::t(
+    "marker",
+    "Marker",
+) ?></option></select>
   </div>
-  <div class="row"><label><?= I18n::t('dot_size_px','Dot size (px)') ?></label><input type="number" id="ms-marker-size" min="6" max="24"></div>
-  <div class="row subtle"><?= I18n::t('popup_fields','Popup fields') ?>:</div>
+  <div class="row"><label><?= I18n::t(
+      "dot_size_px",
+      "Dot size (px)",
+  ) ?></label><input type="number" id="ms-marker-size" min="6" max="24"></div>
+  <div class="row subtle"><?= I18n::t("popup_fields", "Popup fields") ?>:</div>
   <div class="grid">
-    <label><input type="checkbox" class="ms-popup" value="ip"> <?= I18n::t('ip','IP') ?></label>
-    <label><input type="checkbox" class="ms-popup" value="path"> <?= I18n::t('path','Path') ?></label>
-    <label><input type="checkbox" class="ms-popup" value="ts"> <?= I18n::t('time','Time') ?></label>
-    <label><input type="checkbox" class="ms-popup" value="city"> <?= I18n::t('city','City') ?></label>
-    <label><input type="checkbox" class="ms-popup" value="country"> <?= I18n::t('country','Country') ?></label>
-    <label><input type="checkbox" class="ms-popup" value="coords"> <?= I18n::t('coords','Coords') ?></label>
+    <label><input type="checkbox" class="ms-popup" value="ip"> <?= I18n::t(
+        "ip",
+        "IP",
+    ) ?></label>
+    <label><input type="checkbox" class="ms-popup" value="path"> <?= I18n::t(
+        "path",
+        "Path",
+    ) ?></label>
+    <label><input type="checkbox" class="ms-popup" value="ts"> <?= I18n::t(
+        "time",
+        "Time",
+    ) ?></label>
+    <label><input type="checkbox" class="ms-popup" value="city"> <?= I18n::t(
+        "city",
+        "City",
+    ) ?></label>
+    <label><input type="checkbox" class="ms-popup" value="country"> <?= I18n::t(
+        "country",
+        "Country",
+    ) ?></label>
+    <label><input type="checkbox" class="ms-popup" value="coords"> <?= I18n::t(
+        "coords",
+        "Coords",
+    ) ?></label>
   </div>
-  <div class="row"><label><input type="checkbox" id="ms-mask-ip"> <?= I18n::t('mask_ip_abc','Mask IP (a.b.c.0)') ?></label></div>
+  <div class="row"><label><input type="checkbox" id="ms-mask-ip"> <?= I18n::t(
+      "mask_ip_abc",
+      "Mask IP (a.b.c.0)",
+  ) ?></label></div>
   <div class="btns">
-    <button id="ms-reset" type="button"><?= I18n::t('reset','Reset') ?></button>
-    <button id="ms-close" type="button"><?= I18n::t('close','Close') ?></button>
-    <button id="ms-save" type="button"><strong><?= I18n::t('save','Save') ?></strong></button>
+    <button id="ms-reset" type="button"><?= I18n::t(
+        "reset",
+        "Reset",
+    ) ?></button>
+    <button id="ms-close" type="button"><?= I18n::t(
+        "close",
+        "Close",
+    ) ?></button>
+    <button id="ms-save" type="button"><strong><?= I18n::t(
+        "save",
+        "Save",
+    ) ?></strong></button>
   </div>
 </div>
 
@@ -370,6 +540,7 @@ $__map = isset($__dash['map']) && is_array($__dash['map']) ? $__dash['map'] : ar
 (function(){
   var raw = (location.pathname||'').replace(/\/index\.php.*$/,'').replace(/\/+$/,'');
   window.__TE_BASE = raw || '';
+  window.__TE_CSRF = <?= json_encode(\TrackEm\Core\Security::csrfToken()) ?>;
   window.__teApi = function(ep){
     var root = window.__TE_BASE;
     var a = root + '/?p=' + encodeURIComponent(ep);
@@ -524,7 +695,10 @@ var iv = setInterval(function(){
     var payload = { order: snapshotOrder(), cols: parseInt(colsSel.value, 10) || 2 };
     teFetch('api.layout.save', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': window.__TE_CSRF || ''
+      },
       body: JSON.stringify(payload),
       credentials: 'same-origin',
       cache: 'no-store'
@@ -557,6 +731,126 @@ var iv = setInterval(function(){
   var mapErr = document.getElementById('map-error');
   var apiCode = document.getElementById('api-url');
   var tfSel = document.getElementById('timeframe');
+  var perSel = document.getElementById('recent-per');
+  var pageInfo = document.getElementById('recent-page-info');
+  var prevBtn = document.getElementById('recent-prev');
+  var nextBtn = document.getElementById('recent-next');
+  var refreshBtn = document.getElementById('recent-refresh');
+  var autoToggle = document.getElementById('recent-auto');
+  var autoIndicator = document.getElementById('recent-auto-indicator');
+  var autoLabel = document.getElementById('recent-auto-text');
+
+  var pager = {
+    page: 1,
+    per: perSel ? Math.max(1, parseInt(perSel.value, 10) || 50) : 50,
+    pages: 1
+  };
+  var RECENT_PAGER_KEY = 'te.recentPager';
+  var AUTO_PREF_KEY = 'te.recentAuto';
+  var autoTimer = null;
+  var autoRemaining = 0;
+  var isRecentLoading = false;
+  var LABEL_REPEAT = <?= json_encode(I18n::t("repeat", "Repeat")) ?>;
+  var LABEL_SINCE_LAST = <?= json_encode(
+      I18n::t("since_last", "since last"),
+  ) ?>;
+  var LABEL_AUTO_IN = <?= json_encode(
+      I18n::t("auto_in_s", "Auto in {seconds}s"),
+  ) ?>;
+  var LABEL_NO_VISITORS = <?= json_encode(
+      I18n::t("no_visitors", "No visitors"),
+  ) ?>;
+  var LABEL_NO_VISITORS_PAGE = <?= json_encode(
+      I18n::t("no_visitors_this_page", "No visitors on this page"),
+  ) ?>;
+  var LABEL_SHOWING_RANGE_TOTAL = <?= json_encode(
+      I18n::t("showing_range_of_total", "Showing {start}-{end} of {total}"),
+  ) ?>;
+  var LABEL_FETCH_FAILED = <?= json_encode(
+      I18n::t("fetch_failed", "Fetch failed: {error}"),
+  ) ?>;
+  var LABEL_POPUP_IP = <?= json_encode(I18n::t("ip", "IP")) ?>;
+  var LABEL_POPUP_PATH = <?= json_encode(I18n::t("path", "Path")) ?>;
+  var LABEL_POPUP_WHEN = <?= json_encode(I18n::t("when", "When")) ?>;
+  var LABEL_POPUP_LOC = <?= json_encode(I18n::t("location_short", "Loc")) ?>;
+  var LABEL_POPUP_COORDS = <?= json_encode(I18n::t("coords", "Coords")) ?>;
+  var LABEL_SEEN_TIMES = <?= json_encode(
+      I18n::t("seen_times", "Seen {count} times"),
+  ) ?>;
+  var AUTO_LABEL_BASE = autoLabel ? (autoLabel.getAttribute('data-label') || autoLabel.textContent || 'Auto') : 'Auto';
+  (function seedPagerPrefs(){
+    var perVal = pager.per;
+    var pageVal = pager.page;
+    try {
+      var saved = JSON.parse(localStorage.getItem(RECENT_PAGER_KEY) || 'null');
+      if (saved && typeof saved === 'object') {
+        if (saved.per && isFinite(saved.per)) perVal = Math.max(1, parseInt(saved.per, 10) || perVal);
+        if (saved.page && isFinite(saved.page)) pageVal = Math.max(1, parseInt(saved.page, 10) || pageVal);
+        if (tfSel && saved.timeframe && saved.timeframe !== tfSel.value) {
+          pageVal = 1;
+        }
+      }
+    } catch(e){}
+    pager.per = perVal;
+    pager.page = pageVal;
+    if (perSel) perSel.value = String(pager.per);
+  })();
+  (function seedAutoPref(){
+    if (!autoToggle) return;
+    var enabled = true;
+    try {
+      var saved = localStorage.getItem(AUTO_PREF_KEY);
+      if (saved !== null) enabled = saved !== '0';
+    } catch(e){}
+    autoToggle.checked = enabled;
+  })();
+
+  function autoInterval(){
+    var secs = parseInt((cfg && cfg.refresh_seconds) ? cfg.refresh_seconds : 15, 10);
+    if (!isFinite(secs) || secs < 5) secs = 15;
+    return Math.max(5, secs);
+  }
+  function updateAutoLabel(){
+    if (!autoLabel) return;
+    autoLabel.textContent = AUTO_LABEL_BASE + ' (' + autoInterval() + 's)';
+  }
+  function updateAutoIndicator(){
+    if (!autoIndicator) return;
+    if (!autoToggle || !autoToggle.checked) {
+      autoIndicator.textContent = '';
+      return;
+    }
+    var remaining = Math.max(0, autoRemaining);
+    autoIndicator.textContent = LABEL_AUTO_IN.replace('{seconds}', String(remaining));
+  }
+  function resetAutoCountdown(){
+    autoRemaining = autoInterval();
+    updateAutoIndicator();
+  }
+  function stopAutoRefresh(){
+    if (autoTimer) {
+      clearInterval(autoTimer);
+      autoTimer = null;
+    }
+    updateAutoIndicator();
+  }
+  function startAutoRefresh(){
+    stopAutoRefresh();
+    if (!autoToggle || !autoToggle.checked) return;
+    resetAutoCountdown();
+    autoTimer = setInterval(function(){
+      if (isRecentLoading) return;
+      autoRemaining--;
+      if (autoRemaining <= 0) {
+        fetchGeo();
+        autoRemaining = autoInterval();
+      }
+      updateAutoIndicator();
+    }, 1000);
+  }
+  updateAutoLabel();
+  if (autoToggle && autoToggle.checked) resetAutoCountdown();
+  else updateAutoIndicator();
 
   if (apiCode){
     var pair = window.__teApi('api.geo');
@@ -574,13 +868,14 @@ var iv = setInterval(function(){
 
   function tfRange(value){
     var now = Math.floor(Date.now()/1000);
+    var rowLimit = Math.max(1, <?php echo (int) $__row_limit; ?>);
     switch (value) {
-      case 'day':   return { since: now - 1*86400,  until: now, limit: 1000 };
-      case 'week':  return { since: now - 7*86400,  until: now, limit: 5000 };
-      case 'month': return { since: now - 30*86400, until: now, limit: 20000 };
-      case 'year':  return { since: now - 365*86400,until: now, limit: 100000 };
+      case 'day':   return { since: now - 1*86400,  until: now, limit: rowLimit };
+      case 'week':  return { since: now - 7*86400,  until: now, limit: rowLimit };
+      case 'month': return { since: now - 30*86400, until: now, limit: rowLimit };
+      case 'year':  return { since: now - 365*86400,until: now, limit: rowLimit };
       case 'all':
-      default:      return { since: null,            until: now, limit: 200000 };
+      default:      return { since: null,            until: now, limit: rowLimit };
     }
   }
 
@@ -595,15 +890,20 @@ var iv = setInterval(function(){
     return qs.join('&');
   }
 
-  var lastRows = []; // used by IP tooltip portal
+  var lastRows = []; // current page rows (tooltips, realtime)
+  var allRows = [];  // full dataset for pagination & map
 
   var map=null, layer=null, cluster=null;
   var DEFAULTS = {
     basemap:'osm', max_zoom:19, refresh_seconds:15,
     remember_view:true, auto_fit:true, scroll_wheel:true, dragging:true,
-    locate_button:true, marker_style:'dot', marker_size:12, popup_fields:['ip','path','ts','city','country','coords'], mask_ip:false
+    locate_button:true, marker_style:'dot', marker_size:12,
+    cluster:true, cluster_radius:40, cluster_disable:0, spiderfy:true,
+    popup_fields:['ip','path','ts','city','country','coords'], mask_ip:false
   };
-  var serverCfg = <?php echo json_encode($__map ? $__map : new stdClass()); ?> || {};
+  var serverCfg = <?php echo json_encode(
+      $__map ? $__map : new stdClass(),
+  ); ?> || {};
   var cfg = (function(){
     try{
       var local = JSON.parse(localStorage.getItem('te.map.cfg') || 'null') || {};
@@ -631,6 +931,10 @@ var iv = setInterval(function(){
     document.getElementById('ms-scroll').checked = !!cfg.scroll_wheel;
     document.getElementById('ms-dragging').checked = !!cfg.dragging;
     document.getElementById('ms-locate').checked = !!cfg.locate_button;
+    document.getElementById('ms-cluster').checked = !!cfg.cluster;
+    document.getElementById('ms-cluster-radius').value = cfg.cluster_radius;
+    document.getElementById('ms-cluster-disable').value = cfg.cluster_disable;
+    document.getElementById('ms-spiderfy').checked = !!cfg.spiderfy;
     document.getElementById('ms-marker-style').value = cfg.marker_style;
     document.getElementById('ms-marker-size').value = cfg.marker_size;
     var boxes = document.querySelectorAll('.ms-popup');
@@ -646,6 +950,10 @@ var iv = setInterval(function(){
     cfg.scroll_wheel = document.getElementById('ms-scroll').checked;
     cfg.dragging = document.getElementById('ms-dragging').checked;
     cfg.locate_button = document.getElementById('ms-locate').checked;
+    cfg.cluster = document.getElementById('ms-cluster').checked;
+    cfg.cluster_radius = Math.max(10, Math.min(120, parseInt(document.getElementById('ms-cluster-radius').value||'40',10)));
+    cfg.cluster_disable = Math.max(0, Math.min(22, parseInt(document.getElementById('ms-cluster-disable').value||'0',10)));
+    cfg.spiderfy = document.getElementById('ms-spiderfy').checked;
     cfg.marker_style = document.getElementById('ms-marker-style').value;
     cfg.marker_size = parseInt(document.getElementById('ms-marker-size').value||'12',10);
     var sels = document.querySelectorAll('.ms-popup:checked'); var arr=[];
@@ -657,7 +965,7 @@ var iv = setInterval(function(){
   function anchorSheet(){
     var r = openBtn.getBoundingClientRect();
     var s = sheet.style;
-    var w = Math.min(360, Math.max(260, sheet.offsetWidth || 360));
+    var w = Math.min(460, Math.max(320, sheet.offsetWidth || 460));
     var left = Math.max(8, Math.min(r.left, window.innerWidth - w - 8));
     var top  = Math.max(60, Math.min(r.bottom + 8, window.innerHeight - sheet.offsetHeight - 8));
     s.left = left + 'px'; s.top  = top + 'px';
@@ -670,17 +978,51 @@ var iv = setInterval(function(){
   resetBtn.addEventListener('click', function(){
     try{ localStorage.removeItem('te.map.cfg'); }catch(e){}
     for (var k in DEFAULTS) cfg[k]=DEFAULTS[k];
-    seedForm(); applyInteraction(); applyBase(); anchorSheet();
+    seedForm(); applyInteraction(); applyBase(); refreshClusterLayer(); anchorSheet();
+    renderRecentPage(pager.page);
+    updateAutoLabel();
+    if (autoToggle && autoToggle.checked) startAutoRefresh();
+    else updateAutoIndicator();
   });
   saveBtn.addEventListener('click', function(){
-    readForm(); saveCfg(); applyInteraction(); applyBase(); render(lastRows||[]); render(lastRows||[]); render(lastRows||[]); sheet.style.display='none'; sheet.setAttribute('aria-hidden','true');
+    readForm();
+    saveCfg();
+    applyInteraction();
+    applyBase();
+    refreshClusterLayer();
+    renderRecentPage(pager.page);
+    sheet.style.display='none'; sheet.setAttribute('aria-hidden','true');
     if (map) { map.invalidateSize(); }
+    updateAutoLabel();
+    if (autoToggle && autoToggle.checked) startAutoRefresh();
+    else updateAutoIndicator();
   });
   document.addEventListener('click', function(e){
     if (!sheet.contains(e.target) && e.target !== openBtn){ sheet.style.display='none'; sheet.setAttribute('aria-hidden','true'); }
   });
 
   // Map helpers
+
+  function createMarkerLayer(){
+    if (cfg.cluster && typeof L !== 'undefined' && typeof L.markerClusterGroup === 'function') {
+      var options = {
+        maxClusterRadius: Math.max(10, parseInt(cfg.cluster_radius || 40, 10)),
+        spiderfyOnMaxZoom: cfg.spiderfy !== false,
+        showCoverageOnHover: false
+      };
+      var disableAtZoom = parseInt(cfg.cluster_disable || 0, 10);
+      if (disableAtZoom > 0) options.disableClusteringAtZoom = disableAtZoom;
+      return L.markerClusterGroup(options);
+    }
+    return L.layerGroup();
+  }
+
+  function refreshClusterLayer(){
+    if (!map) return;
+    if (cluster) map.removeLayer(cluster);
+    cluster = createMarkerLayer();
+    map.addLayer(cluster);
+  }
 
   function __pinColor(){
     try{
@@ -695,7 +1037,7 @@ var iv = setInterval(function(){
     if (map) return map;
     map = L.map('map', {zoomControl:true});
     applyBase(); applyInteraction();
-    cluster = L.layerGroup(); map.addLayer(cluster);
+    refreshClusterLayer();
     if (cfg.remember_view){
       try{
         var saved = JSON.parse(localStorage.getItem('te.map.view')||'null');
@@ -733,14 +1075,57 @@ var iv = setInterval(function(){
   function popupHtml(row){
     function mask(ip){ var p=String(ip||'').split('.'); if(p.length===4){ p[3]='0'; return p.join('.'); } return ip||''; }
     var buf=[];
-    if ((cfg.popup_fields||[]).indexOf('ip')>=0) buf.push('<div><strong>IP:</strong> '+(cfg.mask_ip?mask(row.ip):row.ip)+'</div>');
-    if ((cfg.popup_fields||[]).indexOf('path')>=0) buf.push('<div><strong>Path:</strong> '+(row.path||'')+'</div>');
-    if ((cfg.popup_fields||[]).indexOf('ts')>=0) buf.push('<div><strong>When:</strong> '+new Date((row.ts||0)*1000).toLocaleString()+'</div>');
+    if ((cfg.popup_fields||[]).indexOf('ip')>=0) buf.push('<div><strong>'+LABEL_POPUP_IP+':</strong> '+(cfg.mask_ip?mask(row.ip):row.ip)+'</div>');
+    if ((cfg.popup_fields||[]).indexOf('path')>=0) buf.push('<div><strong>'+LABEL_POPUP_PATH+':</strong> '+(row.path||'')+'</div>');
+    if ((cfg.popup_fields||[]).indexOf('ts')>=0) buf.push('<div><strong>'+LABEL_POPUP_WHEN+':</strong> '+new Date((row.ts||0)*1000).toLocaleString()+'</div>');
     if ((cfg.popup_fields||[]).indexOf('city')>=0 || (cfg.popup_fields||[]).indexOf('country')>=0){
-      var loc=[row.city||'',row.country||''].filter(Boolean).join(', '); if(loc) buf.push('<div><strong>Loc:</strong> '+loc+'</div>');
+      var loc=[row.city||'',row.country||''].filter(Boolean).join(', '); if(loc) buf.push('<div><strong>'+LABEL_POPUP_LOC+':</strong> '+loc+'</div>');
     }
-    if ((cfg.popup_fields||[]).indexOf('coords')>=0 && row.lat!=null && row.lon!=null) buf.push('<div><strong>Coords:</strong> '+row.lat+', '+row.lon+'</div>');
+    if ((cfg.popup_fields||[]).indexOf('coords')>=0 && row.lat!=null && row.lon!=null) buf.push('<div><strong>'+LABEL_POPUP_COORDS+':</strong> '+row.lat+', '+row.lon+'</div>');
     return '<div>'+buf.join('')+'</div>';
+  }
+
+  function buildMapMarker(row, size, pinColor){
+    var lat = parseFloat(row.lat), lon = parseFloat(row.lon);
+    if (!isFinite(lat) || !isFinite(lon)) return null;
+    if ((cfg.marker_style||'dot') === 'marker') {
+      var h = Math.round(size * 1.4);
+      var svg = `
+  <svg width="${size}" height="${h}" viewBox="0 0 24 34" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="pinGlow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="2.2" result="blur"/>
+        <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0   0 0 0 0 0.6   0 0 0 0 0.3   0 0 0 0.6 0" result="colored"/>
+        <feMerge>
+          <feMergeNode in="colored"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+    <path d="M12 1c6 0 11 4.7 11 10.5 0 6.2-8.8 20-10.5 20.4C11.1 32.2 1 17.4 1 11.5 1 5.7 6 1 12 1z"
+          fill="${pinColor}" stroke="rgba(0,0,0,0.55)" stroke-width="2" filter="url(#pinGlow)" />
+    <circle cx="12" cy="11" r="3" fill="rgba(255,255,255,0.7)"/>
+  </svg>`;
+      return L.marker([lat, lon], {
+        icon: L.divIcon({
+          className: 'te-pin-svg',
+          html: svg,
+          iconSize: [size, h],
+          iconAnchor: [Math.round(size/2), h],
+          popupAnchor: [0, -Math.round(size*0.7)]
+        })
+      });
+    }
+    var dotSize = Math.max(6, size);
+    return L.marker([lat, lon], {
+      icon: L.divIcon({
+        className: 'te-pin-svg te-dot-marker-wrap',
+        html: '<span class="te-dot-marker" style="width:'+dotSize+'px;height:'+dotSize+'px;background:'+pinColor+'"></span>',
+        iconSize: [dotSize, dotSize],
+        iconAnchor: [Math.round(dotSize/2), Math.round(dotSize/2)],
+        popupAnchor: [0, -Math.round(dotSize/2)]
+      })
+    });
   }
 
   
@@ -791,14 +1176,57 @@ function __te_parseUA(ua){
 var __te_SVG={'other':'<svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#607D8B"/><text x="12" y="16" font-size="12" text-anchor="middle" fill="#fff" font-family="system-ui,Segoe UI,Arial" font-weight="700">?</text></svg>','chrome':'<svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#DB4437"/><path d="M12 2a10 10 0 019.5 6h-9.5a4 4 0 00-3.464 2L5.2 6.6A9.99 9.99 0 0112 2z" fill="#FFC107"/><path d="M4.5 7.8A10 10 0 112 12h7a4 4 0 013.464 2l-3.5 6.06A10 10 0 014.5 7.8z" fill="#0F9D58"/><circle cx="12" cy="12" r="4" fill="#4285F4"/></svg>','firefox':'<svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 2c6 0 10 4 10 10s-4 10-10 10S2 18 2 12C2 7 6 3 10 3c-1 2 0 3 2 3 4 0 6 3 6 6 0 4-3 7-7 7-3 0-6-2-6-5 0-2 1-4 3-5 1-2 2-3 2-4 1 0 2 1 3 2 2 1 3 3 3 5 0 3-2 5-5 5-2 0-4-1-4-3 0-3 3-4 4-5" fill="#FF7139"/></svg>','edge':'<svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 2c5.5 0 10 4.5 10 10 0 5-4 9-9 9-3 0-5-2-5-4 0-3 3-4 5-4h7c-1-5-5-8-10-8-4 0-7 3-7 7 0 5 4 9 9 9" fill="#0078D7"/></svg>','opera':'<svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#FF1B2D"/><circle cx="12" cy="12" r="5" fill="#fff"/></svg>','safari':'<svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#00A1F1"/><path d="M12 6l3 6-6 3 3-9z" fill="#fff"/></svg>','brave':'<svg width="14" height="14" viewBox="0 0 24 24"><path d="M7 3h10l3 4-1 8-7 6-7-6L4 7 7 3z" fill="#FB542B"/></svg>','vivaldi':'<svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#EF3939"/><path d="M8 10c0-2 3-2 3 0v1c0 2-3 2-3 0v-1zm5 0c0-2 3-2 3 0v1c0 2-3 2-3 0v-1z" fill="#fff"/></svg>','yandex':'<svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#CC0000"/><path d="M11 6h2v12h-2z" fill="#fff"/></svg>','maxthon':'<svg width="14" height="14" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="2" fill="#2E91FF"/><path d="M7 12h10" stroke="#fff" stroke-width="2"/></svg>','waterfox':'<svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 3c6 0 9 6 6 10-2 3-5 6-6 8-1-2-4-5-6-8-3-4 0-10 6-10z" fill="#145DA0"/></svg>','palemoon':'<svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#6C8CD5"/><circle cx="10" cy="12" r="5" fill="#fff"/></svg>','tor':'<svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#7E57C2"/><path d="M12 6c2 0 3 2 3 4s-1 4-3 4-3-2-3-4 1-4 3-4z" fill="#fff"/></svg>','ddg':'<svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#DE5833"/><path d="M10 8h4v8h-4z" fill="#fff"/></svg>','whale':'<svg width="14" height="14" viewBox="0 0 24 24"><path d="M2 13c2 5 8 7 12 7 5 0 8-3 8-6-2 1-4 0-6-2-3 1-6 1-9 1H2z" fill="#1EC8E1"/></svg>','chromium':'<svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#3F51B5"/><circle cx="12" cy="12" r="4" fill="#fff"/></svg>','windows':'<svg width="14" height="14" viewBox="0 0 24 24"><path d="M3 5l9-2v9H3V5zm0 11h9v5l-9-2v-3zm11-13l7-1v10h-7V3zm0 11h7v9l-7-1v-8z" fill="#00A4EF"/></svg>','mac':'<svg width="14" height="14" viewBox="0 0 24 24"><path d="M16 13c0 4 3 5 3 5s-2 3-5 3-4-2-6-2-4 2-4 2-3-2-3-6c0-4 3-7 6-7 2 0 3 1 4 1s2-1 4-1c1 0 5 1 5 5z" fill="#555"/></svg>','android':'<svg width="14" height="14" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="10" rx="3" fill="#3DDC84"/><rect x="7" y="4" width="2" height="3" fill="#3DDC84"/><rect x="15" y="4" width="2" height="3" fill="#3DDC84"/></svg>','ios':'<svg width="14" height="14" viewBox="0 0 24 24"><path d="M16 13c0 4 3 5 3 5s-2 3-5 3-4-2-6-2-4 2-4 2-3-2-3-6c0-4 3-7 6-7 2 0 3 1 4 1s2-1 4-1c1 0 5 1 5 5z" fill="#333"/></svg>','linux':'<svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3c3 0 5 2 5 5 0 2-1 3-1 4 0 3 3 3 3 5 0 2-2 4-4 4-1 0-2-1-3-1s-2 1-3 1c-2 0-4-2-4-4 0-2 3-2 3-5 0-1-1-2-1-4 0-3 2-5 5-5z" fill="#000"/><ellipse cx="12" cy="12" rx="3.2" ry="4.3" fill="#fff"/><circle cx="10.2" cy="9.2" r="0.9" fill="#fff"/><circle cx="13.8" cy="9.2" r="0.9" fill="#fff"/><circle cx="10.2" cy="9.2" r="0.35" fill="#000"/><circle cx="13.8" cy="9.2" r="0.35" fill="#000"/><path d="M11.1 11.1L12 11.7l.9-.6-.9-.6z" fill="#FFC107"/><path d="M8.8 19.4c1 .9 2.2 1 3.2 1s2.2-.1 3.2-1l1 .8c-1.1 1.1-2.4 1.4-4.2 1.4s-3.1-.3-4.2-1.4z" fill="#FFC107"/></svg>','ubuntu':'<svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#E95420"/><circle cx="12" cy="12" r="4" fill="#fff"/></svg>','debian':'<svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 2c4 0 8 3 8 8s-4 8-8 8-8-4-8-8 4-8 8-8zm0 3c-3 0-5 2-5 5s2 5 5 5 5-2 5-5-2-5-5-5z" fill="#D70751"/></svg>','fedora':'<svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#294172"/><path d="M9 8h6v6H9z" fill="#fff"/></svg>','centos':'<svg width="14" height="14" viewBox="0 0 24 24"><path d="M4 9l8-7 8 7-8 7-8-7zM4 15l8 7 8-7" fill="#9A1D6A"/></svg>','redhat':'<svg width="14" height="14" viewBox="0 0 24 24"><path d="M3 14c3-4 10-6 18-1-3 5-7 7-11 7S3 17 3 14z" fill="#EE0000"/></svg>','arch':'<svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 3l7 18-7-4-7 4 7-18z" fill="#1793D1"/></svg>','manjaro':'<svg width="14" height="14" viewBox="0 0 24 24"><rect x="5" y="5" width="6" height="14" fill="#34BE5B"/><rect x="13" y="5" width="6" height="6" fill="#34BE5B"/><rect x="13" y="13" width="6" height="6" fill="#34BE5B"/></svg>','gentoo':'<svg width="14" height="14" viewBox="0 0 24 24"><path d="M5 8c1-3 6-5 10-3 4 1 5 6 1 8-3 3-6 5-8 5s-4-3-3-6z" fill="#54487A"/></svg>','opensuse':'<svg width="14" height="14" viewBox="0 0 24 24"><path d="M4 14c0-5 5-9 12-9 3 0 4 2 4 4-8-2-14 5-16 5z" fill="#73BA25"/></svg>','mint':'<svg width="14" height="14" viewBox="0 0 24 24"><path d="M4 7h12a4 4 0 014 4v6H4V7z" fill="#87CF3E"/></svg>','kali':'<svg width="14" height="14" viewBox="0 0 24 24"><path d="M4 12c3-5 9-8 16-8-3 3-4 5-4 7 1 1 3 1 4 1-3 2-6 4-9 7-2-2-5-5-7-7z" fill="#268BD2"/></svg>','freebsd':'<svg width="14" height="14" viewBox="0 0 24 24"><circle cx="10" cy="12" r="8" fill="#AB2B28"/><circle cx="16" cy="6" r="3" fill="#AB2B28"/></svg>','openbsd':'<svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#F2C200"/><path d="M8 10h8v4H8z" fill="#fff"/></svg>','popos':'<svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#48B9C7"/><path d="M10 8h6v2h-6zM8 12h10v2H8z" fill="#fff"/></svg>', 'rhel':'<svg width="14" height="14" viewBox="0 0 24 24"><path d="M3 14c3-4 10-6 18-1-3 5-7 7-11 7S3 17 3 14z" fill="#A30000"/></svg>', 'alpine':'<svg width="14" height="14" viewBox="0 0 24 24"><path d="M3 17l9-10 9 10h-6l-3-3-3 3H3z" fill="#0D597F"/></svg>'};
 function __te_iconHTML(k,l){
   var label=(l||'');
-  <?php if (!empty($__dash['show_icons'])): ?>
+  <?php if (!empty($__dash["show_icons"])): ?>
   if (window.__te_iconHTML_ext) return window.__te_iconHTML_ext(k,label);
   return label;
   <?php else: ?>
   return label;
   <?php endif; ?>
 }
-function render(rows){
+  function formatDelta(seconds){
+    seconds = Math.max(0, Math.floor(seconds));
+    var units = [
+      {label:'d', value:86400},
+      {label:'h', value:3600},
+      {label:'m', value:60},
+      {label:'s', value:1}
+    ];
+    for (var i=0;i<units.length;i++){
+      var unit = units[i];
+      if (seconds >= unit.value) {
+        var count = Math.floor(seconds / unit.value);
+        return count + unit.label;
+      }
+    }
+    return '0s';
+  }
+  function repeatBadgeHTML(row){
+    if (!row || (row.__repeatTotal || 0) <= 1) return '';
+    var deltaText = '';
+    if (row.__prevTs) {
+      var diff = Math.max(0, (row.__prevTs || 0) - (row.ts || 0));
+      if (diff > 0) deltaText = ' • ' + formatDelta(diff) + ' ' + LABEL_SINCE_LAST;
+    }
+    return '<span class="repeat-badge" title="'+LABEL_SEEN_TIMES.replace('{count}', String(row.__repeatTotal))+'">'+LABEL_REPEAT+' ×'+row.__repeatTotal + deltaText + '</span>';
+  }
+  function render(rows, fullRows){
+    rows = Array.isArray(rows) ? rows : [];
+    fullRows = (Array.isArray(fullRows) && fullRows.length) ? fullRows : rows;
+    var ipCounts = {};
+    rows.forEach(function(r){
+      var ip = r && r.ip ? r.ip : '';
+      if (!ip) return;
+      ipCounts[ip] = (ipCounts[ip] || 0) + 1;
+    });
+    var lastSeenMap = {};
+    rows.forEach(function(r){
+      var ip = r && r.ip ? r.ip : '';
+      if (!ip) return;
+      r.__repeatTotal = ipCounts[ip] || 0;
+      r.__prevTs = lastSeenMap[ip];
+      if (!lastSeenMap[ip]) lastSeenMap[ip] = r.ts || 0;
+    });
+    lastRows = rows.slice();
     // table
     tbody.innerHTML='';
     rows.forEach(function(row){
@@ -814,9 +1242,10 @@ function render(rows){
         + "<img class=\"ua-icon\" src=\"<?php echo $__base; ?>/assets/icons/ip.svg\" width=\"14\" height=\"14\" alt=\"ip\">"
         <?php endif; ?>
         + "<span class=\"ip-text\">"+(row.ip||"")+"</span>"
+        + repeatBadgeHTML(row)
         + "</td>"
       <?php else: ?>
-        + "<td>"+(row.ip||"")+"</td>"
+        + "<td>"+(row.ip||"") + repeatBadgeHTML(row) + "</td>"
       <?php endif; ?>
         + "<td>"+(row.path||"")+"</td>"
         + (function(){ var __u = __te_parseUA(row.ua||""); return "<td>"+__te_iconHTML(__u.bkey, __u.browser)+"</td><td>"+__te_iconHTML(__u.okey, __u.os)+"</td>"; })()
@@ -876,39 +1305,17 @@ function render(rows){
     var size = Math.max(6, Math.min(24, parseInt((cfg.marker_size||12),10)));
     var count=0;
     var pinColor = __pinColor();
-    rows.forEach(function(row){
-      var la=parseFloat(row.lat), lo=parseFloat(row.lon);
-      if(!isFinite(la)||!isFinite(lo)) return;
-      if ((cfg.marker_style||'dot') === 'marker') {
-        var h = Math.round(size * 1.4);
-        var svg = `
-  <svg width="${size}" height="${h}" viewBox="0 0 24 34" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <filter id="pinGlow" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur in="SourceAlpha" stdDeviation="2.2" result="blur"/>
-        <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0   0 0 0 0 0.6   0 0 0 0 0.3   0 0 0 0.6 0" result="colored"/>
-        <feMerge>
-          <feMergeNode in="colored"/>
-          <feMergeNode in="SourceGraphic"/>
-        </feMerge>
-      </filter>
-    </defs>
-    <path d="M12 1c6 0 11 4.7 11 10.5 0 6.2-8.8 20-10.5 20.4C11.1 32.2 1 17.4 1 11.5 1 5.7 6 1 12 1z"
-          fill="${pinColor}" stroke="rgba(0,0,0,0.55)" stroke-width="2" filter="url(#pinGlow)" />
-    <circle cx="12" cy="11" r="3" fill="rgba(255,255,255,0.7)"/>
-  </svg>`;
-        var icon = L.divIcon({ className: 'te-pin-svg', html: svg, iconSize: [size, h], iconAnchor: [Math.round(size/2), h], popupAnchor: [0, -Math.round(size*0.7)] });
-        L.marker([la,lo], {icon: icon}).bindPopup(popupHtml(row)).addTo(cluster);
-      } else {
-        var cm = L.circleMarker([la,lo], { radius: Math.max(3, Math.round(size/2)), color: 'rgba(0,0,0,0.55)', weight: 2, fillColor: __pinColor(), fillOpacity: 0.95 });
-        cm.bindPopup(popupHtml(row)).addTo(cluster);
-      }
+    var mapRows = fullRows;
+    mapRows.forEach(function(row){
+      var marker = buildMapMarker(row, size, pinColor);
+      if (!marker) return;
+      marker.bindPopup(popupHtml(row)).addTo(cluster);
       count++;
     });
     if(count && cfg.auto_fit){
       var hasSaved = false;
       try { hasSaved = !!(cfg.remember_view && localStorage.getItem('te.map.view')); } catch(_){}
-      var bounds=[]; rows.forEach(function(r){ var la=parseFloat(r.lat), lo=parseFloat(r.lon); if(isFinite(la)&&isFinite(lo)) bounds.push([la,lo]); });
+      var bounds=[]; mapRows.forEach(function(r){ var la=parseFloat(r.lat), lo=parseFloat(r.lon); if(isFinite(la)&&isFinite(lo)) bounds.push([la,lo]); });
       // If "Remember last view" is enabled and a saved view exists, do not override it.
       if (!hasSaved) {
         if (bounds.length === 1) {
@@ -924,31 +1331,130 @@ function render(rows){
     }
   }
 
+  function savePagerPrefs(){
+    try {
+      localStorage.setItem(RECENT_PAGER_KEY, JSON.stringify({
+        per: pager.per,
+        page: pager.page,
+        timeframe: tfSel ? tfSel.value : null
+      }));
+    } catch(e){}
+  }
+
+  function updateRecentPager(total, startIndex, count){
+    if (pageInfo){
+      if (!total) {
+        pageInfo.textContent = LABEL_NO_VISITORS;
+      } else if (!count) {
+        pageInfo.textContent = LABEL_NO_VISITORS_PAGE;
+      } else {
+        pageInfo.textContent = LABEL_SHOWING_RANGE_TOTAL
+          .replace('{start}', String(startIndex + 1))
+          .replace('{end}', String(startIndex + count))
+          .replace('{total}', String(total));
+      }
+    }
+    if (prevBtn) prevBtn.disabled = pager.page <= 1;
+    if (nextBtn) nextBtn.disabled = pager.page >= pager.pages;
+  }
+  function handleFetchComplete(){
+    isRecentLoading = false;
+    if (autoToggle && autoToggle.checked) {
+      resetAutoCountdown();
+    } else {
+      updateAutoIndicator();
+    }
+  }
+
+  function renderRecentPage(targetPage){
+    if (typeof targetPage === 'number' && isFinite(targetPage)) {
+      pager.page = Math.max(1, Math.floor(targetPage));
+    }
+    var per = Math.max(1, pager.per || 50);
+    pager.per = per;
+    if (perSel && perSel.value !== String(per)) perSel.value = String(per);
+    var total = allRows.length;
+    var pages = total ? Math.max(1, Math.ceil(total / per)) : 1;
+    pager.pages = pages;
+    if (pager.page > pages) pager.page = pages;
+    if (pager.page < 1) pager.page = 1;
+    var start = total ? (pager.page - 1) * per : 0;
+    var slice = total ? allRows.slice(start, start + per) : [];
+    if (!slice.length && total) {
+      pager.page = pages;
+      start = (pager.page - 1) * per;
+      slice = allRows.slice(start, start + per);
+    }
+    render(slice, allRows);
+    updateRecentPager(total, start, slice.length);
+    savePagerPrefs();
+  }
+
+  if (perSel){
+    perSel.addEventListener('change', function(){
+      var v = parseInt(perSel.value, 10);
+      if (!isFinite(v) || v < 1) v = 50;
+      pager.per = v;
+      renderRecentPage(1);
+    });
+  }
+  if (prevBtn){
+    prevBtn.addEventListener('click', function(){
+      if (pager.page > 1) renderRecentPage(pager.page - 1);
+    });
+  }
+  if (nextBtn){
+    nextBtn.addEventListener('click', function(){
+      if (pager.page < pager.pages) renderRecentPage(pager.page + 1);
+    });
+  }
+  if (refreshBtn){
+    refreshBtn.addEventListener('click', function(){
+      fetchGeo();
+    });
+  }
+  if (autoToggle){
+    autoToggle.addEventListener('change', function(){
+      try { localStorage.setItem(AUTO_PREF_KEY, autoToggle.checked ? '1' : '0'); } catch(e){}
+      if (autoToggle.checked) {
+        startAutoRefresh();
+      } else {
+        stopAutoRefresh();
+      }
+    });
+  }
+
   function fetchGeo(){
     clearErr();
     var qs = buildGeoQS();
+    isRecentLoading = true;
     teFetchQ('api.geo', qs)
       .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
       .then(function(data){
         var rows = Array.isArray(data)?data : (data.items||data.rows||data.data||[]);
-        rows = rows.slice(0, <?php echo (int)$__row_limit; ?>);
-        lastRows = rows;            // <<< restore data for tooltips
-        render(rows);
+        allRows = rows.slice();
+        renderRecentPage(pager.page);
+        handleFetchComplete();
       })
-      .catch(function(err){ rerr('Fetch failed: ' + (err && err.message ? err.message : String(err))); });
+      .catch(function(err){
+        rerr(LABEL_FETCH_FAILED.replace('{error}', (err && err.message ? err.message : String(err))));
+        handleFetchComplete();
+      });
   }
 
   // initial load
   fetchGeo();
-
-  // periodic refresh uses current picker value each time
-  var poll = setInterval(fetchGeo, Math.max(5, parseInt(cfg.refresh_seconds||15,10))*1000);
+  if (autoToggle && autoToggle.checked) startAutoRefresh();
 
   // picker change: persist + immediate refresh
-  tfSel.addEventListener('change', function(e){
-    try { localStorage.setItem('te.timeframe', e.target.value || 'all'); } catch(_){}
-    fetchGeo();
-  });
+  if (tfSel){
+    tfSel.addEventListener('change', function(e){
+      try { localStorage.setItem('te.timeframe', e.target.value || 'all'); } catch(_){}
+      pager.page = 1;
+      savePagerPrefs();
+      fetchGeo();
+    });
+  }
 
   // Visitors plugin widgets
   teFetch('api.plugins.list')

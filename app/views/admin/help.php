@@ -15,8 +15,11 @@ use TrackEm\Core\I18n;
   </style>
 
   <div class="card" style="padding: 1rem;">
-    <h3><a href="#"><?= I18n::t('help','Help') ?></a></h3>
-    <p class="muted"><?= I18n::t('builtin_help','Built‑in HTML help is shown below.') ?></p>
+    <h3><a href="#"><?= I18n::t("help", "Help") ?></a></h3>
+    <p class="muted"><?= I18n::t(
+        "builtin_help",
+        "Built‑in HTML help is shown below.",
+    ) ?></p>
     <iframe class="help-iframe" src="docs/help.html"></iframe>
   </div>
 </div>

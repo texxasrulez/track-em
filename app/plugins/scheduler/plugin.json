@@ -1,0 +1,7 @@
+{
+  "id": "scheduler",
+  "name": "Scheduler",
+  "version": "0.1.0",
+  "description": "Lightweight admin-triggered scheduler for low-cost plugin maintenance jobs.",
+  "admin_route": "scheduler.admin"
+}

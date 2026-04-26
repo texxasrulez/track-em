@@ -1,0 +1,129 @@
+<?php
+declare(strict_types=1);
+
+namespace TrackEm\Plugins\Scheduler;
+
+use TrackEm\Core\Security;
+
+require_once dirname(__DIR__, 2) . '/core/Security.php';
+require_once dirname(__DIR__, 2) . '/core/DB.php';
+require_once __DIR__ . '/SchedulerService.php';
+
+final class PluginController
+{
+    private SchedulerService $service;
+    private string $pluginDir;
+
+    public function __construct(string $pluginId, string $pluginDir)
+    {
+        $this->pluginDir = rtrim($pluginDir, '/\\');
+        $this->service = new SchedulerService($pluginId, $pluginDir);
+    }
+
+    public function dispatch(string $action): bool
+    {
+        return match ($action) {
+            'admin' => $this->admin(),
+            'save' => $this->save(),
+            'reset' => $this->reset(),
+            'run_due' => $this->runDue(),
+            'run_all' => $this->runAll(),
+            default => false,
+        };
+    }
+
+    private function admin(): bool
+    {
+        if (!$this->requireAdmin()) {
+            return true;
+        }
+        $config = $this->service->loadConfig();
+        $autoResult = $this->service->autoRunDueJobs($config);
+        $state = $this->service->loadState();
+        $availableJobs = $this->service->availableJobs();
+        $runs = $this->service->recentRuns();
+        $csrf = $this->service->csrfToken();
+        require $this->pluginDir . '/views/admin_fragment.php';
+        return true;
+    }
+
+    private function save(): bool
+    {
+        if (!$this->requireAdminPost()) {
+            return true;
+        }
+        $config = $this->service->saveFromRequest($_POST);
+        $this->json(200, ['ok' => true, 'config' => $config]);
+        return true;
+    }
+
+    private function reset(): bool
+    {
+        if (!$this->requireAdminPost()) {
+            return true;
+        }
+        $this->service->resetConfig();
+        $this->json(200, ['ok' => true, 'config' => $this->service->loadConfig()]);
+        return true;
+    }
+
+    private function runDue(): bool
+    {
+        if (!$this->requireAdminPost()) {
+            return true;
+        }
+        $result = $this->service->runDueJobs($this->service->loadConfig(), false);
+        $this->json(200, ['ok' => true, 'result' => $result]);
+        return true;
+    }
+
+    private function runAll(): bool
+    {
+        if (!$this->requireAdminPost()) {
+            return true;
+        }
+        $result = $this->service->runDueJobs($this->service->loadConfig(), true);
+        $this->json(200, ['ok' => true, 'result' => $result]);
+        return true;
+    }
+
+    private function requireAdmin(): bool
+    {
+        Security::startSecureSession();
+        if (!isset($_SESSION['uid'])) {
+            http_response_code(401);
+            echo 'Unauthorized';
+            return false;
+        }
+        return true;
+    }
+
+    private function requireAdminPost(): bool
+    {
+        if (!$this->requireAdmin()) {
+            return false;
+        }
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            $this->json(405, ['ok' => false, 'error' => 'method_not_allowed']);
+            return false;
+        }
+        if (!Security::rateLimit('scheduler_admin:' . Security::clientIpMasked(), 60, 30)) {
+            $this->json(429, ['ok' => false, 'error' => 'rate_limited']);
+            return false;
+        }
+        if (!Security::verifyCsrf((string) ($_POST['csrf'] ?? ''))) {
+            $this->json(400, ['ok' => false, 'error' => 'bad_csrf']);
+            return false;
+        }
+        return true;
+    }
+
+    private function json(int $status, array $payload): void
+    {
+        http_response_code($status);
+        header('Content-Type: application/json; charset=utf-8');
+        header('Cache-Control: no-store');
+        header('X-Content-Type-Options: nosniff');
+        echo json_encode($payload, JSON_UNESCAPED_SLASHES);
+    }
+}

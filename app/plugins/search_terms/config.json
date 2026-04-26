@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "report_range": "30d",
+  "query_params": [
+    "q",
+    "s",
+    "search",
+    "query",
+    "term"
+  ],
+  "min_term_length": 2,
+  "max_terms": 100,
+  "exclude_terms": []
+}

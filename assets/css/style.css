@@ -1,191 +1,247 @@
-{
-    box-sizing: border-box;
+* {
+  box-sizing: border-box;
 }
 body {
-    margin: 0;
-    font-family: system-ui, Arial, Helvetica, sans-serif;
-    background: #0b0e11;
-    color: var(--text);
+  margin: 0;
+  font-family: system-ui, Arial, Helvetica, sans-serif;
+  background: #0b0e11;
+  color: var(--text);
 }
 a {
-    color: #9ed1ff;
-    text-decoration: none;
-    margin-right: 12px;
+  color: #9ed1ff;
+  text-decoration: none;
+  margin-right: 12px;
+}
+selector {
+  caret-color: var(--theme-pin-color) !important;
 }
 .topbar {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 12px 16px;
-    background: #151a21;
-    border-bottom: 1px solid #1f2630;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background: #151a21;
+  border-bottom: 1px solid #1f2630;
 }
 .topbar h1 {
-    font-size: 18px;
-    margin: 0 12px 0 0;
-    color: #e8e8e8;
+  font-size: 18px;
+  margin: 0 12px 0 0;
+  color: #e8e8e8;
 }
 .topbar nav a.right {
-    margin-left: auto;
+  margin-left: auto;
 }
 main {
-    padding: 16px;
+  padding: 16px;
 }
 .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 .card {
-    background: #12161c;
-    border: 1px solid #1f2630;
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  background: #12161c;
+  border: 1px solid #1f2630;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
 }
 .card.small {
-    max-width: 360px;
-    margin: 60px auto;
+  max-width: 360px;
+  margin: 60px auto;
 }
 .card h3 {
-    margin-top: 0;
+  margin-top: 0;
 }
 label {
-    display: block;
-    margin: 8px 0;
+  display: block;
+  margin: 8px 0;
 }
 input,
 select,
 button {
-    width: 100%;
-    padding: 8px 10px;
-    border-radius: 8px;
-    border: 1px solid #e5e7eb;
-    background: #ffffff;
-    color: #0f172a;
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--muted);
+  color: var(--text);
+}
+textarea,
+option,
+optgroup {
+  border-color: var(--border);
+  background: var(--muted);
+  color: var(--text);
+}
+select {
+  appearance: auto;
+  color-scheme: light dark;
+}
+select option:checked,
+select option:hover,
+select option:focus {
+  background: var(--accent);
+  color: var(--text-hover);
 }
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 th,
 td {
-    border-bottom: 1px solid #1f2630;
-    padding: 8px;
-    text-align: left;
+  border-bottom: 1px solid #1f2630;
+  padding: 8px;
+  text-align: left;
 }
 .code {
-    background: #0f1318;
-    padding: 12px;
-    border-radius: 8px;
-    overflow: auto;
+  background: #0f1318;
+  padding: 12px;
+  border-radius: 8px;
+  overflow: auto;
 }
 .themes,
 .plugins {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
 }
 .theme-tile,
 .plugin-tile {
-    border: 1px solid #1f2630;
-    border-radius: 10px;
-    padding: 12px;
-    background: #0f1318;
+  border: 1px solid #1f2630;
+  border-radius: 10px;
+  padding: 12px;
+  background: #0f1318;
 }
 .error {
-    background: #3b1114;
-    color: #ffb4b9;
-    border: 1px solid #622027;
-    padding: 8px;
-    border-radius: 8px;
+  background: #3b1114;
+  color: #ffb4b9;
+  border: 1px solid #622027;
+  padding: 8px;
+  border-radius: 8px;
 }
 .success {
-    background: #113b1e;
-    color: #b9ffcc;
-    border: 1px solid #1f5f2f;
-    padding: 8px;
-    border-radius: 8px;
+  background: #113b1e;
+  color: #b9ffcc;
+  border: 1px solid #1f5f2f;
+  padding: 8px;
+  border-radius: 8px;
 }
 
 /* ==== Themes page scoped fixes (do not affect rest of app) ==== */
-.theme-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:16px;
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
 }
-.theme-card{
-  position:relative;
-  padding:12px !important;
+.theme-card {
+  position: relative;
+  padding: 12px !important;
 }
-.theme-card__head{
-  display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px;
+.theme-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
 }
-.badge{
-  font-size:12px; line-height:1;
-  padding:4px 8px; border-radius:999px;
-  border:1px solid var(--border); background:var(--muted); color:var(--sub);
+.badge {
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--muted);
+  color: var(--sub);
 }
 
-.swatches{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:6px 0 12px; }
-.sw{ display:block; height:30px; border-radius:8px; border:1px solid var(--border); }
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 6px 0 12px;
+}
+.sw {
+  display: block;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
 
 /* Kill any global full-width/button-block rules just inside theme cards */
 .theme-card .button,
 .theme-card button,
-.theme-card .btn{
-  display:inline-flex !important;
-  width:auto !important;
-  flex:0 0 auto !important;
-  align-items:center; justify-content:center;
-  padding:8px 12px;
-  border-radius:10px;
-  text-decoration:none;
-  cursor:pointer;
-  border:1px solid var(--border);
-  background:var(--muted);
-  color:var(--text);
-  white-space:nowrap;
-  box-sizing:border-box;
+.theme-card .btn {
+  display: inline-flex !important;
+  width: auto !important;
+  flex: 0 0 auto !important;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--muted);
+  color: var(--text);
+  white-space: nowrap;
+  box-sizing: border-box;
 }
 
-.theme-card .btn:hover{ filter:brightness(1.06); }
-.theme-card .btn:active{ transform:translateY(1px); }
+.theme-card .btn:hover {
+  filter: brightness(1.06);
+}
+.theme-card .btn:active {
+  transform: translateY(1px);
+}
 
 /* Row for small buttons (Preview / CSS) */
-.theme-card .actions-row{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-bottom:10px;
+.theme-card .actions-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
 }
 
 /* Big block Activate button only */
-.theme-card .btn--block{
-  display:flex !important;
-  width:100% !important;
+.theme-card .btn--block {
+  display: flex !important;
+  width: 100% !important;
 }
-.theme-card .btn--primary{
-  background:linear-gradient(180deg,var(--accent),rgba(0,0,0,0)) !important;
-  border-color:var(--border) !important;
+.theme-card .btn--primary {
+  background: linear-gradient(
+    180deg,
+    var(--accent),
+    rgba(0, 0, 0, 0.05)
+  ) !important;
+  border-color: var(--border) !important;
   color: var(--btn-text) !important;
 }
 
 /* Don’t let generic form styles turn nested controls full-width */
-.theme-card form{ display:block; margin:0; }
+.theme-card form {
+  display: block;
+  margin: 0;
+}
 
 /* Tighten small screens */
-@media (max-width: 480px){
-  .theme-grid{ grid-template-columns:1fr; }
-  .theme-card .actions-row{ flex-direction:column; }
+@media (max-width: 480px) {
+  .theme-grid {
+    grid-template-columns: 1fr;
+  }
+  .theme-card .actions-row {
+    flex-direction: column;
+  }
 }
 
 /* ==== Site-wide UI primitives (safe utilities) ========================== */
 /* Buttons */
-.btn, .button {
+.btn,
+.button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -199,44 +255,60 @@ td {
   color: var(--text);
   white-space: nowrap;
   box-sizing: border-box;
-  transition: transform .02s ease-in-out, filter .12s ease-in-out;
+  transition:
+    transform 0.02s ease-in-out,
+    filter 0.12s ease-in-out;
 }
 .btn:hover,
 .button:hover {
-    filter: brightness(1.06);
-    border: 1px solid var(--border) !important;
+  color: var(--text-hover) !important;
+  font-weight: bold;
+  text-shadow: 0 2px 3px var(--text-shadow);
+  background: var(--muted);
+  filter: brightness(1.06);
+  border-color: var(--border) !important;
 }
 .btn:active,
 .button:active {
   background: var(--accent2) !important;
-    transform: translateY(1px);
+  transform: translateY(1px);
 }
 .btn--primary {
-    background: linear-gradient(180deg, var(--accent), rgba(0, 0, 0, 0));
-    border-color: var(--accent);
-    color: #0b0f14;
+  background: linear-gradient(180deg, var(--accent), rgba(0, 0, 0, 0));
+  border-color: var(--accent);
+  color: #0b0f14;
 }
 .btn--ghost {
-    background: transparent;
+  background: transparent;
 }
 .btn--block {
-    display: flex;
-    width: 100%;
+  display: flex;
+  width: 100%;
 }
 
 /* Form layout */
-.form { display: block; }
+.form {
+  display: block;
+}
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px 16px;
 }
-.form-row { display: contents; } /* children place into grid cells */
-.form-label {
-  display: flex; align-items: center; justify-content: space-between;
-  font-weight: 500; color: var(--sub);
+.form-row {
+  display: contents;
 }
-.form-ctl   { display: block; width: 100%; }
+.form-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 500;
+  color: var(--sub);
+}
+.form-ctl {
+  display: block;
+  width: 100%;
+}
 .form-ctl input[type="text"],
 .form-ctl input[type="number"],
 .form-ctl input[type="password"],
@@ -244,33 +316,58 @@ td {
 .form-ctl select,
 .form-ctl textarea {
   width: 100%;
-  background: #ffffff;
-  color: #0f172a;
-  border: 1px solid #e5e7eb;
+  background: var(--muted);
+  color: var(--text);
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 6px 8px;
   box-sizing: border-box;
 }
 .form-ctl .inline {
-  display: inline-flex; align-items: center; gap: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 /* Section footer (actions) */
-.actions { display: flex; gap: 8px; flex-wrap: wrap; }
-.actions--left  { justify-content: flex-start; }
-.actions--right { justify-content: flex-end; }
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.actions--left {
+  justify-content: flex-start;
+}
+.actions--right {
+  justify-content: flex-end;
+}
 
 /* Cards: don’t let nested forms stretch random controls full-width */
-.card .button, .card button, .card .btn { width: auto; flex: 0 0 auto; }
+.card .button,
+.card button,
+.card .btn {
+  width: auto;
+  flex: 0 0 auto;
+}
 
 /* Responsive tweaks */
 @media (max-width: 720px) {
-  .form-grid { grid-template-columns: 1fr; }
-  .form-label { justify-content: flex-start; }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-label {
+    justify-content: flex-start;
+  }
 }
 
-header.topbar{position:sticky;top:0;z-index:999}
-nav a.active{font-weight:700}
+header.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+nav a.active {
+  font-weight: 700;
+}
 
 /* Theme-aware form controls: dark override */
 body[class$="-dark"] input,
@@ -280,10 +377,10 @@ body[class$="-dark"] option,
 body[class*=" theme-"][class*="-dark"] input,
 body[class*=" theme-"][class*="-dark"] select,
 body[class*=" theme-"][class*="-dark"] textarea,
-body[class*=" theme-"][class*="-dark"] option{
-  background:#0f1318;
-  color:#e8e8e8;
-  border-color:#2a3442;
+body[class*=" theme-"][class*="-dark"] option {
+  background: #0f1318;
+  color: #e8e8e8;
+  border-color: #2a3442;
 }
 
 /* Dark theme override for .form-ctl controls */
@@ -299,54 +396,58 @@ body[class*=" theme-"][class*="-dark"] .form-ctl input[type="password"],
 body[class*=" theme-"][class*="-dark"] .form-ctl input[type="email"],
 body[class*=" theme-"][class*="-dark"] .form-ctl select,
 body[class*=" theme-"][class*="-dark"] .form-ctl textarea {
-  background:#0f141a;
-  color:#e8e8e8;
-  border-color:#2a3442;
+  background: #0f141a;
+  color: #e8e8e8;
+  border-color: #2a3442;
 }
 
 /* Stabilize and de-bounce the map gear button */
-#open-map-settings.map-gear{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:28px;
-  height:28px;
-  margin:0;
-  padding:0;
-  line-height:1;
-  font-size:18px;
-  font-weight:400;
-  border:1px solid transparent;
-  border-radius:6px;
-  background:transparent;
-  vertical-align:middle;
+#open-map-settings.map-gear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  font-size: 18px;
+  font-weight: 400;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  vertical-align: middle;
   transition: box-shadow 120ms ease;
-  pointer-events:auto;
-  cursor:pointer;
+  pointer-events: auto;
+  cursor: pointer;
 }
 #open-map-settings.map-gear:hover,
-#open-map-settings.map-gear:focus{
+#open-map-settings.map-gear:focus {
   outline: none;
   border-color: transparent;
-  background:transparent;
-  box-shadow: 0 0 0 2px rgba(99,102,241,.20);
+  background: transparent;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
 }
-#open-map-settings.map-gear{ transform: translateZ(0); }
-#open-map-settings.map-gear:hover{ transform: none !important; }
-
+#open-map-settings.map-gear {
+  transform: translateZ(0);
+}
+#open-map-settings.map-gear:hover {
+  transform: none !important;
+}
 
 /* Consistent padding/spacing for Settings cards */
-.card--settings{
+.card--settings {
   padding: 1rem;
   margin-top: 1.2rem;
 }
-@media (max-width: 720px){
-  .card--settings{ padding: .75rem; }
+@media (max-width: 720px) {
+  .card--settings {
+    padding: 0.75rem;
+  }
 }
 
-
 /* Base tooltip layout; colors provided by active theme via .tooltip rules */
-.tooltip{
+.tooltip {
   position: fixed;
   padding: 6px 10px;
   border-radius: 8px;
@@ -357,9 +458,126 @@ body[class*=" theme-"][class*="-dark"] .form-ctl textarea {
   transform: translate(8px, 8px);
   /* colors are set in theme files: background, color, border */
 }
-.has-tip{
+.has-tip {
   cursor: help;
   text-decoration: dotted underline 1px;
   text-underline-offset: 2px;
 }
 
+/* === Track 'Em patch: modal number inputs & gear stability === */
+
+/* Lock down gear transitions entirely to prevent any hover-induced loop */
+#open-map-settings.map-gear,
+#open-map-settings.map-gear:hover,
+#open-map-settings.map-gear:focus {
+  border-color: var(--border, #2a3340) !important;
+  box-shadow: none !important;
+  transition: none !important;
+  transform: none !important;
+  background: transparent !important;
+}
+
+/* Map settings: number inputs = compact, readable */
+.sheet .row input[type="number"] {
+  /* stop stretching */
+  flex: 0 0 auto;
+
+  /* size for 2–3 digits + spinner */
+  width: 7.5ch; /* content-based width */
+  min-width: 72px; /* guard against tiny */
+  max-width: 96px; /* guard against huge */
+
+  padding: 6px 8px;
+  font-size: 14px;
+  text-align: right;
+  border-radius: 6px;
+}
+
+/* Only these fields get the compact treatment */
+#ms-maxzoom,
+#ms-refresh,
+#ms-cluster-radius,
+#ms-cluster-disable,
+#ms-marker-size {
+  width: 7.5ch;
+  min-width: 72px;
+  max-width: 96px;
+}
+
+/* Small screens: squeeze just a hair */
+@media (max-width: 560px) {
+  .sheet .row input[type="number"],
+  #ms-maxzoom,
+  #ms-refresh,
+  #ms-cluster-radius,
+  #ms-cluster-disable,
+  #ms-marker-size {
+    width: 7ch;
+    min-width: 64px;
+    max-width: 88px;
+  }
+}
+
+/* Glass buttons tuned to the dark theme (#0b1020 / #0f1530) */
+.glass-button {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  text-shadow: 0 2px 3px var(--text-shadow);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease;
+  will-change: transform, box-shadow, background;
+  transform: translateY(0);
+}
+
+.glass-button:hover {
+  border-color: var(--border) !important;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.02)),
+    var(--gb-bg-hover);
+  box-shadow: 0 3px 6px var(--text-shadow);
+  transform: translateY(-2px);
+}
+
+.glass-button:active {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.02)
+    ),
+    var(--gb-bg-hover);
+  text-shadow: 0 5px 5px var(--text-shadow);
+  transform: translateY(0);
+}
+
+.glass-button.active,
+.glass-button[aria-current="page"] {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.02)
+    ),
+    var(--gb-bg-hover);
+  text-shadow: 0 2px 3px var(--text-shadow);
+  transform: translateY(0);
+}
+
+.glass-button:disabled,
+.glass-button[aria-disabled="true"] {
+  opacity: 0.55;
+  pointer-events: none;
+  transform: none;
+}
+
+/* Icon sizing when using lucide or similar */
+.glass-button .icon,
+.glass-button svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+}

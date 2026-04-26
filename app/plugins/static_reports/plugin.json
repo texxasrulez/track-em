@@ -1,0 +1,7 @@
+{
+  "id": "static_reports",
+  "name": "Static Reports",
+  "version": "0.1.0",
+  "description": "Generates cached admin-only HTML reports so reporting stays fast and predictable.",
+  "admin_route": "static_reports.admin"
+}

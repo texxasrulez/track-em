@@ -1,0 +1,6 @@
+{
+  "enabled": true,
+  "report_range": "30d",
+  "max_groups": 40,
+  "groups": []
+}

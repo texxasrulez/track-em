@@ -1,0 +1,9 @@
+{
+  "enabled": true,
+  "include_traffic": true,
+  "include_alerts": true,
+  "include_bot_watch": true,
+  "include_goals": true,
+  "include_referrers": true,
+  "max_items": 10
+}

@@ -1,0 +1,2077 @@
+{
+    "source": "en_US",
+    "bootstrap": false,
+    "api_base": "https:\/\/api-free.deepl.com",
+    "deepl_languages_error": null,
+    "updated_locales": [
+        {
+            "locale": "ar_SA",
+            "updates": 1,
+            "mapped": "AR"
+        },
+        {
+            "locale": "bg_BG",
+            "updates": 12,
+            "mapped": "BG"
+        },
+        {
+            "locale": "cs_CZ",
+            "updates": 16,
+            "mapped": "CS"
+        },
+        {
+            "locale": "da_DK",
+            "updates": 16,
+            "mapped": "DA"
+        },
+        {
+            "locale": "de_DE",
+            "updates": 16,
+            "mapped": "DE"
+        },
+        {
+            "locale": "el_GR",
+            "updates": 14,
+            "mapped": "EL"
+        },
+        {
+            "locale": "es_419",
+            "updates": 15,
+            "mapped": "ES"
+        },
+        {
+            "locale": "es_ES",
+            "updates": 15,
+            "mapped": "ES"
+        },
+        {
+            "locale": "et_EE",
+            "updates": 18,
+            "mapped": "ET"
+        },
+        {
+            "locale": "fi_FI",
+            "updates": 16,
+            "mapped": "FI"
+        },
+        {
+            "locale": "fr_FR",
+            "updates": 16,
+            "mapped": "FR"
+        },
+        {
+            "locale": "hu_HU",
+            "updates": 19,
+            "mapped": "HU"
+        },
+        {
+            "locale": "id_ID",
+            "updates": 15,
+            "mapped": "ID"
+        },
+        {
+            "locale": "it_IT",
+            "updates": 13,
+            "mapped": "IT"
+        },
+        {
+            "locale": "ja_JP",
+            "updates": 8,
+            "mapped": "JA"
+        },
+        {
+            "locale": "ko_KR",
+            "updates": 9,
+            "mapped": "KO"
+        },
+        {
+            "locale": "lt_LT",
+            "updates": 9,
+            "mapped": "LT"
+        },
+        {
+            "locale": "lv_LV",
+            "updates": 13,
+            "mapped": "LV"
+        },
+        {
+            "locale": "nb_NO",
+            "updates": 13,
+            "mapped": "NB"
+        },
+        {
+            "locale": "nl_NL",
+            "updates": 20,
+            "mapped": "NL"
+        },
+        {
+            "locale": "pl_PL",
+            "updates": 16,
+            "mapped": "PL"
+        },
+        {
+            "locale": "pt_BR",
+            "updates": 12,
+            "mapped": "PT-BR"
+        },
+        {
+            "locale": "pt_PT",
+            "updates": 12,
+            "mapped": "PT-PT"
+        },
+        {
+            "locale": "ro_RO",
+            "updates": 13,
+            "mapped": "RO"
+        },
+        {
+            "locale": "ru_RU",
+            "updates": 12,
+            "mapped": "RU"
+        },
+        {
+            "locale": "sk_SK",
+            "updates": 11,
+            "mapped": "SK"
+        },
+        {
+            "locale": "sl_SI",
+            "updates": 13,
+            "mapped": "SL"
+        },
+        {
+            "locale": "sv_SE",
+            "updates": 15,
+            "mapped": "SV"
+        },
+        {
+            "locale": "tr_TR",
+            "updates": 10,
+            "mapped": "TR"
+        },
+        {
+            "locale": "uk_UA",
+            "updates": 10,
+            "mapped": "UK"
+        },
+        {
+            "locale": "zh_CN",
+            "updates": 7,
+            "mapped": "ZH"
+        },
+        {
+            "locale": "zh_TW",
+            "updates": 7,
+            "mapped": "ZH"
+        }
+    ],
+    "skipped_locales": [
+        {
+            "locale": "en_GB",
+            "reason": "unsupported or English",
+            "mapped": "EN-GB"
+        },
+        {
+            "locale": "he_IL",
+            "reason": "unsupported or English",
+            "mapped": "HE"
+        },
+        {
+            "locale": "hi_IN",
+            "reason": "unsupported or English",
+            "mapped": "HI"
+        },
+        {
+            "locale": "hr_HR",
+            "reason": "unsupported or English",
+            "mapped": "HR"
+        },
+        {
+            "locale": "sr_RS",
+            "reason": "unsupported or English",
+            "mapped": "SR"
+        },
+        {
+            "locale": "th_TH",
+            "reason": "unsupported or English",
+            "mapped": "TH"
+        },
+        {
+            "locale": "vi_VN",
+            "reason": "unsupported or English",
+            "mapped": "VI"
+        }
+    ],
+    "key_results_sample": {
+        "ar_SA": [
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "bg_BG": [
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "esri_satellite",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "os",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "openstreetmap",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "cs_CZ": [
+            {
+                "key": "admin",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "dot",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "esri_satellite",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "da_DK": [
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "browser",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "dwnlod_geolite_db",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "nav_dashboard",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "de_DE": [
+            {
+                "key": "admin",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "browser",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "nav_dashboard",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "el_GR": [
+            {
+                "key": "admin",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "nav_plugins",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "os",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "es_419": [
+            {
+                "key": "admin",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "coords",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "nav_plugins",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "es_ES": [
+            {
+                "key": "admin",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "coords",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "nav_plugins",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "et_EE": [
+            {
+                "key": "admin",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "mask_ip_abc",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "nav_plugins",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "fi_FI": [
+            {
+                "key": "admin",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "dot",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "esri_satellite",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "fr_FR": [
+            {
+                "key": "actions",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "esri_satellite",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip_api_base_url",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "hu_HU": [
+            {
+                "key": "admin",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "dot",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "esri_satellite",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "id_ID": [
+            {
+                "key": "admin",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "browser",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "coords",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "it_IT": [
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "browser",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "esri_satellite",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "os",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "openstreetmap",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "ja_JP": [
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "esri_satellite",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "os",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "retention_purge_php",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "security_and_limits",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "ko_KR": [
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "coords",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "os",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "security_and_limits",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "theme_error_2",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "lt_LT": [
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "os",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "openstreetmap",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "retention_purge_php",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "security_and_limits",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "lv_LV": [
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "dot",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "esri_satellite",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "os",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "nb_NO": [
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip_api_base_url",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "nav_plugins",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "os",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "nl_NL": [
+            {
+                "key": "admin",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "basemap",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "browser",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "help",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "pl_PL": [
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "esri_satellite",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip_api_base_url",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "marker",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "pt_BR": [
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "nav_plugins",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "openstreetmap",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "plugins",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "pt_PT": [
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "nav_plugins",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "openstreetmap",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "plugins",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "ro_RO": [
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "browser",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "marker",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "openstreetmap",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "ru_RU": [
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "basemap",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "esri_satellite",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "os",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "openstreetmap",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "sk_SK": [
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "os",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "openstreetmap",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "retention_purge_php",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "sl_SI": [
+            {
+                "key": "admin",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "dot",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "os",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "sv_SE": [
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "coords",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "dragging",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "id",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "mask_ip_abc",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "tr_TR": [
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "openstreetmap",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "retention_purge_php",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "security_and_limits",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "theme_error_2",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "uk_UA": [
+            {
+                "key": "api",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "carto_darkmatter",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "esri_satellite",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "openstreetmap",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "retention_purge_php",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "security_and_limits",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "zh_CN": [
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "openstreetmap",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "retention_purge_php",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "security_and_limits",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ],
+        "zh_TW": [
+            {
+                "key": "carto_positron",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "css",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "geo_settings",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "ip",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "openstreetmap",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "retention_purge_php",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            },
+            {
+                "key": "security_and_limits",
+                "status": "ok",
+                "http": 200,
+                "error": null
+            }
+        ]
+    }
+}

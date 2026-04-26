@@ -1,96 +1,99 @@
 /* Track Em Theme: Greyscale */
 :root {
-    --bg: #dddddd;
-    --panel: #d6d6d6;
-    --muted: #cccccc;
-    --text: #1e1e1e;
-    --sub: #334155;
-    --accent: #333333;
-    --accent2: #bbbbbb;
-    --border: #666666;
-    --theme-pin-color: #e8e9eb;
-	--pin-color: var(--theme-pin-color);
-	--icon-color: #e8e8e8;
-	--btn-text: #fff;
-	
-	--badge-muted: #a1d99b;
-	--badge-sub: #006d2c;
-	--badge-border: #006d2c;
-    
-	--te-surface: var(--bg);
-	--te-surface-hover: var(--accent2);
-	--te-border: var(--border);
-	--te-text: var(--text);
-	
-	--te-primary-bg: var(--muted);
-    --te-primary-border: var(--border);
-    --te-primary-text: var(--text);
-    --te-primary-hover: var(--accent2);
+  --bg: #dddddd;
+  --panel: #d6d6d6;
+  --muted: #cccccc;
+  --text: #1e1e1e;
+  --text-hover: #000;
+  --sub: #334155;
+  --accent: #333333;
+  --accent2: #bbbbbb;
+  --border: #666666;
+  --theme-pin-color: #e8e9eb;
+  --pin-color: var(--theme-pin-color);
+  --icon-color: #e8e8e8;
+  --btn-text: #fff;
+  --text-shadow: rgba(102, 102, 102, 0.75);
 
-	--te-danger-bg: #991b1b;
-    --te-danger-border: #ef4444;
-    --te-danger-text: #ffe4e6;
-    --te-danger-hover: #b91c1c;
-    
-	--tt-bg: var(--bg);
-	--tt-text: var(--text);
-	--tt-border: var(--border);
+  --badge-muted: #a1d99b;
+  --badge-sub: #006d2c;
+  --badge-border: #006d2c;
+
+  --te-surface: var(--bg);
+  --te-surface-hover: #a7a7a7;
+  --te-border: var(--border);
+  --te-text: var(--text);
+
+  --te-primary-bg: var(--muted);
+  --te-primary-border: var(--border);
+  --te-primary-text: var(--text);
+  --te-primary-hover: var(--accent2);
+
+  --te-danger-bg: #991b1b;
+  --te-danger-border: #ef4444;
+  --te-danger-text: #ffe4e6;
+  --te-danger-hover: #b91c1c;
+
+  --tt-bg: var(--bg);
+  --tt-text: var(--text);
+  --tt-border: var(--border);
 }
 html,
 body {
-    background: var(--bg);
-    color: var(--text);
+  background: var(--bg);
+  color: var(--text);
 }
 a {
-    color: var(--accent);
+  color: var(--accent);
 }
 .topbar {
-	position: fixed;
-    background: var(--panel);
-    border-bottom: 1px solid var(--border);
-    box-shadow: 0 8px 24px rgba(42, 42, 42, 0.4);
-	z-index: 9999 !important;
+  position: fixed;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 8px 24px rgba(42, 42, 42, 0.4);
+  z-index: 9999 !important;
 }
 .card {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(42, 42, 42, 0.4);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(42, 42, 42, 0.4);
 }
 input,
 select,
 button {
-    background: #d6d6d6;
-    color: #0f172a;
-    border: 1px solid var(--border);
+  background: #d6d6d6;
+  color: #0f172a;
+  border: 1px solid var(--border);
 }
 table {
-    border-collapse: separate;
-    border-spacing: 0;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
 }
 th,
 td {
-    border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 thead th {
-    background: var(--muted);
-    color: var(--text);
+  background: var(--muted);
+  color: var(--text);
 }
 .badge {
-    background: var(--badge-muted);
-    color: var(--badge-sub);
-    border: 1px solid var(--badge-border);
+  background: var(--badge-muted);
+  color: var(--badge-sub);
+  border: 1px solid var(--badge-border);
 }
 .tooltip {
-    background: var(--tt-bg) !important;
-    color: var(--tt-text) !important;
-    border: 1px solid var(--tt-border) !important;
-    box-shadow: 0 8px 24px rgba(42, 42, 42, 0.4);
+  background: var(--tt-bg) !important;
+  color: var(--tt-text) !important;
+  border: 1px solid var(--tt-border) !important;
+  box-shadow: 0 8px 24px rgba(42, 42, 42, 0.4);
 }
-.map-gear:hover, .map-gear:focus {
+.map-gear:hover,
+.map-gear:focus {
   border-color: var(--accent2);
-  box-shadow: 0 0 0 2px rgba(0,0,0,.06);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.06);
 }

@@ -1,174 +1,308 @@
 <?php
 declare(strict_types=1);
 
-$cfgPath   = __DIR__ . '/config/config.php';
-$lockPath  = __DIR__ . '/config/.installed.lock';
-$schemaPath= __DIR__ . '/sql/schema.sql';
-$pluginsDir= __DIR__ . '/plugins';
-
+$cfgPath = __DIR__ . "/config/config.php";
+$lockPath = __DIR__ . "/config/.installed.lock";
+$schemaPath = __DIR__ . "/sql/schema.sql";
+$pluginsDir = __DIR__ . "/app/plugins";
 
 /**
- * Split SQL into statements; removes -- and /* */ comments; ignores semicolons in strings.
+ * Split SQL into statements; strips SQL line/block comments and ignores semicolons in strings.
  */
-function split_sql(string $sql): array {
-  if (substr($sql, 0, 3) === "\xEF\xBB\xBF") $sql = substr($sql, 3);
-  $out = []; $cur = ''; $in = null; $len = strlen($sql);
-  for ($i=0;$i<$len;$i++) {
-    $ch = $sql[$i]; $nx = $i+1<$len ? $sql[$i+1] : '';
-    if ($in===null && $ch==='-' && $nx==='-') { while ($i<$len && $sql[$i] !== "\n") $i++; continue; }
-    if ($in===null && $ch==='#') { while ($i<$len && $sql[$i] !== "\n") $i++; continue; }
-    if ($in===null && $ch==='/' && $nx==='*') { $i+=2; while ($i+1<$len && !($sql[$i]=='*' && $sql[$i+1]=='/')) $i++; $i++; continue; }
-    if ($ch===\"'\" or $ch=='\"') {
-      if ($in===null) { $in=$ch; $cur.=$ch; continue; }
-      if ($in===$ch) {
-        $prev = $i>0 ? $sql[$i-1] : '';
-        $next = $i+1<$len ? $sql[$i+1] : '';
-        if ($ch===\"'\" && $next===\"'\") { $cur.=$ch.$next; $i++; continue; }
-        if ($prev=='\\') { $cur.=$ch; continue; }
-        $in=null; $cur.=$ch; continue;
-      }
-      $cur.=$ch; continue;
+function split_sql(string $sql): array
+{
+    if (substr($sql, 0, 3) === "\xEF\xBB\xBF") {
+        $sql = substr($sql, 3);
     }
-    if ($in===null && $ch===';') { $stmt=trim($cur); if ($stmt!=='') $out[] =($stmt); $cur=''; continue; }
-    $cur.=$ch;
-  }
-  $stmt=trim($cur); if ($stmt!=='') $out[]=$stmt;
-  return $out;
+    $out = [];
+    $cur = "";
+    $in = null;
+    $len = strlen($sql);
+    for ($i = 0; $i < $len; $i++) {
+        $ch = $sql[$i];
+        $nx = $i + 1 < $len ? $sql[$i + 1] : "";
+        if ($in === null && $ch === "-" && $nx === "-") {
+            while ($i < $len && $sql[$i] !== "\n") {
+                $i++;
+            }
+            continue;
+        }
+        if ($in === null && $ch === "#") {
+            while ($i < $len && $sql[$i] !== "\n") {
+                $i++;
+            }
+            continue;
+        }
+        if ($in === null && $ch === "/" && $nx === "*") {
+            $i += 2;
+            while ($i + 1 < $len && !($sql[$i] == "*" && $sql[$i + 1] == "/")) {
+                $i++;
+            }
+            $i++;
+            continue;
+        }
+        if ($ch === "'" || $ch == '"') {
+            if ($in === null) {
+                $in = $ch;
+                $cur .= $ch;
+                continue;
+            }
+            if ($in === $ch) {
+                $prev = $i > 0 ? $sql[$i - 1] : "";
+                $next = $i + 1 < $len ? $sql[$i + 1] : "";
+                if ($ch === "'" && $next === "'") {
+                    $cur .= $ch . $next;
+                    $i++;
+                    continue;
+                }
+                if ($prev == "\\") {
+                    $cur .= $ch;
+                    continue;
+                }
+                $in = null;
+                $cur .= $ch;
+                continue;
+            }
+            $cur .= $ch;
+            continue;
+        }
+        if ($in === null && $ch === ";") {
+            $stmt = trim($cur);
+            if ($stmt !== "") {
+                $out[] = $stmt;
+            }
+            $cur = "";
+            continue;
+        }
+        $cur .= $ch;
+    }
+    $stmt = trim($cur);
+    if ($stmt !== "") {
+        $out[] = $stmt;
+    }
+    return $out;
 }
-function h($s){ return htmlspecialchars((string)$s, ENT_QUOTES); }
+function h($s)
+{
+    return htmlspecialchars((string) $s, ENT_QUOTES);
+}
 
 /* --- session/CSRF (robust behind proxies) --- */
-function csrf_boot(){
-  $is_https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
-              || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
-  if (session_status() === PHP_SESSION_NONE) {
-    session_name('TESESS');
-    session_start([
-      'cookie_httponly' => true,
-      'cookie_secure'   => $is_https,
-      'cookie_samesite' => 'Lax',
-      'cookie_path'     => '/',
-      'use_strict_mode' => true,
-      'use_only_cookies'=> true,
-    ]);
-  }
+function csrf_boot()
+{
+    $is_https =
+        (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] !== "off") ||
+        (!empty($_SERVER["HTTP_X_FORWARDED_PROTO"]) &&
+            $_SERVER["HTTP_X_FORWARDED_PROTO"] === "https");
+    if (session_status() === PHP_SESSION_NONE) {
+        session_name("TESESS");
+        session_start([
+            "cookie_httponly" => true,
+            "cookie_secure" => $is_https,
+            "cookie_samesite" => "Lax",
+            "cookie_path" => "/",
+            "use_strict_mode" => true,
+            "use_only_cookies" => true,
+        ]);
+    }
 }
-function csrf_token(){ csrf_boot(); $_SESSION['csrf'] ??= bin2hex(random_bytes(16)); return $_SESSION['csrf']; }
-function csrf_check($t){ csrf_boot(); return hash_equals($_SESSION['csrf'] ?? '', $t ?? ''); }
+function csrf_token()
+{
+    csrf_boot();
+    $_SESSION["csrf"] ??= bin2hex(random_bytes(16));
+    return $_SESSION["csrf"];
+}
+function csrf_check($t)
+{
+    csrf_boot();
+    $stored = $_SESSION["csrf"] ?? "";
+    $given = (string) ($t ?? "");
+    if (!is_string($stored) || $stored === "" || $given === "") {
+        return false;
+    }
+    return hash_equals($stored, $given);
+}
 
 /* --- helpers --- */
-function dsn(string $h, int $p, string $n): string {
-  return sprintf('mysql:host=%s;port=%d;dbname=%s;charset=utf8mb4', $h, $p, $n);
+function dsn(string $h, int $p, string $n): string
+{
+    return sprintf(
+        "mysql:host=%s;port=%d;dbname=%s;charset=utf8mb4",
+        $h,
+        $p,
+        $n,
+    );
 }
-function json_decode_a(string $s): array { $j=json_decode($s, true); return is_array($j)?$j:[]; }
+function json_decode_a(string $s): array
+{
+    $j = json_decode($s, true);
+    return is_array($j) ? $j : [];
+}
 
 /* --- page vars --- */
-$errors  = [];
-$ok      = false;
+$errors = [];
+$ok = false;
 $already = is_file($cfgPath) && is_file($lockPath);
-$loginUrl = (rtrim(dirname($_SERVER['SCRIPT_NAME'] ?? ''), '/\\') ?: '') . '/index.php';
+$loginUrl =
+    (rtrim(dirname($_SERVER["SCRIPT_NAME"] ?? ""), "/\\") ?: "") . "/index.php";
 
 /* --- POST: run install/repair --- */
-if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
-  if (!csrf_check($_POST['csrf'] ?? '')) { $errors[] = 'Bad CSRF token.'; }
-  $db_host = trim($_POST['db_host'] ?? '127.0.0.1');
-  $db_port = (int)($_POST['db_port'] ?? 3306);
-  $db_name = trim($_POST['db_name'] ?? '');
-  $db_user = trim($_POST['db_user'] ?? '');
-  $db_pass = (string)($_POST['db_pass'] ?? '');
-  $app_theme = trim($_POST['app_theme'] ?? 'default');
-  $app_lang  = trim($_POST['app_lang'] ?? 'en_US');
-  $base_url  = trim($_POST['base_url'] ?? '');
+if (($_SERVER["REQUEST_METHOD"] ?? "GET") === "POST") {
+    if (!csrf_check($_POST["csrf"] ?? "")) {
+        $errors[] = "Bad CSRF token.";
+    }
+    $db_host = trim($_POST["db_host"] ?? "127.0.0.1");
+    $db_port = (int) ($_POST["db_port"] ?? 3306);
+    $db_name = trim($_POST["db_name"] ?? "");
+    $db_user = trim($_POST["db_user"] ?? "");
+    $db_pass = (string) ($_POST["db_pass"] ?? "");
+    $app_theme = trim($_POST["app_theme"] ?? "default");
+    $app_lang = trim($_POST["app_lang"] ?? "en_US");
+    $base_url = trim($_POST["base_url"] ?? "");
 
-  $admin_user = trim($_POST['admin_user'] ?? '');
-  $admin_pass = (string)($_POST['admin_pass'] ?? '');
+    $admin_user = trim($_POST["admin_user"] ?? "");
+    $admin_pass = (string) ($_POST["admin_pass"] ?? "");
 
-  if ($db_name==='') $errors[] = 'DB name required';
-  if ($db_user==='') $errors[] = 'DB user required';
-  if ($admin_user==='') $errors[] = 'Admin username required';
-  if (strlen($admin_pass) < 8) $errors[] = 'Admin password must be at least 8 chars';
+    if ($db_name === "") {
+        $errors[] = "DB name required";
+    }
+    if ($db_user === "") {
+        $errors[] = "DB user required";
+    }
+    if ($admin_user === "") {
+        $errors[] = "Admin username required";
+    }
+    if (strlen($admin_pass) < 8) {
+        $errors[] = "Admin password must be at least 8 chars";
+    }
 
-  if (!$errors) {
-    try {
-      $pdo = new PDO(dsn($db_host,$db_port,$db_name), $db_user, $db_pass, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::ATTR_EMULATE_PREPARES => false,
-      ]);
+    if (!$errors) {
+        try {
+            $pdo = new PDO(
+                dsn($db_host, $db_port, $db_name),
+                $db_user,
+                $db_pass,
+                [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::ATTR_EMULATE_PREPARES => false,
+                ],
+            );
 
-      /* 1) Run extended schema (idempotent) */
-      $sql = file_get_contents($schemaPath);
-      foreach (split_sql($sql) as $stmt) {
-        $pdo->exec($stmt);
-      }
-
-      /* 2) Ensure admin user exists */
-      $ph = password_hash($admin_pass, PASSWORD_DEFAULT);
-      $stmt = $pdo->prepare("SELECT COUNT(*) AS c FROM users WHERE username=?");
-      $stmt->execute([$admin_user]);
-      if (((int)$stmt->fetch()['c']) === 0) {
-        $ins = $pdo->prepare("INSERT INTO users (username,password_hash,role) VALUES (?,?, 'admin')");
-        $ins->execute([$admin_user,$ph]);
-      }
-
-      /* 3) Discover plugins and upsert rows with defaults */
-      if (is_dir($pluginsDir)) {
-        foreach (scandir($pluginsDir) as $d) {
-          if ($d==='.' || $d==='..') continue;
-          $pj = $pluginsDir . "/$d/plugin.json";
-          if (!is_file($pj)) continue;
-          $man = json_decode_a((string)file_get_contents($pj));
-          if (empty($man['id'])) continue;
-          $pid = (string)$man['id'];
-
-          // Build default config from schema defaults
-          $defaults = [];
-          if (!empty($man['configSchema']['fields']) && is_array($man['configSchema']['fields'])) {
-            foreach ($man['configSchema']['fields'] as $f) {
-              if (!is_array($f) || empty($f['name'])) continue;
-              $fname = (string)$f['name'];
-              if (array_key_exists('default', $f)) $defaults[$fname] = $f['default'];
+            /* 1) Run extended schema (idempotent) */
+            $sql = file_get_contents($schemaPath);
+            foreach (split_sql($sql) as $stmt) {
+                $pdo->exec($stmt);
             }
-          }
 
-          // Insert if missing; keep existing config if present
-          $st = $pdo->prepare("INSERT INTO plugins (id, enabled, config)
+            /* 2) Ensure admin user exists */
+            $ph = password_hash($admin_pass, PASSWORD_DEFAULT);
+            $stmt = $pdo->prepare(
+                "SELECT COUNT(*) AS c FROM users WHERE username=?",
+            );
+            $stmt->execute([$admin_user]);
+            if (((int) $stmt->fetch()["c"]) === 0) {
+                $ins = $pdo->prepare(
+                    "INSERT INTO users (username,password_hash,role) VALUES (?,?, 'admin')",
+                );
+                $ins->execute([$admin_user, $ph]);
+            }
+
+            /* 3) Discover plugins and upsert rows with defaults */
+            if (is_dir($pluginsDir)) {
+                foreach (scandir($pluginsDir) as $d) {
+                    if ($d === "." || $d === "..") {
+                        continue;
+                    }
+                    $pj = $pluginsDir . "/$d/plugin.json";
+                    if (!is_file($pj)) {
+                        continue;
+                    }
+                    $man = json_decode_a((string) file_get_contents($pj));
+                    if (empty($man["id"])) {
+                        continue;
+                    }
+                    $pid = (string) $man["id"];
+
+                    // Build default config from schema defaults
+                    $defaults = [];
+                    if (
+                        !empty($man["configSchema"]["fields"]) &&
+                        is_array($man["configSchema"]["fields"])
+                    ) {
+                        foreach ($man["configSchema"]["fields"] as $f) {
+                            if (!is_array($f) || empty($f["name"])) {
+                                continue;
+                            }
+                            $fname = (string) $f["name"];
+                            if (array_key_exists("default", $f)) {
+                                $defaults[$fname] = $f["default"];
+                            }
+                        }
+                    }
+
+                    // Insert if missing; keep existing config if present
+                    $st = $pdo->prepare("INSERT INTO plugins (id, enabled, config)
                                VALUES (?, 1, ?)
                                ON DUPLICATE KEY UPDATE id=id"); // no-op update, preserves existing
-          $st->execute([$pid, json_encode($defaults, JSON_UNESCAPED_SLASHES)]);
+                    $st->execute([
+                        $pid,
+                        json_encode($defaults, JSON_UNESCAPED_SLASHES),
+                    ]);
 
-          // If row exists but config is NULL, set to defaults
-          $fix = $pdo->prepare("UPDATE plugins SET config = COALESCE(config, ?) WHERE id=?");
-          $fix->execute([json_encode($defaults, JSON_UNESCAPED_SLASHES), $pid]);
+                    // If row exists but config is NULL, set to defaults
+                    $fix = $pdo->prepare(
+                        "UPDATE plugins SET config = COALESCE(config, ?) WHERE id=?",
+                    );
+                    $fix->execute([
+                        json_encode($defaults, JSON_UNESCAPED_SLASHES),
+                        $pid,
+                    ]);
+                }
+            }
+
+            /* 4) Write config.php (includes geo defaults) */
+            $cfg = [
+                "base_url" => $base_url,
+                "database" => [
+                    "host" => $db_host,
+                    "port" => $db_port,
+                    "name" => $db_name,
+                    "user" => $db_user,
+                    "pass" => $db_pass,
+                ],
+                "theme" => ["active" => $app_theme],
+                "i18n" => ["default" => $app_lang],
+                "privacy" => [
+                    "respect_dnt" => true,
+                    "require_consent" => false,
+                    "ip_anonymize" => true,
+                    "ip_mask_bits" => 16,
+                ],
+                // Geo provider defaults (client code respects these)
+                "geo" => [
+                    "enabled" => true,
+                    "provider" => "ip-api",
+                    "ip_api_base" => "http://ip-api.com/json",
+                    "timeout_sec" => 0.8,
+                    "max_lookups" => 15,
+                ],
+            ];
+            if (!is_dir(dirname($cfgPath))) {
+                mkdir(dirname($cfgPath), 0775, true);
+            }
+            file_put_contents(
+                $cfgPath,
+                "<?php\nreturn " . var_export($cfg, true) . ";\n",
+            );
+
+            /* 5) Lock file */
+            file_put_contents($lockPath, "installed: " . date("c") . "\n");
+            $ok = true;
+        } catch (Throwable $e) {
+            $errors[] = "Install failed: " . $e->getMessage();
         }
-      }
-
-      /* 4) Write config.php (includes geo defaults) */
-      $cfg = [
-        'base_url' => $base_url,
-        'database' => ['host'=>$db_host,'port'=>$db_port,'name'=>$db_name,'user'=>$db_user,'pass'=>$db_pass],
-        'theme'    => ['active'=>$app_theme],
-        'i18n'     => ['default'=>$app_lang],
-        'privacy'  => ['respect_dnt'=>true,'require_consent'=>false,'ip_anonymize'=>true,'ip_mask_bits'=>16],
-        // Geo provider defaults (client code respects these)
-        'geo'      => [
-          'enabled'       => true,
-          'provider'      => 'ip-api',
-          'ip_api_base'   => 'http://ip-api.com/json',
-          'timeout_sec'   => 0.8,
-          'max_lookups'   => 15
-        ],
-      ];
-      if (!is_dir(dirname($cfgPath))) mkdir(dirname($cfgPath), 0775, true);
-      file_put_contents($cfgPath, "<?php\nreturn " . var_export($cfg, true) . ";\n");
-
-      /* 5) Lock file */
-      file_put_contents($lockPath, "installed: ".date('c')."\n");
-      $ok = true;
-    } catch (Throwable $e) {
-      $errors[] = 'Install failed: ' . $e->getMessage();
     }
-  }
 }
 ?>
 <!doctype html>
@@ -198,9 +332,13 @@ button{cursor:pointer}
   <div class="card">
     <h1>Track Em — Web Installer</h1>
     <?php if ($already && !$ok): ?>
-      <div class="lock">Existing install detected. You can <a href="<?= h($loginUrl) ?>">open the app</a> or re-install (non-destructive).</div>
+      <div class="lock">Existing install detected. You can <a href="<?= h(
+          $loginUrl,
+      ) ?>">open the app</a> or re-install (non-destructive).</div>
     <?php endif; ?>
-    <?php foreach ($errors as $e): ?><div class="error"><?= h($e) ?></div><?php endforeach; ?>
+    <?php foreach ($errors as $e): ?><div class="error"><?= h(
+    $e,
+) ?></div><?php endforeach; ?>
     <?php if ($ok): ?>
       <div class="success">Installation complete. Schema migrated, admin ensured, plugin defaults synced.</div>
       <div class="footer">

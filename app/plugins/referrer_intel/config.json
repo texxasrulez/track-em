@@ -1,0 +1,21 @@
+{
+  "enabled": true,
+  "report_range": "30d",
+  "search_domains": [
+    "google.",
+    "bing.com",
+    "duckduckgo.com",
+    "yahoo.com"
+  ],
+  "social_domains": [
+    "facebook.com",
+    "x.com",
+    "twitter.com",
+    "reddit.com",
+    "linkedin.com",
+    "youtube.com"
+  ],
+  "internal_domains": [],
+  "show_referrer_paths": false,
+  "include_query_strings": false
+}

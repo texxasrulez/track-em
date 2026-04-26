@@ -1,0 +1,7 @@
+{
+  "id": "goals",
+  "name": "Goals",
+  "version": "0.1.0",
+  "description": "Lightweight goal and conversion reporting from page visits and optional event tracking.",
+  "admin_route": "goals.admin"
+}

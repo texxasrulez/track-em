@@ -18,6 +18,9 @@ CREATE TABLE IF NOT EXISTS visits (
   meta JSON NULL
 );
 
+CREATE INDEX IF NOT EXISTS idx_visits_ts_id ON visits (ts, id);
+CREATE INDEX IF NOT EXISTS idx_visits_ip ON visits (ip);
+
 CREATE TABLE IF NOT EXISTS settings (
   `key` VARCHAR(190) PRIMARY KEY,
   `value` JSON NOT NULL

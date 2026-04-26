@@ -1,0 +1,5 @@
+{
+  "enabled": true,
+  "report_range": "30d",
+  "goals": []
+}

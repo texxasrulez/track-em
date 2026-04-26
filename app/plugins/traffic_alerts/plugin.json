@@ -1,0 +1,7 @@
+{
+  "id": "traffic_alerts",
+  "name": "Traffic Alerts",
+  "version": "0.1.0",
+  "description": "Lightweight admin alerts for unusual traffic patterns, spikes, drops, and suspicious probing.",
+  "admin_route": "traffic_alerts.admin"
+}

@@ -1,0 +1,26 @@
+{
+  "counter": {
+    "enabled": false,
+    "mode": "site",
+    "range": "30d",
+    "format": "compact",
+    "label": "Visits"
+  },
+  "map": {
+    "enabled": false,
+    "profile": {
+      "id": "main",
+      "title": "Visitor Map",
+      "range": "30d",
+      "max_points": 120,
+      "privacy_mode": "bucketed",
+      "tile_layer": "roads",
+      "coordinate_precision": 1,
+      "bucket_size_deg": 2.5,
+      "jitter": 0.18,
+      "min_bucket_size": 3,
+      "show_counts": true,
+      "height": 520
+    }
+  }
+}

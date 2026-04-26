@@ -1,0 +1,9 @@
+{
+  "enabled": true,
+  "allowed_event_names": [],
+  "validation_rule": "extended",
+  "retention_days": 90,
+  "max_event_name_length": 64,
+  "max_metadata_keys": 5,
+  "max_metadata_value_length": 100
+}

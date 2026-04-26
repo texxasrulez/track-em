@@ -1,0 +1,7 @@
+{
+  "id": "public_widgets",
+  "name": "Public Widgets",
+  "version": "0.1.0",
+  "description": "Privacy-preserving public hit counters and visitor map embeds for normal HTML pages.",
+  "admin_route": "public_widgets.admin"
+}

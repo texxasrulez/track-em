@@ -15,7 +15,7 @@ Track 'Em is a no‑nonsense, PHP‑native tracker and tiny dashboard you can dr
 
 ## **Screenshot**
 
-![Alt text](assets/images/screenshot.png?raw=true "Track Em Screenshot")
+![Alt text](/assets/images/screenshot.png?raw=true "Track Em Screenshot")
 
 ---
 
@@ -25,10 +25,19 @@ Track 'Em is a no‑nonsense, PHP‑native tracker and tiny dashboard you can dr
 - **Privacy first** - honors Do‑Not‑Track; optional consent banner; IP anonymization/masking.
 - **Geo** - pluggable providers: free `ip-api.com` (with proxy option) or local **MaxMind GeoLite2 City** `.mmdb`.
 - **Fast** - single PDO connection; prepared statements; no ORM.
-- **Admin UI** - visitors table, charts/widgets, themes, plugins, and full settings.
-- **Plugins** - first‑party widgets: `visitors`, `realtime`, `maps`, `consent_banner`.
+- **Admin UI** - visitors table, charts/widgets, themes, a two-pane plugin manager, and full settings.
+- **Plugins** - route-driven plugin system with first-party widgets, embeds, event collection, goals, referrer analysis, alerts, bot detection, and static reporting.
 - **I18n** - simple label files under `i18n/` with a validator, plus per‑session language switching.
 - **Operational sanity** - retention script, rate limiting on API, cron for Geo DB refresh.
+
+---
+
+## Documentation
+
+- [docs/README.md](docs/README.md) - docs index and root-webroot notes.
+- [docs/PLUGIN_DEVELOPMENT.md](docs/PLUGIN_DEVELOPMENT.md) - detailed third-party plugin development guide.
+- [docs/I18N.md](docs/I18N.md) - localization notes.
+- [docs/TRANSLATION.md](docs/TRANSLATION.md) - translation workflow notes.
 
 ---
 
@@ -43,11 +52,12 @@ track-em/
 ├─ assets/                   # App JS/CSS (no bundler)
 │  └─ js/te.js               # Copy‑paste client snippet (sets TE_ENDPOINT → /track.php)
 ├─ app/
-│  ├─ core/                  # Framework‑ish bits (Config, DB, Router, Security, Geo, Theme, I18n, HookManager)
+│  ├─ core/                  # Framework‑ish bits (Config, DB, Router, Security, Geo, Theme, I18n, HookManager, PluginDispatcher)
 │  ├─ controllers/           # Admin/API endpoints
 │  ├─ models/                # Visit, User
 │  └─ views/                 # Admin HTML templates + layout
-├─ app/plugins/              # Built‑in plugins (consent_banner, realtime, maps, visitors)
+├─ app/plugins/              # Built‑in plugins (widgets, public embeds, goals, alerts, reports, etc.)
+├─ docs/                     # Setup, translation, and plugin development docs
 ├─ themes/                   # Theme placeholders (runtime CSS is generated)
 ├─ config/
 │  ├─ config.sample.php      # Copy to config.php and edit
@@ -145,10 +155,14 @@ return [
     "ip_anonymize" => true,
     "ip_mask_bits" => 16,
   ],
+  "security" => [
+    "trusted_proxies" => [],
+  ],
   "geo" => [
     "enabled" => true,
     "provider" => "ip-api",
     "ip_api_base" => "http://ip-api.com/json", // or point to your own HTTPS proxy
+    "allow_insecure_http" => false,
   ],
 ];
 ```
@@ -163,10 +177,13 @@ Key options (practical notes):
   - `respect_dnt` - Skip tracking when the browser's Do‑Not‑Track is on.
   - `require_consent` - Show/use the consent banner plugin and only track after "Allow".
   - `ip_anonymize` + `ip_mask_bits` - Masks the lower bits of IPs before storing.
+- `security`:
+  - `trusted_proxies` - Optional list of reverse proxy IPs allowed to supply `X-Forwarded-For`. Leave empty when the app is directly exposed.
 - `geo`:
   - `enabled` - store lat/lon + city/country when available.
-  - `provider` - `"ip-api"` (HTTP/HTTPS via proxy) or `"maxmind_local"`.
-  - `ip_api_base` - Point to your own HTTPS proxy if you don't want direct HTTP calls.
+  - `provider` - `"ip-api"` or MaxMind providers.
+  - `ip_api_base` - Point to an HTTPS endpoint or your own HTTPS proxy.
+  - `allow_insecure_http` - Defaults to `false`. Set `true` only if you explicitly accept plaintext geo lookups.
   - `mm_license_key`, `mmdb_path` - For MaxMind local DB (auto‑download supported).
 - `rate_limit`:
   - `enabled` - Throttle API endpoints.
@@ -226,36 +243,48 @@ Key screens:
 - **Users**: manage admin accounts.
 - **Help**: quick reference.
 
+Plugin-owned routes are also supported. Any route of the form `plugin_id.action` is passed to `TrackEm\Core\PluginDispatcher`, which loads `app/plugins/{plugin_id}/PluginController.php` and calls its `dispatch()` method.
+
 ---
 
 ## Plugins
 
-Built‑in plugins ship under `app/plugins/` and are managed via the **Plugins** screen and API.
+Built-in plugins ship under `app/plugins/` and are managed via the **Plugins** screen and API.
 
-- `consent_banner` - drops a minimalist banner. Config keys:
-- `message`, `position` (`top`|`bottom`).
-- `visitors` - dashboard widget; no config.
-- `realtime` - near‑real‑time updates via server polling; no config.
-- `maps` - shows a map widget when geo is enabled.
+Current first-party plugins in this repository include:
 
-Plugin assets are served via `?p=api.plugins.asset&plugin={id}&file=...`. Per‑plugin JSON configs are persisted under `storage/plugins/{id}/config.json` (the controller writes them atomically).
+- `consent_banner`
+- `visitors`
+- `realtime`
+- `maps`
+- `public_widgets`
+- `event_tracking`
+- `goals`
+- `referrer_intel`
+- `traffic_alerts`
+- `bot_watch`
+- `static_reports`
 
-**Developing a plugin** (short version):
+The current plugin manager supports:
 
-```
-app/plugins/your_plugin/
-├─ plugin.php         # optional bootstrap
-├─ manifest.json      # optional metadata
-└─ assets/...         # any JS/CSS/images
-```
+- a real plugin sidebar with filtering and search
+- plugin-specific admin routes via `plugin.json -> admin_route`
+- generic schema-based settings forms via `plugin.json -> configSchema`
 
-Your admin UI can fetch assets via `api.plugins.asset`. Read current config via `api.plugins.configs` and update with `api.plugins.config.set`.
+Common asset and config patterns:
+
+- static plugin asset route: `?p=api.plugins.asset&key={id}&file=assets/widget.js`
+- plugin-owned route example: `?p=event_tracking.asset&file=trackem-events.js`
+- plugin runtime storage: `storage/plugins/{id}/...`
+- older generic config storage: `config/plugins/{id}.json`
+
+For real third-party development, use [docs/PLUGIN_DEVELOPMENT.md](docs/PLUGIN_DEVELOPMENT.md). It documents the current `plugin.json` + `PluginController.php` conventions and the plugin route dispatcher used by this codebase.
 
 ---
 
 ## Geo options
 
-- **ip-api.com** (default): simple web API. To avoid HTTP from the browser, set up an HTTPS reverse proxy and point `geo.ip_api_base` at it.
+- **ip-api.com**: simple web API. By default Track 'Em refuses plaintext HTTP lookups, so use an HTTPS proxy or explicitly opt into insecure HTTP with `geo.allow_insecure_http=true`.
 - **MaxMind GeoLite2 (local)**: set `geo.mm_license_key` in **Settings**, then click **Download / Update GeoLite2**. The app uses `PharData` to unpack the official tarball and writes `data/GeoLite2-City.mmdb`. You can also run the cron below.
 
 Nightly cron to refresh the DB and backfill recent visits:
@@ -283,11 +312,35 @@ The script uses the configured PDO connection and deletes rows older than `NOW()
 
 - Locale files live in `i18n/{LOCALE}.php` and return `['key' => 'Label', ...]`.
 - Default locale is `i18n.default`. Users can switch with `?lang=xx_YY`.
+- Create or update locale files with DeepL using the append-only helper in `scripts/translate_locales.php`.
 - Validate your locales (keys and placeholders) locally:
 
 ```bash
 php cli/validate_locales.php
 ```
+
+- Generate or update missing translations with DeepL:
+
+```bash
+export DEEPL_API_KEY=your-key
+php scripts/translate_locales.php --source=en_US
+php scripts/translate_locales.php --only=fr_FR,es_ES
+php scripts/translate_locales.php --dry-run
+php scripts/translate_locales.php --force
+```
+
+- DeepL endpoint selection:
+  - `DEEPL_API_KEY` is required unless `--dry-run` is used.
+  - `DEEPL_API_URL` is optional; if unset, the script auto-selects `https://api-free.deepl.com` for DeepL Free keys and `https://api.deepl.com` otherwise.
+  - `MT_FORMALITY` can be set to `default`, `more`, or `less`.
+- Normal runs are append-only:
+  - The script sends only missing keys from `i18n/en_US.php` to DeepL.
+  - Existing translated strings are not modified.
+  - Use `--force` only when you intentionally want to re-translate existing keys.
+- Outputs:
+  - Updated `i18n/<locale>.php` files when missing keys are filled.
+  - `i18n/.mt/mt_report.json` with a summary of what was processed.
+  - `i18n/.mt/mt_state.json` with source metadata.
 
 ---
 

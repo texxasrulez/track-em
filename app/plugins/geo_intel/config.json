@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "report_range": "30d",
+  "max_rows": 20,
+  "include_city_summary": false,
+  "group_unknown": true
+}

@@ -1,0 +1,7 @@
+{
+  "id": "content_groups",
+  "name": "Content Groups",
+  "version": "0.1.0",
+  "description": "Group paths like /blog/* or /docs/* into lightweight admin reporting buckets.",
+  "admin_route": "content_groups.admin"
+}

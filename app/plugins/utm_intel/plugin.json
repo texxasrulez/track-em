@@ -1,0 +1,7 @@
+{
+  "id": "utm_intel",
+  "name": "UTM Intel",
+  "version": "0.1.0",
+  "description": "Summarize lightweight campaign parameters like source, medium, and campaign from tracked paths.",
+  "admin_route": "utm_intel.admin"
+}

@@ -1,0 +1,7 @@
+{
+  "id": "anomaly_digest",
+  "name": "Anomaly Digest",
+  "version": "0.1.0",
+  "description": "Lightweight admin digest that summarizes traffic shifts, alerts, bots, goals, and referrer changes.",
+  "admin_route": "anomaly_digest.admin"
+}

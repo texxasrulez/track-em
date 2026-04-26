@@ -1,0 +1,7 @@
+{
+  "id": "site_annotations",
+  "name": "Site Annotations",
+  "version": "0.1.0",
+  "description": "Add lightweight dated notes like deploys, campaigns, outages, and content changes for admin review.",
+  "admin_route": "site_annotations.admin"
+}

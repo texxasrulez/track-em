@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "report_range": "30d",
+  "export_format": "both",
+  "retention_count": 30,
+  "include_sections": {
+    "traffic_summary": true,
+    "top_paths": true,
+    "referrer_summary": true,
+    "event_summary": true,
+    "goals_summary": true
+  }
+}

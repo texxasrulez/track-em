@@ -1,96 +1,99 @@
 /* Track Em Theme: Paper */
 :root {
-    --bg: #fbfbf8;
-    --panel: #fffef7;
-    --muted: #f3f2ea;
-    --text: #1b1b18;
-    --sub: #3a3a33;
-    --accent: #8b5cf6;
-    --accent2: #22c55e;
-    --border: #e7e4d8;
-    --theme-pin-color: #8b5cf6;
-	--pin-color: var(--theme-pin-color);
-	--icon-color: #0f172a;
-	--btn-text: #000;
-	
-	--badge-muted: #a1d99b;
-	--badge-sub: #006d2c;
-	--badge-border: #006d2c;
-    
-	--te-surface: var(--bg);
-	--te-surface-hover: var(--accent2);
-	--te-border: var(--border);
-	--te-text: var(--text);
-	
-	--te-primary-bg: var(--muted);
-    --te-primary-border: var(--border);
-    --te-primary-text: var(--text);
-    --te-primary-hover: #a6a6a6;
+  --bg: #fbfbf8;
+  --panel: #fffef7;
+  --muted: #f3f2ea;
+  --text: #1b1b18;
+  --text-hover: #ffffff;
+  --sub: #3a3a33;
+  --accent: #8b5cf6;
+  --accent2: #22c55e;
+  --border: #e7e4d8;
+  --theme-pin-color: #8b5cf6;
+  --pin-color: var(--theme-pin-color);
+  --icon-color: #0f172a;
+  --btn-text: #000;
+  --text-shadow: rgba(139, 92, 246, 0.75);
 
-	--te-danger-bg: #991b1b;
-    --te-danger-border: #ef4444;
-    --te-danger-text: #ffe4e6;
-    --te-danger-hover: #b91c1c;
-    
-	--tt-bg: var(--bg);
-	--tt-text: var(--text);
-	--tt-border: var(--border);
+  --badge-muted: #a1d99b;
+  --badge-sub: #006d2c;
+  --badge-border: #006d2c;
+
+  --te-surface: var(--bg);
+  --te-surface-hover: #8b5cf6;
+  --te-border: var(--border);
+  --te-text: var(--text);
+
+  --te-primary-bg: var(--muted);
+  --te-primary-border: var(--border);
+  --te-primary-text: var(--text);
+  --te-primary-hover: #8b5cf6;
+
+  --te-danger-bg: #991b1b;
+  --te-danger-border: #ef4444;
+  --te-danger-text: #ffe4e6;
+  --te-danger-hover: #b91c1c;
+
+  --tt-bg: var(--bg);
+  --tt-text: var(--text);
+  --tt-border: var(--border);
 }
 html,
 body {
-    background: var(--bg);
-    color: var(--text);
+  background: var(--bg);
+  color: var(--text);
 }
 a {
-    color: var(--accent);
+  color: var(--accent);
 }
 .topbar {
-	position: fixed;
-    background: var(--panel);
-    border-bottom: 1px solid var(--border);
-    box-shadow: 0 6px 18px rgba(27, 27, 24, 0.06);
-	z-index: 9999 !important;
+  position: fixed;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 6px 18px rgba(27, 27, 24, 0.06);
+  z-index: 9999 !important;
 }
 .card {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    box-shadow: 0 6px 18px rgba(27, 27, 24, 0.06);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(27, 27, 24, 0.06);
 }
 input,
 select,
 button {
-    background: #fffef7;
-    color: #1b1b18;
-    border: 1px solid var(--border);
+  background: #fffef7;
+  color: #1b1b18;
+  border: 1px solid var(--border);
 }
 table {
-    border-collapse: separate;
-    border-spacing: 0;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
 }
 th,
 td {
-    border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 thead th {
-    background: var(--muted);
-    color: var(--text);
+  background: var(--muted);
+  color: var(--text);
 }
 .badge {
-    background: var(--badge-muted);
-    color: var(--badge-sub);
-    border: 1px solid var(--badge-border);
+  background: var(--badge-muted);
+  color: var(--badge-sub);
+  border: 1px solid var(--badge-border);
 }
 .tooltip {
-    background: var(--tt-bg) !important;
-    color: var(--tt-text) !important;
-    border: 1px solid var(--tt-border) !important;
-    box-shadow: 0 0 10px rgba(251, 251, 248, 0.5);
+  background: var(--tt-bg) !important;
+  color: var(--tt-text) !important;
+  border: 1px solid var(--tt-border) !important;
+  box-shadow: 0 0 10px rgba(251, 251, 248, 0.5);
 }
-.map-gear:hover, .map-gear:focus {
+.map-gear:hover,
+.map-gear:focus {
   border-color: var(--accent, #3b82f6);
-  box-shadow: 0 0 0 2px rgba(0,0,0,.06);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.06);
 }

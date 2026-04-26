@@ -1,119 +1,121 @@
 /* Track Em Theme: Forest */
 :root {
-    --bg: #06190b;
-    --panel: #121913;
-    --muted: #152119;
-    --text: #e8f1ea;
-    --sub: #c2d2c7;
-    --accent: #6ee7b7;
-    --accent2: #34d399;
-    --border: #1f2b22;
-    --theme-pin-color: #6ee7b7;
-	--pin-color: var(--theme-pin-color);
-	--icon-color: #0f172a;
-	--btn-text: #fff;
-	
-	--badge-muted: #a1d99b;
-	--badge-sub: #006d2c;
-	--badge-border: #006d2c;
-    
-	--te-surface: var(--bg);
-	--te-surface-hover: var(--accent2);
-	--te-border: var(--border);
-	--te-text: var(--text);
-	
-	--te-primary-bg: var(--muted);
-    --te-primary-border: var(--border);
-    --te-primary-text: var(--text);
-    --te-primary-hover: #a6a6a6;
+  --bg: #06190b;
+  --panel: #121913;
+  --muted: #152119;
+  --text: #6ee7b7;
+  --text-hover: #06402b;
+  --sub: #c2d2c7;
+  --accent: #6ee7b7;
+  --accent2: #34d399;
+  --border: #1f2b22;
+  --theme-pin-color: #6ee7b7;
+  --pin-color: var(--theme-pin-color);
+  --icon-color: #0f172a;
+  --btn-text: #fff;
+  --text-shadow: rgba(110, 231, 183, 0.75);
 
-	--te-danger-bg: #991b1b;
-    --te-danger-border: #ef4444;
-    --te-danger-text: #ffe4e6;
-    --te-danger-hover: #b91c1c;
-    
-	--tt-bg: var(--bg);
-	--tt-text: var(--text);
-	--tt-border: var(--border);
-    
+  --badge-muted: #a1d99b;
+  --badge-sub: #006d2c;
+  --badge-border: #006d2c;
+
+  --te-surface: var(--bg);
+  --te-surface-hover: var(--accent2);
+  --te-border: var(--border);
+  --te-text: var(--text);
+
+  --te-primary-bg: var(--muted);
+  --te-primary-border: var(--border);
+  --te-primary-text: var(--text);
+  --te-primary-hover: #6ee7b7;
+
+  --te-danger-bg: #991b1b;
+  --te-danger-border: #ef4444;
+  --te-danger-text: #ffe4e6;
+  --te-danger-hover: #b91c1c;
+
+  --tt-bg: var(--bg);
+  --tt-text: var(--text);
+  --tt-border: var(--border);
 }
 html,
 body {
-    background: var(--bg);
-    color: var(--text);
+  background: var(--bg);
+  color: var(--text);
 }
 a {
-    color: var(--accent);
+  color: var(--accent);
 }
 .topbar {
-	position: fixed;
-    background: var(--panel);
-    border-bottom: 1px solid var(--border);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-	z-index: 9999 !important;
+  position: fixed;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  z-index: 9999 !important;
 }
 .card {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 .grid {
-    gap: 12px;
+  gap: 12px;
 }
 table {
-    width: 100%;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    border-collapse: separate;
-    border-spacing: 0;
-    overflow: hidden;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
 }
 th,
 td {
-    padding: 8px 10px;
-    border-bottom: 1px solid var(--border);
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
 }
 thead th {
-    background: var(--muted);
-    color: var(--sub);
+  background: var(--muted);
+  color: var(--sub);
 }
 tr:nth-child(even) td {
-    background: rgba(110, 231, 183, 0.04);
+  background: rgba(110, 231, 183, 0.04);
 }
 button,
 .button {
-    background: linear-gradient(180deg, var(--accent), #2fb289);
-    color: #0a0f0c;
-    border: 1px solid #2fb289;
-    border-radius: 10px;
-    padding: 8px 12px;
-    cursor: pointer;
+  background: linear-gradient(180deg, var(--accent), #2fb289);
+  color: #0a0f0c;
+  border: 1px solid #2fb289;
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
 }
 button:disabled {
-    opacity: 0.6;
+  opacity: 0.6;
 }
 input,
 select {
-    background: #0f1511;
-    color: var(--text);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 6px 8px;
+  background: #0f1511;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 8px;
 }
 .badge {
-    background: var(--badge-muted);
-    color: var(--badge-sub);
-    border: 1px solid var(--badge-border);
+  background: var(--badge-muted);
+  color: var(--badge-sub);
+  border: 1px solid var(--badge-border);
 }
 .tooltip {
-    background: var(--tt-bg) !important;
-    color: var(--tt-text) !important;
-    border: 1px solid var(--tt-border) !important;
-    box-shadow: 0 0 10px rgba(110, 231, 183, 0.5);
+  background: var(--tt-bg) !important;
+  color: var(--tt-text) !important;
+  border: 1px solid var(--tt-border) !important;
+  box-shadow: 0 0 10px rgba(110, 231, 183, 0.5);
 }
-.map-gear:hover, .map-gear:focus {
+.map-gear:hover,
+.map-gear:focus {
   border-color: var(--accent, #3b82f6);
-  box-shadow: 0 0 0 2px rgba(0,0,0,.06);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.06);
 }

@@ -1,0 +1,7 @@
+{
+  "id": "plugin_health",
+  "name": "Plugin Health",
+  "version": "0.1.0",
+  "description": "Inspect plugin manifests, storage, dependencies, stale caches, and recent delivery errors.",
+  "admin_route": "plugin_health.admin"
+}

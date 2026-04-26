@@ -1,1 +1,10 @@
-(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js';s.onload=function(){document.querySelectorAll('.grid,.plugins,.themes').forEach(function(el){new Sortable(el,{animation:150});});};document.head.appendChild(s);})();
+(function () {
+  var s = document.createElement("script");
+  s.src = "https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js";
+  s.onload = function () {
+    document.querySelectorAll(".grid,.plugins,.themes").forEach(function (el) {
+      new Sortable(el, { animation: 150 });
+    });
+  };
+  document.head.appendChild(s);
+})();

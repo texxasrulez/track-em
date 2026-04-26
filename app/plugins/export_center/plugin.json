@@ -1,0 +1,7 @@
+{
+  "id": "export_center",
+  "name": "Export Center",
+  "version": "0.1.0",
+  "description": "Generate lightweight cached admin-only JSON and CSV exports from existing reporting data.",
+  "admin_route": "export_center.admin"
+}

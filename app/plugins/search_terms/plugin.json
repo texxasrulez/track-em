@@ -1,0 +1,7 @@
+{
+  "id": "search_terms",
+  "name": "Search Terms",
+  "version": "0.1.0",
+  "description": "Extract lightweight internal search-term summaries from tracked paths and query parameters.",
+  "admin_route": "search_terms.admin"
+}

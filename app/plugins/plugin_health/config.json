@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "strict_mode": false,
+  "include_passes": true,
+  "scan_disabled_plugins": true,
+  "stale_cache_hours": 24
+}

@@ -1,0 +1,7 @@
+{
+  "id": "privacy_audit",
+  "name": "Privacy Audit",
+  "version": "0.1.0",
+  "description": "Lightweight admin audit for privacy-sensitive settings, public exposure, and plugin risk patterns.",
+  "admin_route": "privacy_audit.admin"
+}

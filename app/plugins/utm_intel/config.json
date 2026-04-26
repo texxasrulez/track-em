@@ -1,0 +1,12 @@
+{
+  "enabled": true,
+  "report_range": "30d",
+  "source_param": "utm_source",
+  "medium_param": "utm_medium",
+  "campaign_param": "utm_campaign",
+  "content_param": "utm_content",
+  "term_param": "utm_term",
+  "max_rows": 20,
+  "exclude_sources": [],
+  "exclude_mediums": []
+}

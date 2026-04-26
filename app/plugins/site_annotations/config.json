@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "report_range": "30d",
+  "default_type": "note",
+  "max_annotations": 250,
+  "annotations": []
+}

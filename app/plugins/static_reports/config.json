@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "generate_daily": true,
+  "generate_weekly": true,
+  "email_enabled": false,
+  "email_recipient": "",
+  "retention_daily": 30,
+  "retention_weekly": 12,
+  "include_sections": {
+    "traffic_summary": true,
+    "top_paths": true,
+    "referrer_summary": true,
+    "event_summary": true,
+    "goals_summary": true,
+    "bot_summary": true
+  },
+  "include_private_detail": false
+}

@@ -35,7 +35,8 @@ final class MtUtils
     {
         $export = "<?php\nreturn [\n";
         foreach ($arr as $k => $v) {
-            $export .= "  " . self::phpKey($k) . " => " . self::phpVal($v) . ",\n";
+            $export .=
+                "  " . self::phpKey($k) . " => " . self::phpVal($v) . ",\n";
         }
         $export .= "];\n";
         $tmp = $file . ".tmp";
@@ -43,7 +44,9 @@ final class MtUtils
         $existing = is_file($file) ? file_get_contents($file) : null;
         if ($existing !== $export) {
             $dir = dirname($file);
-            if (!is_dir($dir)) { @mkdir($dir, 0775, true); }
+            if (!is_dir($dir)) {
+                @mkdir($dir, 0775, true);
+            }
             rename($tmp, $file);
         } else {
             @unlink($tmp);
@@ -62,7 +65,9 @@ final class MtUtils
         if (is_file($stateFile)) {
             $raw = file_get_contents($stateFile);
             $data = json_decode($raw, true);
-            if (is_array($data)) { return $data; }
+            if (is_array($data)) {
+                return $data;
+            }
         }
         return [
             "source" => "en_US",
@@ -75,24 +80,39 @@ final class MtUtils
     public static function saveState(string $stateFile, array $state): void
     {
         $dir = dirname($stateFile);
-        if (!is_dir($dir)) { @mkdir($dir, 0775, true); }
-        $state["last_run"] = gmdate('c');
-        file_put_contents($stateFile, json_encode($state, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
+        if (!is_dir($dir)) {
+            @mkdir($dir, 0775, true);
+        }
+        $state["last_run"] = gmdate("c");
+        file_put_contents(
+            $stateFile,
+            json_encode($state, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
+        );
     }
 
     private static function phpKey($k): string
     {
-        if (is_int($k)) { return (string)$k; }
-        if (is_string($k)) { return var_export($k, true); }
-        return var_export((string)$k, true);
+        if (is_int($k)) {
+            return (string) $k;
+        }
+        if (is_string($k)) {
+            return var_export($k, true);
+        }
+        return var_export((string) $k, true);
     }
 
     private static function phpVal($v): string
     {
-        if (is_string($v) || is_int($v) || is_float($v) || is_bool($v) || is_null($v)) {
+        if (
+            is_string($v) ||
+            is_int($v) ||
+            is_float($v) ||
+            is_bool($v) ||
+            is_null($v)
+        ) {
             return var_export($v, true);
         }
-        return var_export((string)$v, true);
+        return var_export((string) $v, true);
     }
 
     /** Very tolerant static parser for 'key' => 'value' pairs.
@@ -102,15 +122,15 @@ final class MtUtils
     private static function parseLocaleText(string $txt): ?array
     {
         // Strip PHP open/close tags
-        $txt = preg_replace('/^\\s*<\\?php/u', '', $txt);
-        $txt = preg_replace('/\\?>\\s*$/u', '', $txt);
+        $txt = preg_replace("/^\\s*<\\?php/u", "", $txt);
+        $txt = preg_replace('/\\?>\\s*$/u', "", $txt);
 
         // Remove /* */ block comments
-        $txt = preg_replace('!/\*.*?\*/!s', '', $txt);
+        $txt = preg_replace("!/\*.*?\*/!s", "", $txt);
 
         // Remove // and # line comments safely while keeping left-side content
-        $lines = preg_split('/\\R/u', $txt);
-        $tmp = '';
+        $lines = preg_split("/\\R/u", $txt);
+        $tmp = "";
         foreach ($lines as $ln) {
             // Match '//' or '#' only when they start a comment, keep what comes before
             $tmp .= preg_replace('/(^|\\s)(?:\\/\\/|#).*$/u', '$1', $ln) . "\n";
@@ -136,19 +156,23 @@ final class MtUtils
     {
         $patterns = [
             '/%\\d+\\$[sd]/u', // printf positional
-            '/%[sd]/u',        // printf simple
-            '/\\{[A-Za-z0-9_\\.:-]+\\}/u', // {name} or {count}
-            '/\\{\\{[^}]+\\}\\}/u', // {{ double }}
+            "/%[sd]/u", // printf simple
+            "/\\{[A-Za-z0-9_\\.:-]+\\}/u", // {name} or {count}
+            "/\\{\\{[^}]+\\}\\}/u", // {{ double }}
         ];
         $map = [];
         $i = 0;
         $masked = $s;
         foreach ($patterns as $p) {
-            $masked = preg_replace_callback($p, function($m) use (&$map, &$i) {
-                $token = "__PH__" . ($i++) . "__";
-                $map[$token] = $m[0];
-                return $token;
-            }, $masked);
+            $masked = preg_replace_callback(
+                $p,
+                function ($m) use (&$map, &$i) {
+                    $token = "__PH__" . $i++ . "__";
+                    $map[$token] = $m[0];
+                    return $token;
+                },
+                $masked,
+            );
         }
         return [$masked, $map];
     }

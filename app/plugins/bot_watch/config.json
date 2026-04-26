@@ -1,0 +1,30 @@
+{
+  "enabled": true,
+  "sensitivity": "normal",
+  "ignore_known_good_bots": true,
+  "known_bot_allowlist": [
+    "googlebot",
+    "bingbot",
+    "duckduckbot",
+    "applebot",
+    "slurp",
+    "linkedinbot",
+    "facebookexternalhit",
+    "twitterbot",
+    "petalbot"
+  ],
+  "suspicious_path_patterns": [
+    "wp-login.php",
+    "xmlrpc.php",
+    ".env",
+    "vendor/phpunit",
+    "phpmyadmin",
+    "wp-admin",
+    "wp-json",
+    ".git",
+    "boaform",
+    "setup.cgi"
+  ],
+  "max_hits_per_minute_threshold": 20,
+  "status_404_threshold": 12
+}

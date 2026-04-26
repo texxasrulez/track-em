@@ -1,0 +1,7 @@
+{
+  "id": "referrer_intel",
+  "name": "Referrer Intel",
+  "version": "0.1.0",
+  "description": "Lightweight referrer source reporting with built-in search, social, internal, and external classification.",
+  "admin_route": "referrer_intel.admin"
+}

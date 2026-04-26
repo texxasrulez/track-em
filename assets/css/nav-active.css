@@ -1,3 +1,9 @@
 /* Minimal patch: keep original styles; just make header sticky and active link bold */
-header.topbar { position: sticky; top: 0; z-index: 999; }
-nav a.active { font-weight: 700; }
+header.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+nav a.active {
+  font-weight: 700;
+}

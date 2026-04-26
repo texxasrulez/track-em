@@ -5,13 +5,16 @@ use TrackEm\Core\Theme;
 
 I18n::boot();
 $themeId = Theme::activeId();
-$__p = isset($_GET['p']) ? (string)$_GET['p'] : '';
+$__p = isset($_GET["p"]) ? (string) $_GET["p"] : "";
 
 /** prefix-aware active check without PHP 8 dependency */
-function te_active($p, $needle) {
-  if ($p === $needle) return true;
-  $len = strlen($needle);
-  return ($len > 0) && strncmp($p, $needle . '.', $len + 1) === 0;
+function te_active($p, $needle)
+{
+    if ($p === $needle) {
+        return true;
+    }
+    $len = strlen($needle);
+    return $len > 0 && strncmp($p, $needle . ".", $len + 1) === 0;
 }
 ?>
 <?php \TrackEm\Core\Security::emitSecurityHeaders(); ?>
@@ -49,7 +52,10 @@ function te_active($p, $needle) {
     line-height: 1.2;
     transition: background .15s ease, border-color .15s ease, box-shadow .15s ease, opacity .15s ease, color .15s ease;
   }
-  .button:hover, .btn:hover { background: var(--te-surface-hover); }
+  .button:hover,
+  .btn:hover {
+	  background: var(--te-surface-hover);
+  }
 
   .button:disabled, .btn:disabled { opacity: .55; cursor: not-allowed; }
 
@@ -68,13 +74,24 @@ function te_active($p, $needle) {
   /* Danger variant pulls from theme danger vars */
   .danger, .btn--danger {
     background: var(--te-danger-bg);
+	font-weight: normal;
     border-color: var(--te-danger-border);
     color: var(--te-danger-text);
+	transform: none;
   }
   .danger:hover, .btn--danger:hover {
     background: var(--te-danger-hover);
+	font-weight: normal;
     border-color: var(--te-danger-hover);
-    color: var(--te-danger-text);
+	color: var(--te-danger-text) !important;
+	transform: none;
+  }
+  .disable:hover, .btn--disable:hover {
+    background: var(--te-primary-hover);
+	font-weight: normal;
+    border-color: var(--te-primary-hover);
+    color: var(--te-primary-text);
+	transform: none;
   }
 
   /* Block buttons */
@@ -111,13 +128,48 @@ function te_active($p, $needle) {
   <header class="topbar">
     <a href="?p=admin"><img src="assets/images/header-logo.svg" height="50px"></a>
     <nav>
-      <a href="?p=admin" class="button btn <?= te_active($__p,'admin') ? 'active' : '' ?>"><?= I18n::t('nav_dashboard','Dashboard') ?></a>
-      <a href="?p=admin.settings" class="button btn <?= te_active($__p,'admin.settings') ? 'active' : '' ?>"><?= I18n::t('nav_settings','Settings') ?></a>
-      <a href="?p=admin.themes" class="button btn <?= te_active($__p,'admin.themes') ? 'active' : '' ?>"><?= I18n::t('nav_themes','Themes') ?></a>
-      <a href="?p=admin.plugins" class="button btn <?= te_active($__p,'admin.plugins') ? 'active' : '' ?>"><?= I18n::t('nav_plugins','Plugins') ?></a>
-      <a href="?p=admin.users" class="button btn <?= te_active($__p,'admin.users') ? 'active' : '' ?>"><?= I18n::t('nav_users','Users') ?></a>
-      <a href="?p=admin.help" class="button btn <?= te_active($__p,'admin.help') ? 'active' : '' ?>"><?= I18n::t('nav_help','Help') ?></a>
-      <a href="?p=logout" class="button btn right <?= te_active($__p,'logout') ? 'active' : '' ?>"><?= I18n::t('nav_logout','Logout') ?></a>
+      <a href="?p=admin" class="button btn glass-button <?= te_active(
+          $__p,
+          "admin",
+      )
+          ? "active"
+          : "" ?>"><?= I18n::t("nav_dashboard", "Dashboard") ?></a>
+      <a href="?p=admin.settings" class="button btn glass-button <?= te_active(
+          $__p,
+          "admin.settings",
+      )
+          ? "active"
+          : "" ?>"><?= I18n::t("nav_settings", "Settings") ?></a>
+      <a href="?p=admin.themes" class="button btn glass-button <?= te_active(
+          $__p,
+          "admin.themes",
+      )
+          ? "active"
+          : "" ?>"><?= I18n::t("nav_themes", "Themes") ?></a>
+      <a href="?p=admin.plugins" class="button btn glass-button <?= te_active(
+          $__p,
+          "admin.plugins",
+      )
+          ? "active"
+          : "" ?>"><?= I18n::t("nav_plugins", "Plugins") ?></a>
+      <a href="?p=admin.users" class="button btn glass-button <?= te_active(
+          $__p,
+          "admin.users",
+      )
+          ? "active"
+          : "" ?>"><?= I18n::t("nav_users", "Users") ?></a>
+      <a href="?p=admin.help" class="button btn glass-button <?= te_active(
+          $__p,
+          "admin.help",
+      )
+          ? "active"
+          : "" ?>"><?= I18n::t("nav_help", "Help") ?></a>
+      <a href="?p=logout" class="button btn right glass-button <?= te_active(
+          $__p,
+          "logout",
+      )
+          ? "active"
+          : "" ?>"><?= I18n::t("nav_logout", "Logout") ?></a>
     </nav>
   </header>
   <main>
@@ -126,7 +178,15 @@ function te_active($p, $needle) {
   <script>window.TE_ENDPOINT='/track.php';</script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="assets/js/app.js"></script>
-<?php $__base = rtrim(str_replace('\\','/', dirname($_SERVER['SCRIPT_NAME'] ?? '/')), '/'); if ($__base === '/') $__base = ''; ?>
+<?php
+$__base = rtrim(
+    str_replace("\\", "/", dirname($_SERVER["SCRIPT_NAME"] ?? "/")),
+    "/",
+);
+if ($__base === "/") {
+    $__base = "";
+}
+?>
   <script>window.TE_BASE=<?php echo json_encode($__base); ?>;</script>
   <script src="assets/js/consent.js"></script>
   <script src="assets/js/dragdrop.js"></script>

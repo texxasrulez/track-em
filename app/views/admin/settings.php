@@ -3,14 +3,19 @@ use TrackEm\Core\Security;
 use TrackEm\Core\Theme;
 use TrackEm\Core\I18n;
 
-function h($s){ return htmlspecialchars((string)$s, ENT_QUOTES); }
+function h($s)
+{
+    return htmlspecialchars((string) $s, ENT_QUOTES);
+}
 
 /** Expect $cfg, $langs, $flash_geo from controller (as before) */
-$geo = $cfg['geo'] ?? [];
-$prov = (string)($geo['provider'] ?? 'ip-api');
-$mmdb = (string)($geo['mmdb_path'] ?? (dirname(__DIR__,2).'/data/GeoLite2-City.mmdb'));
-$BASE = rtrim(dirname($_SERVER['SCRIPT_NAME'] ?? ''), '/\\');
-$API  = ($BASE === '' ? '' : $BASE) . '/index.php?p=';
+$geo = $cfg["geo"] ?? [];
+$prov = (string) ($geo["provider"] ?? "ip-api");
+$mmdb =
+    (string) ($geo["mmdb_path"] ??
+        dirname(__DIR__, 2) . "/data/GeoLite2-City.mmdb");
+$BASE = rtrim(dirname($_SERVER["SCRIPT_NAME"] ?? ""), "/\\");
+$API = ($BASE === "" ? "" : $BASE) . "/index.php?p=";
 ?>
 <style>
   .form input[type="text"],
@@ -56,31 +61,46 @@ $API  = ($BASE === '' ? '' : $BASE) . '/index.php?p=';
 
 <div class="grid">
   <div class="card card--settings">
-    <h3><?= I18n::t('nav_dashboard','Dashboard') ?></h3>
+    <h3><?= I18n::t("nav_dashboard", "Dashboard") ?></h3>
     <form method="post" action="?p=admin.settings">
       <input type="hidden" name="section" value="dashboard">
             <input type="hidden" name="csrf" value="<?= Security::csrfToken() ?>"/>
-			<label><?= I18n::t('default_row_limit','Default row limit (Recent/Geo)') ?>:
+			<label><?= I18n::t("default_row_limit", "Default row limit (Recent/Geo)") ?>:
         <input type="number" style="width:95%" min="10" max="10000" step="10" name="dash_row_limit"
-               value="<?= (int)($cfg['dashboard']['row_limit'] ?? 200) ?>">
+               value="<?= (int) ($cfg["dashboard"]["row_limit"] ?? 200) ?>">
       </label>
       <label><input type="checkbox" name="dash_show_icons" value="1"
-             <?= !empty($cfg['dashboard']['show_icons']) ? 'checked' : '' ?>> <?= I18n::t('show_row_icons','Show row icons') ?></label>
+             <?= !empty($cfg["dashboard"]["show_icons"])
+                 ? "checked"
+                 : "" ?>> <?= I18n::t(
+    "show_row_icons",
+    "Show row icons",
+) ?></label>
       <label><input type="checkbox" name="dash_ip_tooltips" value="1"
-             <?= !empty($cfg['dashboard']['ip_tooltips']) ? 'checked' : '' ?>> <?= I18n::t('enable_ip_popups','Enable IP hover popups') ?></label>
-      <button type="submit" class="btn"><?= I18n::t('save_dashboard','Save Dashboard') ?></button>
+             <?= !empty($cfg["dashboard"]["ip_tooltips"])
+                 ? "checked"
+                 : "" ?>> <?= I18n::t(
+    "enable_ip_popups",
+    "Enable IP hover popups",
+) ?></label>
+      <button type="submit" class="btn disable"><?= I18n::t(
+          "save_dashboard",
+          "Save Dashboard",
+      ) ?></button>
     </form>
   </div>
 
   <!-- GEO SETTINGS -->
   <div class="card card--settings">
-    <h3><?= I18n::t('geo_settings','Geo Settings') ?></h3>
+    <h3><?= I18n::t("geo_settings", "Geo Settings") ?></h3>
 
     <?php if (!empty($flash_geo)): ?>
-      <div class="<?= $flash_geo['ok'] ? 'success' : 'error' ?>" style="margin-bottom:10px">
-        <?= $flash_geo['ok']
-            ? ('GeoLite download ok: ' . h($flash_geo['path'] ?? ''))
-            : ('GeoLite download failed: ' . h($flash_geo['msg'] ?? '')) ?>
+      <div class="<?= $flash_geo["ok"]
+          ? "success"
+          : "error" ?>" style="margin-bottom:10px">
+        <?= $flash_geo["ok"]
+            ? "GeoLite download ok: " . h($flash_geo["path"] ?? "")
+            : "GeoLite download failed: " . h($flash_geo["msg"] ?? "") ?>
       </div>
     <?php endif; ?>
 
@@ -91,71 +111,154 @@ $API  = ($BASE === '' ? '' : $BASE) . '/index.php?p=';
       <div class="form-grid">
         <!-- Enable -->
         <div class="form-label">
-          <span><?= I18n::t('enable_geo_lookups','Enable geolocation lookups') ?></span>
+          <span><?= I18n::t(
+              "enable_geo_lookups",
+              "Enable geolocation lookups",
+          ) ?></span>
         </div>
         <div class="form-ctl">
           <label class="inline">
-            <input type="checkbox" name="geo_enabled" <?= !empty($geo['enabled']) ? 'checked' : '' ?> />
-            <span><?= I18n::t('enabled','Enabled') ?></span>
+            <input type="checkbox" name="geo_enabled" <?= !empty(
+                $geo["enabled"]
+            )
+                ? "checked"
+                : "" ?> />
+            <span><?= I18n::t("enabled", "Enabled") ?></span>
           </label>
         </div>
 
         <!-- Provider -->
-        <div class="form-label"><span><?= I18n::t('provider','Provider') ?></span></div>
+        <div class="form-label"><span><?= I18n::t(
+            "provider",
+            "Provider",
+        ) ?></span></div>
         <div class="form-ctl">
           <select name="geo_provider" id="geo_provider" onchange="geoToggle()">
-            <option value="ip-api" <?= $prov==='ip-api'?'selected':'' ?>><?= I18n::t('ip_api_free','ip-api (free)') ?></option>
-            <option value="maxmind_local" <?= $prov==='maxmind_local'?'selected':'' ?>><?= I18n::t('maxmind_local_db','MaxMind GeoLite2 (local DB)') ?></option>
-            <option value="maxmind_web" <?= $prov==='maxmind_web'?'selected':'' ?>><?= I18n::t('maxmind_geo_ip','MaxMind GeoIP2 (web service)') ?></option>
+            <option value="ip-api" <?= $prov === "ip-api"
+                ? "selected"
+                : "" ?>><?= I18n::t("ip_api_free", "ip-api (free)") ?></option>
+            <option value="maxmind_local" <?= $prov === "maxmind_local"
+                ? "selected"
+                : "" ?>><?= I18n::t(
+    "maxmind_local_db",
+    "MaxMind GeoLite2 (local DB)",
+) ?></option>
+            <option value="maxmind_web" <?= $prov === "maxmind_web"
+                ? "selected"
+                : "" ?>><?= I18n::t(
+    "maxmind_geo_ip",
+    "MaxMind GeoIP2 (web service)",
+) ?></option>
           </select>
         </div>
 
         <!-- ip-api -->
-        <div class="form-label ipapi-box"><span><?= I18n::t('ip_api_base_url','ip-api Base URL') ?></span></div>
+        <div class="form-label ipapi-box"><span><?= I18n::t(
+            "ip_api_base_url",
+            "ip-api Base URL",
+        ) ?></span></div>
         <div class="form-ctl  ipapi-box">
-          <input type="text" name="ip_api_base" value="<?= h($geo['ip_api_base'] ?? 'http://ip-api.com/json/') ?>"/>
+          <input type="text" name="ip_api_base" value="<?= h(
+              $geo["ip_api_base"] ?? "http://ip-api.com/json/",
+          ) ?>"/>
+          <div class="note" style="margin-top:6px">Use an HTTPS endpoint or proxy. Plain HTTP is blocked unless `geo.allow_insecure_http` is enabled in config.</div>
+          <label class="inline" style="margin-top:8px">
+            <input type="checkbox" name="geo_allow_insecure_http" <?= !empty(
+                $geo["allow_insecure_http"]
+            )
+                ? "checked"
+                : "" ?> />
+            <span><?= I18n::t(
+                "allow_insecure_http",
+                "Allow insecure HTTP for ip-api",
+            ) ?></span>
+          </label>
         </div>
 
         <!-- MaxMind Local -->
-        <div class="form-label mm-local-box"><span><?= I18n::t('mmdb_path','MMDB Path') ?></span></div>
+        <div class="form-label mm-local-box"><span><?= I18n::t(
+            "mmdb_path",
+            "MMDB Path",
+        ) ?></span></div>
         <div class="form-ctl  mm-local-box">
           <input type="text" name="mmdb_path" value="<?= h($mmdb) ?>"/>
-          <div class="note" style="margin-top:6px"><?= I18n::t('mmdb_note','Requires a free MaxMind account & license key for downloads.') ?></div>
+          <div class="note" style="margin-top:6px"><?= I18n::t(
+              "mmdb_note",
+              "Requires a free MaxMind account & license key for downloads.",
+          ) ?></div>
         </div>
 
         <!-- MaxMind Web -->
-        <div class="form-label mm-web-box"><span><?= I18n::t('maxmind_acct_id','MaxMind Account ID') ?></span></div>
+        <div class="form-label mm-web-box"><span><?= I18n::t(
+            "maxmind_acct_id",
+            "MaxMind Account ID",
+        ) ?></span></div>
         <div class="form-ctl  mm-web-box">
-          <input type="text" name="mm_account_id" value="<?= h($geo['mm_account_id'] ?? '') ?>"/>
+          <input type="text" name="mm_account_id" value="<?= h(
+              $geo["mm_account_id"] ?? "",
+          ) ?>"/>
         </div>
-        <div class="form-label mm-web-box"><span><?= I18n::t('maxmind_license_key','MaxMind License Key') ?></span></div>
+        <div class="form-label mm-web-box"><span><?= I18n::t(
+            "maxmind_license_key",
+            "MaxMind License Key",
+        ) ?></span></div>
         <div class="form-ctl  mm-web-box">
-          <input type="text" name="mm_license_key" value="<?= h($geo['mm_license_key'] ?? '') ?>"/>
+          <input type="text" name="mm_license_key" value="<?= h(
+              $geo["mm_license_key"] ?? "",
+          ) ?>"/>
         
-		<div class="form-label mm-local-box"><span><?= I18n::t('geolite_db','GeoLite2 Database') ?></span></div>
+		<div class="form-label mm-local-box"><span><?= I18n::t(
+      "geolite_db",
+      "GeoLite2 Database",
+  ) ?></span></div>
 		<div class="form-ctl  mm-local-box">
-		  <button type="button" class="btn" id="btn-mmdb-download"><?= I18n::t('geolite_db_dwnld','Download / Update GeoLite2') ?></button>
-		  <div class="note"><?= I18n::t('maxmind_key_note','Uses your MaxMind license key to download GeoLite2-City.mmdb into the configured path.') ?></div>
+		  <button type="button" class="btn disable" id="btn-mmdb-download"><?= I18n::t(
+        "geolite_db_dwnld",
+        "Download / Update GeoLite2",
+    ) ?></button>
+		  <div class="note"><?= I18n::t(
+        "maxmind_key_note",
+        "Uses your MaxMind license key to download GeoLite2-City.mmdb into the configured path.",
+    ) ?></div>
 		  <pre id="mmdb-download-out" style="margin-top:6px;max-height:160px;overflow:auto;background:#111;color:#9f9;padding:8px;border-radius:6px;display:none"></pre>
 		</div>
 
 		</div>
 
         <!-- Timeouts / caps -->
-        <div class="form-label"><span><?= I18n::t('timeout_sec','Timeout (sec)') ?></span></div>
+        <div class="form-label"><span><?= I18n::t(
+            "timeout_sec",
+            "Timeout (sec)",
+        ) ?></span></div>
         <div class="form-ctl">
-          <input type="number" step="0.1" name="geo_timeout" value="<?= h((string)($geo['timeout_sec'] ?? 0.8)) ?>"/>
+          <input type="number" step="0.1" name="geo_timeout" value="<?= h(
+              (string) ($geo["timeout_sec"] ?? 0.8),
+          ) ?>"/>
         </div>
-        <div class="form-label"><span><?= I18n::t('max_lookups_per_rqst','Max lookups per request') ?></span></div>
+        <div class="form-label"><span><?= I18n::t(
+            "max_lookups_per_rqst",
+            "Max lookups per request",
+        ) ?></span></div>
         <div class="form-ctl">
-          <input type="number" name="geo_maxlookups" value="<?= h((string)($geo['max_lookups'] ?? 50)) ?>"/>
+          <input type="number" name="geo_maxlookups" value="<?= h(
+              (string) ($geo["max_lookups"] ?? 50),
+          ) ?>"/>
         </div>
       </div>
 
       <div class="actions actions--left" style="margin-top:10px">
-        <button type="submit" class="btn btn--primary"><?= I18n::t('save_geo_settings','Save Geo Settings') ?></button>
-        <button type="button" class="btn" onclick="downloadMMDB()"><?= I18n::t('dwnlod_geolite_db','Download GeoLite2 DB') ?></button>
-        <button type="button" class="btn" onclick="testGeo()"><?= I18n::t('test_provider','Test Provider') ?></button>
+        <button type="submit" class="btn disable"><?= I18n::t(
+            "save_geo_settings",
+            "Save Geo Settings",
+        ) ?></button>
+        <button type="button" class="btn disable" onclick="downloadMMDB()"><?= I18n::t(
+            "dwnlod_geolite_db",
+            "Download GeoLite2 DB",
+        ) ?></button>
+        <button type="button" class="btn disable" onclick="testGeo()"><?= I18n::t(
+            "test_provider",
+            "Test Provider",
+        ) ?></button>
       </div>
     </form>
 
@@ -176,7 +279,12 @@ function geoToggle(){
 geoToggle();
 
 function downloadMMDB(){
-  const key = prompt('Enter your MaxMind license key (required to fetch GeoLite2 City):','<?= h($geo['mm_license_key'] ?? '') ?>');
+  const key = prompt(<?= json_encode(
+      I18n::t(
+          "prompt_maxmind_license",
+          "Enter your MaxMind license key (required to fetch GeoLite2 City):",
+      ),
+  ) ?>,'<?= h($geo["mm_license_key"] ?? "") ?>');
   if (key === null) return;
   const form = document.createElement('form');
   form.method='post';
@@ -190,17 +298,25 @@ function downloadMMDB(){
 }
 
 async function testGeo(){
-  let ip = prompt('IP to test (e.g., 8.8.8.8):','');
+  let ip = prompt(<?= json_encode(
+      I18n::t("prompt_test_ip", "IP to test (e.g., 8.8.8.8):"),
+  ) ?>,'');
   if (!ip) return;
   const out = document.getElementById('geo-test-output');
   out.style.display='block';
-  out.textContent = 'Testing ' + ip + ' ...';
+  out.textContent = <?= json_encode(
+      I18n::t("testing_ip", "Testing {ip} ..."),
+  ) ?>.replace('{ip}', ip);
   try{
-    const r = await fetch(<?= json_encode($API) ?> + 'api.geo.test&ip=' + encodeURIComponent(ip), {credentials:'same-origin', cache:'no-store'});
+    const r = await fetch(<?= json_encode(
+        $API,
+    ) ?> + 'api.geo.test&ip=' + encodeURIComponent(ip), {credentials:'same-origin', cache:'no-store'});
     const j = await r.json();
     out.textContent = JSON.stringify(j, null, 2);
   } catch(e){
-    out.textContent = 'Error: ' + e;
+    out.textContent = <?= json_encode(
+        I18n::t("error_prefix", "Error:"),
+    ) ?> + ' ' + e;
   }
 }
 
@@ -210,7 +326,9 @@ document.addEventListener('DOMContentLoaded', function(){
   var out = document.getElementById('mmdb-download-out');
   btn.addEventListener('click', async function(){
     out.style.display='block';
-    out.textContent = 'Starting download...';
+    out.textContent = <?= json_encode(
+        I18n::t("starting_download", "Starting download..."),
+    ) ?>;
     try{
       // Use license/path from current form values so user doesn't have to save first
       var license = document.querySelector('input[name="mm_license_key"]').value || '';
@@ -218,46 +336,90 @@ document.addEventListener('DOMContentLoaded', function(){
       const params = new URLSearchParams();
       if (license) params.set('license', license);
       if (mmdbPath) params.set('mmdb_path', mmdbPath);
-      const r = await fetch(<?= json_encode($API) ?> + 'api.geo.download&' + params.toString(), {credentials:'same-origin', cache:'no-store'});
+      const r = await fetch(<?= json_encode(
+          $API,
+      ) ?> + 'api.geo.download&' + params.toString(), {
+        credentials:'same-origin',
+        cache:'no-store',
+        headers: {'X-CSRF-Token': <?= json_encode(Security::csrfToken()) ?>}
+      });
       const j = await r.json();
       out.textContent = JSON.stringify(j, null, 2);
     }catch(e){
-      out.textContent = 'Error: ' + e;
+      out.textContent = <?= json_encode(
+          I18n::t("error_prefix", "Error:"),
+      ) ?> + ' ' + e;
     }
   });
 });
 
 </script>
 
-<div class="card card--settings"><h3>Security &amp; Limits</h3>
+<div class="card card--settings"><h3><?= I18n::t(
+    "security_and_limits",
+    "Security &amp; Limits",
+) ?></h3>
   <form class="form" method="post" action="?p=admin.settings">
     <input type="hidden" name="section" value="security">
     <input type="hidden" name="csrf" value="<?= Security::csrfToken() ?>"/>
     <div class="form-grid">
-      <div class="form-label"><label for="rl_enabled"><strong><?= I18n::t('enable_rate_limit','Enable rate limit') ?></strong></label></div>
+      <div class="form-label"><label for="rl_enabled"><strong><?= I18n::t(
+          "enable_rate_limit",
+          "Enable rate limit",
+      ) ?></strong></label></div>
       <div class="form-ctl">
-        <label><input id="rl_enabled" type="checkbox" name="rl_enabled" value="1" <?= !empty($cfg['rate_limit']['enabled']) ? 'checked' : '' ?>> <?= I18n::t('limit_posts_to_track_php','Limit POSTs to track.php') ?></label>
+        <label><input id="rl_enabled" type="checkbox" name="rl_enabled" value="1" <?= !empty(
+            $cfg["rate_limit"]["enabled"]
+        )
+            ? "checked"
+            : "" ?>> <?= I18n::t(
+    "limit_posts_to_track_php",
+    "Limit POSTs to track.php",
+) ?></label>
       </div>
 
-      <div class="form-label"><label for="rl_window"><?= I18n::t('window_secs','Window (seconds)') ?></label></div>
+      <div class="form-label"><label for="rl_window"><?= I18n::t(
+          "window_secs",
+          "Window (seconds)",
+      ) ?></label></div>
       <div class="form-ctl">
-        <input id="rl_window" type="number" min="1" max="3600" step="1" name="rl_window" value="<?= (int)($cfg['rate_limit']['window_sec'] ?? 60) ?>"/>
+        <input id="rl_window" type="number" min="1" max="3600" step="1" name="rl_window" value="<?= (int) ($cfg[
+            "rate_limit"
+        ]["window"] ?? 60) ?>"/>
       </div>
 
-      <div class="form-label"><label for="rl_max"><?= I18n::t('max_events_window','Max events / window') ?></label></div>
+      <div class="form-label"><label for="rl_max"><?= I18n::t(
+          "max_events_window",
+          "Max events / window",
+      ) ?></label></div>
       <div class="form-ctl">
-        <input id="rl_max" type="number" min="1" max="100000" step="1" name="rl_max" value="<?= (int)($cfg['rate_limit']['max_events'] ?? 120) ?>"/>
+        <input id="rl_max" type="number" min="1" max="100000" step="1" name="rl_max" value="<?= (int) ($cfg[
+            "rate_limit"
+        ]["max_events"] ?? 120) ?>"/>
       </div>
 
-      <div class="form-label"><label for="ret_days"><?= I18n::t('retention_days','Retention (days)') ?></label></div>
+      <div class="form-label"><label for="ret_days"><?= I18n::t(
+          "retention_days",
+          "Retention (days)",
+      ) ?></label></div>
       <div class="form-ctl">
-        <input id="ret_days" type="number" min="1" max="3650" step="1" name="ret_days" value="<?= (int)($cfg['retention']['days'] ?? 90) ?>"/>
-        <div class="note" style="margin-top:6px"><?= I18n::t('used_by','Used by') ?> <code><?= I18n::t('retention_purge_php','scripts/retention_purge.php') ?></code>.</div>
+        <input id="ret_days" type="number" min="1" max="3650" step="1" name="ret_days" value="<?= (int) ($cfg[
+            "retention"
+        ]["days"] ?? 90) ?>"/>
+        <div class="note" style="margin-top:6px"><?= I18n::t(
+            "used_by",
+            "Used by",
+        ) ?> <code><?= I18n::t(
+     "retention_purge_php",
+     "scripts/retention_purge.php",
+ ) ?></code>.</div>
       </div>
     </div>
     <div class="actions actions--left" style="margin-top:10px">
-      <button class="btn btn--primary" type="submit"><?= I18n::t('save','Save') ?></button>
+      <button class="btn disable" type="submit"><?= I18n::t(
+          "save",
+          "Save",
+      ) ?></button>
     </div>
   </form>
 </div>
-

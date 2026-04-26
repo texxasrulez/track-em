@@ -1,107 +1,109 @@
-
 /* Track Em Theme: Aurora */
 :root {
-    --bg: #f8fafc;
-    --panel: #ffffff;
-    --muted: #f1f5f9;
-    --text: #1e293b;
-    --sub: #475569;
-    --accent: #0ea5e9;
-    --accent2: #22d3ee;
-    --border: #cbd5e1;
-    --theme-pin-color: #38bdf8;
-	--pin-color: var(--theme-pin-color);
-	--icon-color: #0ea5e9;
-	--btn-text: #ffffff;
+  --bg: #f8fafc;
+  --panel: #ffffff;
+  --muted: #f1f5f9;
+  --text: #1e293b;
+  --text-hover: #ffffff;
+  --sub: #475569;
+  --accent: #0ea5e9;
+  --accent2: #22d3ee;
+  --border: #cbd5e1;
+  --theme-pin-color: #38bdf8;
+  --pin-color: var(--theme-pin-color);
+  --icon-color: #0ea5e9;
+  --btn-text: #ffffff;
+  --text-shadow: rgba(14, 165, 233, 0.75);
 
-	--badge-muted: #bae6fd;
-	--badge-sub: #0369a1;
-	--badge-border: #38bdf8;
+  --badge-muted: #bae6fd;
+  --badge-sub: #0369a1;
+  --badge-border: #38bdf8;
 
-	--te-surface: var(--bg);
-	--te-surface-hover: var(--accent2);
-	--te-border: var(--border);
-	--te-text: var(--text);
+  --te-surface: var(--bg);
+  --te-surface-hover: var(--accent2);
+  --te-border: var(--border);
+  --te-text: var(--text);
 
-	--te-primary-bg: var(--muted);
-    --te-primary-border: var(--border);
-    --te-primary-text: var(--text);
-    --te-primary-hover: var(--accent2);
+  --te-primary-bg: var(--muted);
+  --te-primary-border: var(--border);
+  --te-primary-text: var(--text);
+  --te-primary-hover: var(--accent2);
 
-	--te-danger-bg: #991b1b;
-    --te-danger-border: #ef4444;
-    --te-danger-text: #ffe4e6;
-    --te-danger-hover: #b91c1c;
-    
-	--tt-bg: var(--bg);
-	--tt-text: var(--text);
-	--tt-border: var(--border);
+  --te-danger-bg: #991b1b;
+  --te-danger-border: #ef4444;
+  --te-danger-text: #ffe4e6;
+  --te-danger-hover: #b91c1c;
+
+  --tt-bg: var(--bg);
+  --tt-text: var(--text);
+  --tt-border: var(--border);
 }
 html,
 body {
-    background: var(--bg);
-    color: var(--text);
+  background: var(--bg);
+  color: var(--text);
 }
 a {
-    color: var(--accent);
-    transition: color 0.2s ease-in-out;
+  color: var(--accent);
+  transition: color 0.2s ease-in-out;
 }
 a:hover {
-    color: var(--accent2);
+  color: var(--accent2);
 }
 .topbar {
-	position: fixed;
-    background: var(--panel);
-    border-bottom: 1px solid var(--border);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-	z-index: 9999 !important;
+  position: fixed;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  z-index: 9999 !important;
 }
 .card {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
 }
 input,
 select,
 button {
-    background: #f1f5f9;
-    color: #1e293b;
-    border: 1px solid var(--border);
+  background: #f1f5f9;
+  color: #1e293b;
+  border: 1px solid var(--border);
 }
 input:focus,
 select:focus,
 button:hover {
-    border-color: var(--accent);
-    outline: none;
+  border-color: var(--accent);
+  outline: none;
 }
 table {
-    border-collapse: separate;
-    border-spacing: 0;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
 }
 th,
 td {
-    border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 thead th {
-    background: var(--muted);
-    color: var(--text);
+  background: var(--muted);
+  color: var(--text);
 }
 .badge {
-    background: var(--badge-muted);
-    color: var(--badge-sub);
-    border: 1px solid var(--badge-border);
+  background: var(--badge-muted);
+  color: var(--badge-sub);
+  border: 1px solid var(--badge-border);
 }
 .tooltip {
-    background: var(--tt-bg) !important;
-    color: var(--tt-text) !important;
-    border: 1px solid var(--tt-border) !important;
-    box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+  background: var(--tt-bg) !important;
+  color: var(--tt-text) !important;
+  border: 1px solid var(--tt-border) !important;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
 }
-.map-gear:hover, .map-gear:focus {
+.map-gear:hover,
+.map-gear:focus {
   border-color: var(--accent, #3b82f6);
-  box-shadow: 0 0 0 2px rgba(0,0,0,.06);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.06);
 }

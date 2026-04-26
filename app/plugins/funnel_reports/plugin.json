@@ -1,0 +1,7 @@
+{
+  "id": "funnel_reports",
+  "name": "Funnel Reports",
+  "version": "0.1.0",
+  "description": "Build lightweight aggregate path and event funnels with cached step counts and drop-off reporting.",
+  "admin_route": "funnel_reports.admin"
+}

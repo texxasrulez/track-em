@@ -1,0 +1,6 @@
+{
+  "enabled": true,
+  "strict_mode": false,
+  "scan_plugin_settings": true,
+  "include_passes": true
+}
