@@ -6,6 +6,8 @@ Use the admin Plugins screen to:
 
 - Enable or disable the public hit counter.
 - Choose site-wide or per-path counting.
+- Choose text or image-digit counter rendering.
+- Upload digit theme ZIP files containing `0.png` through `9.png`.
 - Configure a public visitor map profile.
 - Copy the generated counter and iframe snippets.
 
@@ -21,6 +23,33 @@ Counter embed example:
 <span data-trackem-counter="site"></span>
 <script async src="/track-em/index.php?p=api.plugins.asset&key=public_widgets&file=assets/counter.js"></script>
 ```
+
+Counter display modes:
+
+- `Text counter` keeps the original text output, such as `1.2k Visits`.
+- `Image digit counter` renders digits as PNG images through the plugin-owned digit endpoint and falls back quietly to text if a theme cannot be resolved.
+
+Digit theme upload rules:
+
+- Upload a ZIP file containing exactly `0.png` through `9.png` at the ZIP root.
+- No nested folders, no extra files, no SVG, and no renamed non-image files.
+- Recommended transparent PNG size is roughly 24px to 64px tall.
+- Maximum ZIP size is 2 MB.
+- Maximum image size is 100 KB per digit, with maximum dimensions of 128x128 pixels.
+
+Digit image endpoint example:
+
+```text
+/track-em/index.php?p=public_widgets.digit&id=default&n=7
+```
+
+Uploaded digit themes are stored under:
+
+```text
+storage/plugins/public_widgets/digit_themes/{theme_id}/
+```
+
+Built-in themes may live in the plugin assets directory, but uploaded themes are never written into plugin source files.
 
 Map embed example:
 

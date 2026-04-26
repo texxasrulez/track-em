@@ -2,7 +2,7 @@
   "id": "realtime",
   "name": "Realtime",
   "version": "0.1.0",
-  "description": "Realtime polling widget for recent visits.",
+  "description": "Realtime polling widget in Admin Dashboard for recent visits.",
   "configSchema": {
     "fields": [
       {

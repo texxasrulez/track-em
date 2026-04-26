@@ -2,7 +2,7 @@
   "id": "maps",
   "name": "Visitor Map",
   "version": "0.1.1",
-  "description": "Shows visitor locations using Leaflet.",
+  "description": "Shows visitor locations in Admin Dashboard using Leaflet.",
   "configSchema": {
     "fields": [
       {

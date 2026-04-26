@@ -3,6 +3,9 @@
     "enabled": false,
     "mode": "site",
     "range": "30d",
+    "display_mode": "text",
+    "digit_theme": "default",
+    "digit_height": 24,
     "format": "compact",
     "label": "Visits"
   },

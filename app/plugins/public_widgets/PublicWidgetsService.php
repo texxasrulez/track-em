@@ -8,6 +8,7 @@ use DateTimeZone;
 use PDO;
 use TrackEm\Core\DB;
 use TrackEm\Core\Security;
+use ZipArchive;
 
 final class PublicWidgetsService
 {
@@ -74,6 +75,34 @@ final class PublicWidgetsService
             '/config/plugins/' .
             $this->pluginId .
             '.json';
+    }
+
+    public function storageDir(): string
+    {
+        $dir = dirname(__DIR__, 2) . '/storage/plugins/' . $this->pluginId;
+        if (!is_dir($dir)) {
+            @mkdir($dir, 0775, true);
+        }
+        return $dir;
+    }
+
+    public function digitThemesStorageDir(): string
+    {
+        $dir = $this->storageDir() . '/digit_themes';
+        if (!is_dir($dir)) {
+            @mkdir($dir, 0775, true);
+        }
+        return $dir;
+    }
+
+    public function builtInDigitThemesDir(): string
+    {
+        return $this->pluginDir . '/assets/digit_themes';
+    }
+
+    public function zipUploadAvailable(): bool
+    {
+        return class_exists(ZipArchive::class);
     }
 
     public function isPluginEnabled(): bool
@@ -208,6 +237,31 @@ final class PublicWidgetsService
                 $count,
                 (string) ($counter['format'] ?? 'compact'),
             ),
+            'display_mode' => $this->sanitizeEnum(
+                (string) ($counter['display_mode'] ?? 'text'),
+                ['text', 'image_digits'],
+                'text',
+            ),
+            'digit_theme' => $this->resolveActiveDigitThemeId($config),
+            'digit_height' => max(12, min(128, (int) ($counter['digit_height'] ?? 24))),
+            'digit_url_base' => $this->routeUrl('public_widgets.digit', [
+                'id' => $this->resolveActiveDigitThemeId($config),
+            ]),
+        ];
+    }
+
+    public function counterPreviewContext(array $config): array
+    {
+        $counter = $config['counter'] ?? [];
+        return [
+            'display_mode' => $this->sanitizeEnum(
+                (string) ($counter['display_mode'] ?? 'text'),
+                ['text', 'image_digits'],
+                'text',
+            ),
+            'digit_theme' => $this->resolveActiveDigitThemeId($config),
+            'digit_height' => max(12, min(128, (int) ($counter['digit_height'] ?? 24))),
+            'digits' => str_split('0123456789'),
         ];
     }
 
@@ -321,6 +375,10 @@ final class PublicWidgetsService
 
     public function sanitizeConfig(array $src): array
     {
+        $themeId = $this->sanitizeThemeId((string) ($src['counter_digit_theme'] ?? 'default'));
+        if (!$this->digitThemeExists($themeId)) {
+            $themeId = 'default';
+        }
         return [
             'counter' => [
                 'enabled' => $this->toBool($src['counter_enabled'] ?? false),
@@ -338,6 +396,16 @@ final class PublicWidgetsService
                     (string) ($src['counter_format'] ?? 'compact'),
                     ['exact', 'compact', 'rounded'],
                     'compact',
+                ),
+                'display_mode' => $this->sanitizeEnum(
+                    (string) ($src['counter_display_mode'] ?? 'text'),
+                    ['text', 'image_digits'],
+                    'text',
+                ),
+                'digit_theme' => $themeId,
+                'digit_height' => max(
+                    12,
+                    min(128, (int) ($src['counter_digit_height'] ?? 24)),
                 ),
                 'label' => $this->sanitizeText(
                     (string) ($src['counter_label'] ?? 'Visits'),
@@ -417,6 +485,154 @@ final class PublicWidgetsService
         return Security::csrfToken();
     }
 
+    public function digitThemes(): array
+    {
+        $themes = [];
+        foreach ($this->builtInDigitThemes() as $theme) {
+            $themes[$theme['id']] = $theme + ['source' => 'built_in', 'deletable' => false];
+        }
+        foreach ($this->uploadedDigitThemes() as $theme) {
+            $themes[$theme['id']] = $theme + ['source' => 'uploaded', 'deletable' => true];
+        }
+        uasort(
+            $themes,
+            static function (array $a, array $b): int {
+                if (($a['source'] ?? '') !== ($b['source'] ?? '')) {
+                    return ($a['source'] ?? '') === 'built_in' ? -1 : 1;
+                }
+                return strcmp((string) ($a['name'] ?? ''), (string) ($b['name'] ?? ''));
+            },
+        );
+        return array_values($themes);
+    }
+
+    public function resolveDigitThemeFile(string $themeId, string $digit): ?string
+    {
+        $themeId = $this->sanitizeThemeId($themeId);
+        if ($themeId === '' || preg_match('/^[0-9]$/', $digit) !== 1) {
+            return null;
+        }
+        foreach ($this->digitThemes() as $theme) {
+            if (($theme['id'] ?? '') !== $themeId) {
+                continue;
+            }
+            $base = (string) ($theme['path'] ?? '');
+            if ($base === '') {
+                return null;
+            }
+            $path = $base . '/' . $digit . '.png';
+            return is_file($path) ? $path : null;
+        }
+        return null;
+    }
+
+    public function uploadDigitTheme(array $post, array $files, array $config): array
+    {
+        if (!$this->zipUploadAvailable()) {
+            throw new \RuntimeException('zip_unavailable');
+        }
+        $name = $this->sanitizeText((string) ($post['digit_theme_name'] ?? ''), 80, '');
+        if ($name === '') {
+            throw new \RuntimeException('theme_name_invalid');
+        }
+        $upload = $files['digit_theme_zip'] ?? null;
+        if (!is_array($upload)) {
+            throw new \RuntimeException('zip_missing');
+        }
+        $uploadError = (int) ($upload['error'] ?? UPLOAD_ERR_NO_FILE);
+        if ($uploadError !== UPLOAD_ERR_OK) {
+            throw new \RuntimeException($this->uploadErrorCode($uploadError));
+        }
+        $tmpPath = (string) ($upload['tmp_name'] ?? '');
+        $originalName = (string) ($upload['name'] ?? '');
+        $size = (int) ($upload['size'] ?? 0);
+        if ($tmpPath === '' || !is_uploaded_file($tmpPath)) {
+            if (!is_file($tmpPath)) {
+                throw new \RuntimeException('zip_missing');
+            }
+        }
+        if (!preg_match('/\.zip$/i', $originalName)) {
+            throw new \RuntimeException('zip_invalid');
+        }
+        if ($size <= 0 || $size > 2 * 1024 * 1024) {
+            throw new \RuntimeException('zip_too_large');
+        }
+
+        $themeId = $this->uniqueUploadedThemeId($name);
+        if ($themeId === '') {
+            throw new \RuntimeException('theme_id_conflict');
+        }
+
+        $tempDir = $this->makeTempDir();
+        $finalDir = $this->digitThemesStorageDir() . '/' . $themeId;
+        try {
+            $digits = $this->validateDigitZip($tmpPath);
+            @mkdir($tempDir, 0775, true);
+            foreach ($digits as $digit => $payload) {
+                @file_put_contents($tempDir . '/' . $digit . '.png', $payload, LOCK_EX);
+                @chmod($tempDir . '/' . $digit . '.png', 0644);
+            }
+            @file_put_contents(
+                $tempDir . '/manifest.json',
+                json_encode(
+                    [
+                        'id' => $themeId,
+                        'name' => $name,
+                        'format' => 'png',
+                        'created_at' => gmdate('Y-m-d'),
+                    ],
+                    JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES,
+                ),
+                LOCK_EX,
+            );
+            @chmod($tempDir . '/manifest.json', 0644);
+            if (is_dir($finalDir)) {
+                throw new \RuntimeException('theme_id_conflict');
+            }
+            if (!@rename($tempDir, $finalDir)) {
+                @mkdir($finalDir, 0775, true);
+                foreach (array_merge(range(0, 9), ['manifest']) as $entry) {
+                    $namePart = $entry === 'manifest' ? 'manifest.json' : $entry . '.png';
+                    @copy($tempDir . '/' . $namePart, $finalDir . '/' . $namePart);
+                }
+                $this->removeTree($tempDir);
+            }
+        } catch (\RuntimeException $e) {
+            $this->removeTree($tempDir);
+            throw $e;
+        } catch (\Throwable) {
+            $this->removeTree($tempDir);
+            throw new \RuntimeException('theme_upload_failed');
+        }
+
+        return [
+            'theme_id' => $themeId,
+            'name' => $name,
+        ];
+    }
+
+    public function deleteDigitTheme(string $themeId, array $config): array
+    {
+        $themeId = $this->sanitizeThemeId($themeId);
+        if ($themeId === '' || $themeId === 'default') {
+            throw new \RuntimeException('built_in_theme_protected');
+        }
+        foreach ($this->builtInDigitThemes() as $theme) {
+            if (($theme['id'] ?? '') === $themeId) {
+                throw new \RuntimeException('built_in_theme_protected');
+            }
+        }
+        if ($this->resolveActiveDigitThemeId($config) === $themeId) {
+            throw new \RuntimeException('active_theme_protected');
+        }
+        $dir = $this->digitThemesStorageDir() . '/' . $themeId;
+        if (!is_dir($dir)) {
+            throw new \RuntimeException('theme_not_found');
+        }
+        $this->removeTree($dir);
+        return ['theme_id' => $themeId];
+    }
+
     private function loadSavedConfig(): array
     {
         $path = $this->configPath();
@@ -470,6 +686,14 @@ final class PublicWidgetsService
             return mb_substr($value, 0, $maxLen);
         }
         return substr($value, 0, $maxLen);
+    }
+
+    private function sanitizeThemeId(string $id): string
+    {
+        $id = strtolower(trim($id));
+        $id = preg_replace('/[^a-z0-9_-]+/', '-', $id) ?? '';
+        $id = trim($id, '-_');
+        return $id !== '' ? substr($id, 0, 48) : '';
     }
 
     private function normalizePath(string $path): string
@@ -733,5 +957,239 @@ final class PublicWidgetsService
             ),
             LOCK_EX,
         );
+    }
+
+    private function resolveActiveDigitThemeId(array $config): string
+    {
+        $themeId = $this->sanitizeThemeId((string) (($config['counter']['digit_theme'] ?? 'default')));
+        if ($themeId === '' || !$this->digitThemeExists($themeId)) {
+            return 'default';
+        }
+        return $themeId;
+    }
+
+    private function digitThemeExists(string $themeId): bool
+    {
+        foreach ($this->digitThemes() as $theme) {
+            if (($theme['id'] ?? '') === $themeId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function builtInDigitThemes(): array
+    {
+        $dir = $this->builtInDigitThemesDir();
+        if (!is_dir($dir)) {
+            return [];
+        }
+        $themes = [];
+        foreach (glob($dir . '/*', GLOB_ONLYDIR) ?: [] as $themeDir) {
+            $manifest = $this->loadThemeManifest($themeDir . '/manifest.json');
+            if ($manifest === null || !$this->validateThemeDigitsExist($themeDir)) {
+                continue;
+            }
+            $themes[] = $manifest + ['path' => $themeDir];
+        }
+        return $themes;
+    }
+
+    private function uploadedDigitThemes(): array
+    {
+        $dir = $this->digitThemesStorageDir();
+        $themes = [];
+        foreach (glob($dir . '/*', GLOB_ONLYDIR) ?: [] as $themeDir) {
+            $manifest = $this->loadThemeManifest($themeDir . '/manifest.json');
+            if ($manifest === null || !$this->validateThemeDigitsExist($themeDir)) {
+                continue;
+            }
+            $themes[] = $manifest + ['path' => $themeDir];
+        }
+        return $themes;
+    }
+
+    private function loadThemeManifest(string $path): ?array
+    {
+        if (!is_file($path)) {
+            return null;
+        }
+        $data = json_decode((string) file_get_contents($path), true);
+        if (!is_array($data)) {
+            return null;
+        }
+        $id = $this->sanitizeThemeId((string) ($data['id'] ?? ''));
+        $name = $this->sanitizeText((string) ($data['name'] ?? ''), 80, '');
+        if ($id === '' || $name === '') {
+            return null;
+        }
+        return [
+            'id' => $id,
+            'name' => $name,
+            'format' => 'png',
+            'created_at' => (string) ($data['created_at'] ?? ''),
+        ];
+    }
+
+    private function validateThemeDigitsExist(string $dir): bool
+    {
+        for ($i = 0; $i <= 9; $i++) {
+            if (!is_file($dir . '/' . $i . '.png')) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private function uniqueUploadedThemeId(string $name): string
+    {
+        $base = $this->sanitizeThemeId($name);
+        if ($base === '' || $base === 'default') {
+            $base = 'theme';
+        }
+        $ids = [];
+        foreach ($this->digitThemes() as $theme) {
+            $ids[(string) ($theme['id'] ?? '')] = true;
+        }
+        if (!isset($ids[$base])) {
+            return $base;
+        }
+        for ($i = 0; $i < 20; $i++) {
+            $candidate = substr($base, 0, 40) . '-' . substr(sha1($base . '|' . microtime(true) . '|' . $i), 0, 6);
+            if (!isset($ids[$candidate])) {
+                return $candidate;
+            }
+        }
+        return '';
+    }
+
+    private function makeTempDir(): string
+    {
+        $base = rtrim(sys_get_temp_dir(), '/\\') . '/trackem_public_widgets_' . bin2hex(random_bytes(8));
+        return $base;
+    }
+
+    private function uploadErrorCode(int $error): string
+    {
+        return match ($error) {
+            UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE => 'zip_too_large',
+            UPLOAD_ERR_PARTIAL => 'zip_upload_incomplete',
+            UPLOAD_ERR_NO_FILE => 'zip_missing',
+            UPLOAD_ERR_NO_TMP_DIR, UPLOAD_ERR_CANT_WRITE, UPLOAD_ERR_EXTENSION => 'theme_upload_failed',
+            default => 'theme_upload_failed',
+        };
+    }
+
+    private function validateDigitZip(string $tmpPath): array
+    {
+        $zip = new ZipArchive();
+        if ($zip->open($tmpPath) !== true) {
+            throw new \RuntimeException('zip_invalid');
+        }
+
+        $allowed = [];
+        for ($i = 0; $i <= 9; $i++) {
+            $allowed[$i . '.png'] = true;
+        }
+        $found = [];
+        $out = [];
+        for ($i = 0; $i < $zip->numFiles; $i++) {
+            $name = (string) $zip->getNameIndex($i);
+            if ($name === '' || str_contains($name, "\0") || str_contains($name, '/') || str_contains($name, '\\') || str_contains($name, '..') || str_starts_with($name, '.')) {
+                $zip->close();
+                throw new \RuntimeException('zip_nested_path');
+            }
+            if (!isset($allowed[$name])) {
+                $zip->close();
+                throw new \RuntimeException('zip_extra_files');
+            }
+            $stat = $zip->statIndex($i);
+            $size = (int) ($stat['size'] ?? 0);
+            if ($size <= 0 || $size > 100 * 1024) {
+                $zip->close();
+                throw new \RuntimeException('digit_file_too_large');
+            }
+            $bytes = $zip->getFromIndex($i);
+            if (!is_string($bytes) || $bytes === '') {
+                $zip->close();
+                throw new \RuntimeException('png_invalid');
+            }
+            $found[$name] = true;
+            $out[(int) $name[0]] = $this->validateDigitPng($bytes);
+        }
+        $zip->close();
+
+        if (count($found) !== 10) {
+            throw new \RuntimeException('zip_missing_digits');
+        }
+        foreach ($allowed as $name => $_) {
+            if (!isset($found[$name])) {
+                throw new \RuntimeException('zip_missing_digits');
+            }
+        }
+        ksort($out);
+        return $out;
+    }
+
+    private function validateDigitPng(string $bytes): string
+    {
+        if (function_exists('finfo_open')) {
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime = $finfo ? (string) finfo_buffer($finfo, $bytes) : '';
+            if ($finfo) {
+                finfo_close($finfo);
+            }
+            if ($mime !== '' && $mime !== 'image/png') {
+                throw new \RuntimeException('png_invalid');
+            }
+        }
+
+        $imageInfo = @getimagesizefromstring($bytes);
+        if (!is_array($imageInfo) || (int) ($imageInfo[2] ?? 0) !== IMAGETYPE_PNG) {
+            throw new \RuntimeException('png_invalid');
+        }
+        $width = (int) ($imageInfo[0] ?? 0);
+        $height = (int) ($imageInfo[1] ?? 0);
+        if ($width < 1 || $height < 1 || $width > 128 || $height > 128) {
+            throw new \RuntimeException('png_dimensions_invalid');
+        }
+
+        if (extension_loaded('gd')) {
+            $image = @imagecreatefromstring($bytes);
+            if (!$image) {
+                throw new \RuntimeException('png_invalid');
+            }
+            ob_start();
+            imagealphablending($image, false);
+            imagesavealpha($image, true);
+            imagepng($image);
+            imagedestroy($image);
+            $reencoded = (string) ob_get_clean();
+            if ($reencoded === '' || strlen($reencoded) > 100 * 1024) {
+                throw new \RuntimeException('digit_file_too_large');
+            }
+            return $reencoded;
+        }
+
+        return $bytes;
+    }
+
+    private function removeTree(string $dir): void
+    {
+        if (!is_dir($dir)) {
+            return;
+        }
+        foreach (scandir($dir) ?: [] as $item) {
+            if ($item === '.' || $item === '..') {
+                continue;
+            }
+            $path = $dir . '/' . $item;
+            if (is_dir($path)) {
+                $this->removeTree($path);
+            } else {
+                @unlink($path);
+            }
+        }
+        @rmdir($dir);
     }
 }

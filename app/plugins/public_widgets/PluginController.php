@@ -28,7 +28,10 @@ final class PluginController
             'admin' => $this->admin(),
             'save' => $this->save(),
             'reset' => $this->reset(),
+            'upload_theme' => $this->uploadTheme(),
+            'delete_theme' => $this->deleteTheme(),
             'counter_data' => $this->counterData(),
+            'digit' => $this->digit(),
             'map_embed' => $this->mapEmbed(),
             'map_data' => $this->mapData(),
             default => false,
@@ -46,6 +49,9 @@ final class PluginController
         $counterSnippet = $this->service->counterSnippet($config);
         $mapSnippet = $this->service->mapSnippet($config);
         $basemapOptions = $this->service->basemapOptions();
+        $digitThemes = $this->service->digitThemes();
+        $zipUploadAvailable = $this->service->zipUploadAvailable();
+        $counterPreview = $this->service->counterPreviewContext($config);
 
         require $this->pluginDir . '/views/admin_fragment.php';
         return true;
@@ -65,6 +71,7 @@ final class PluginController
                 'config' => $config,
                 'counter_snippet' => $this->service->counterSnippet($config),
                 'map_snippet' => $this->service->mapSnippet($config),
+                'csrf' => $this->service->csrfToken(),
             ],
         );
         return true;
@@ -85,8 +92,70 @@ final class PluginController
                 'config' => $config,
                 'counter_snippet' => $this->service->counterSnippet($config),
                 'map_snippet' => $this->service->mapSnippet($config),
+                'csrf' => $this->service->csrfToken(),
             ],
         );
+        return true;
+    }
+
+    private function uploadTheme(): bool
+    {
+        if (!$this->requireAdminPost(true)) {
+            return true;
+        }
+
+        try {
+            $result = $this->service->uploadDigitTheme($_POST, $_FILES, $this->service->loadConfig());
+        } catch (\RuntimeException $e) {
+            $this->json(200, [
+                'ok' => false,
+                'error' => $e->getMessage(),
+                'message' => $this->messageForError($e->getMessage()),
+                'csrf' => $this->service->csrfToken(),
+            ]);
+            return true;
+        }
+
+        $config = $this->service->loadConfig();
+        $this->json(200, [
+            'ok' => true,
+            'result' => $result,
+            'digit_themes' => $this->service->digitThemes(),
+            'counter_preview' => $this->service->counterPreviewContext($config),
+            'csrf' => $this->service->csrfToken(),
+        ]);
+        return true;
+    }
+
+    private function deleteTheme(): bool
+    {
+        if (!$this->requireAdminPost(true)) {
+            return true;
+        }
+
+        try {
+            $result = $this->service->deleteDigitTheme(
+                (string) ($_POST['theme_id'] ?? ''),
+                $this->service->loadConfig(),
+            );
+        } catch (\RuntimeException $e) {
+            $this->json(200, [
+                'ok' => false,
+                'error' => $e->getMessage(),
+                'message' => $this->messageForError($e->getMessage()),
+                'csrf' => $this->service->csrfToken(),
+            ]);
+            return true;
+        }
+
+        $config = $this->service->loadConfig();
+        $this->json(200, [
+            'ok' => true,
+            'result' => $result,
+            'digit_themes' => $this->service->digitThemes(),
+            'counter_preview' => $this->service->counterPreviewContext($config),
+            'csrf' => $this->service->csrfToken(),
+        ]);
         return true;
     }
 
@@ -112,6 +181,31 @@ final class PluginController
         );
         header('Cache-Control: public, max-age=30');
         $this->json(200, $payload);
+        return true;
+    }
+
+    private function digit(): bool
+    {
+        if (!$this->allowPublicRate('digit', 60, 180)) {
+            return true;
+        }
+
+        $themeId = (string) ($_GET['id'] ?? '');
+        $digit = (string) ($_GET['n'] ?? '');
+        $path = $this->service->resolveDigitThemeFile($themeId, $digit);
+        if ($path === null) {
+            http_response_code(404);
+            header('Content-Type: text/plain; charset=utf-8');
+            header('X-Content-Type-Options: nosniff');
+            echo 'Not found';
+            return true;
+        }
+
+        http_response_code(200);
+        header('Content-Type: image/png');
+        header('X-Content-Type-Options: nosniff');
+        header('Cache-Control: public, max-age=86400, immutable');
+        readfile($path);
         return true;
     }
 
@@ -179,24 +273,65 @@ final class PluginController
         return true;
     }
 
-    private function requireAdminPost(): bool
+    private function requireAdminPost(bool $softErrors = false): bool
     {
         if (!$this->requireAdmin()) {
             return false;
         }
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
-            $this->json(405, ['ok' => false, 'error' => 'method_not_allowed']);
+            $this->json($softErrors ? 200 : 405, [
+                'ok' => false,
+                'error' => 'method_not_allowed',
+                'message' => $this->messageForError('method_not_allowed'),
+                'csrf' => $this->service->csrfToken(),
+            ]);
             return false;
         }
         if (!$this->allowAdminRate()) {
-            $this->json(429, ['ok' => false, 'error' => 'rate_limited']);
+            $this->json($softErrors ? 200 : 429, [
+                'ok' => false,
+                'error' => 'rate_limited',
+                'message' => $this->messageForError('rate_limited'),
+                'csrf' => $this->service->csrfToken(),
+            ]);
             return false;
         }
         if (!Security::verifyCsrf((string) ($_POST['csrf'] ?? ''))) {
-            $this->json(400, ['ok' => false, 'error' => 'bad_csrf']);
+            $this->json($softErrors ? 200 : 400, [
+                'ok' => false,
+                'error' => 'bad_csrf',
+                'message' => $this->messageForError('bad_csrf'),
+                'csrf' => $this->service->csrfToken(),
+            ]);
             return false;
         }
         return true;
+    }
+
+    private function messageForError(string $code): string
+    {
+        return match ($code) {
+            'bad_csrf' => 'The plugin form token expired. Reload the plugin page and try again.',
+            'zip_unavailable' => 'ZIP uploads are unavailable on this server because the PHP ZIP extension is missing.',
+            'theme_name_invalid' => 'Enter a theme name before uploading the ZIP file.',
+            'zip_missing' => 'Choose a ZIP file containing 0.png through 9.png.',
+            'zip_invalid' => 'Upload a valid ZIP file. Only ZIP archives are accepted.',
+            'zip_too_large' => 'The ZIP file is too large. Keep it under 2 MB.',
+            'zip_upload_incomplete' => 'The ZIP upload did not complete. Try again.',
+            'zip_nested_path' => 'The ZIP must keep 0.png through 9.png at the archive root with no folders.',
+            'zip_extra_files' => 'The ZIP may contain only 0.png through 9.png. Remove all extra files.',
+            'zip_missing_digits' => 'The ZIP must include every digit file from 0.png through 9.png.',
+            'digit_file_too_large' => 'Each digit PNG must stay under 100 KB.',
+            'png_invalid' => 'Each digit file must be a real PNG image. SVG and renamed non-images are rejected.',
+            'png_dimensions_invalid' => 'Each digit PNG must be no larger than 128x128 pixels.',
+            'theme_id_conflict' => 'That theme name could not be stored safely. Try a different theme name.',
+            'built_in_theme_protected' => 'Built-in digit themes cannot be deleted.',
+            'active_theme_protected' => 'Switch away from the active theme before deleting it.',
+            'theme_not_found' => 'The selected uploaded theme was not found.',
+            'method_not_allowed' => 'This action only accepts POST requests.',
+            'rate_limited' => 'Too many plugin admin requests were sent too quickly. Wait a moment and try again.',
+            default => 'The request could not be completed safely.',
+        };
     }
 
     private function allowAdminRate(): bool
